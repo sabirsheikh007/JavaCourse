@@ -1,0 +1,328 @@
+/* ============ BASE ============ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+body.theme-dark {
+    background: #020617;
+    color: #e5e7eb;
+}
+
+body.theme-light {
+    background: #f9fafb;
+    color: #0f172a;
+}
+
+/* ============ CONTAINER & HEADER ============ */
+.chapter-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+}
+
+.chapter-header {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding-bottom: 0.75rem;
+    background: linear-gradient(to bottom,
+    rgba(2,6,23,0.98),
+    rgba(2,6,23,0.9),
+    transparent);
+    backdrop-filter: blur(12px);
+}
+
+body.theme-light .chapter-header {
+    background: linear-gradient(to bottom,
+    rgba(249,250,251,0.98),
+    rgba(249,250,251,0.9),
+    transparent);
+}
+
+.chapter-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chapter-breadcrumb {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+body.theme-light .chapter-breadcrumb {
+    color: #6b7280;
+}
+
+.chapter-header h1 {
+    font-size: 1.8rem;
+}
+
+.chapter-subtitle {
+    font-size: 0.95rem;
+    color: #9ca3af;
+}
+body.theme-light .chapter-subtitle {
+    color: #4b5563;
+}
+
+/* Theme toggle */
+.theme-toggle-btn {
+    border-radius: 999px;
+    border: 1px solid #1f2937;
+    background: #020617;
+    color: #e5e7eb;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+body.theme-light .theme-toggle-btn {
+    background: #e5e7eb;
+    color: #0f172a;
+    border-color: #d1d5db;
+}
+
+/* ============ LAYOUT ============ */
+.chapter-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .chapter-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============ SIDEBAR ============ */
+.chapter-sidebar {
+    position: sticky;
+    top: 3.4rem;
+    align-self: flex-start;
+    max-height: calc(100vh - 3.4rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.sidebar-box {
+    background: #020617;
+    border-radius: 0.9rem;
+    border: 1px solid #1f2937;
+    padding: 1rem;
+}
+body.theme-light .sidebar-box {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+
+.chapter-sidebar h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin-bottom: 0.6rem;
+}
+
+/* Sidebar search */
+.sidebar-search {
+    margin-bottom: 0.7rem;
+}
+.sidebar-search input {
+    width: 100%;
+    padding: 0.35rem 0.6rem;
+    border-radius: 0.5rem;
+    border: 1px solid #1f2937;
+    background: #020617;
+    color: #e5e7eb;
+    font-size: 0.85rem;
+}
+body.theme-light .sidebar-search input {
+    background: #f9fafb;
+    color: #0f172a;
+    border-color: #e5e7eb;
+}
+
+/* Sidebar nav */
+.chapter-sidebar nav a {
+    display: block;
+    padding: 0.45rem 0.6rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+body.theme-light .chapter-sidebar nav a {
+    color: #0f172a;
+}
+
+.chapter-sidebar nav a:hover {
+    background: rgba(56,189,248,0.15);
+    color: #38bdf8;
+}
+
+.chapter-sidebar nav a.active {
+    background: rgba(56,189,248,0.25);
+    border-left-color: #38bdf8;
+    color: #38bdf8;
+}
+
+.chapter-sidebar nav a.hidden {
+    display: none;
+}
+
+/* ============ MAIN CONTENT ============ */
+.chapter-main {
+    min-width: 0;
+}
+
+.chapter-card {
+    background: #020617;
+    border-radius: 0.9rem;
+    border: 1px solid #1f2937;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1.3rem;
+    scroll-margin-top: 4.5rem;
+}
+body.theme-light .chapter-card {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+
+.chapter-card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+    color: #38bdf8;
+}
+.chapter-card h3 {
+    font-size: 1.02rem;
+    margin: 0.7rem 0 0.3rem;
+}
+
+.chapter-card p {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+}
+
+/* Chip */
+.chapter-chip {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.18rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid #38bdf8;
+    background: rgba(56,189,248,0.12);
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+}
+
+/* Lists */
+.chapter-list {
+    margin-left: 1.1rem;
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+}
+.chapter-list li {
+    margin-bottom: 0.35rem;
+}
+
+/* Note */
+.chapter-note {
+    margin-top: 0.7rem;
+    padding: 0.6rem 0.75rem;
+    border-left: 3px solid #38bdf8;
+    background: #020617;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+body.theme-light .chapter-note {
+    background: #f1f5f9;
+    color: #4b5563;
+}
+
+/* ============ CODE EDITOR ============ */
+.code-editor {
+    position: relative;
+    margin: 0.8rem 0;
+    border-radius: 0.75rem;
+    border: 1px solid #1f2937;
+    overflow: hidden;
+    background: #0b1120;
+}
+
+.code-editor pre {
+    margin: 0;
+    background: #0b1120 !important;
+}
+
+/* Prism base */
+code[class*="language-"],
+pre[class*="language-"] {
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 0.9rem;
+}
+
+/* Line numbers gutter */
+pre.line-numbers {
+    padding-left: 3.2em;
+}
+.line-numbers .line-numbers-rows {
+    border-right: 1px solid #1f2937;
+}
+.line-numbers .line-numbers-rows > span:before {
+    color: #64748b;
+}
+
+/* Copy button */
+.copy-btn {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.7rem;
+    font-size: 0.75rem;
+    padding: 0.18rem 0.6rem;
+    border-radius: 0.5rem;
+    border: 1px solid #334155;
+    background: rgba(15,23,42,0.95);
+    color: #e5e7eb;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity 0.15s ease, transform 0.15s ease, background 0.2s;
+}
+.code-editor:hover .copy-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+.copy-btn.copied {
+    background: #16a34a;
+    border-color: #16a34a;
+}
+
+/* ============ FOOTER ============ */
+.chapter-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #1f2937;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+body.theme-light .chapter-footer {
+    border-color: #e5e7eb;
+    color: #9ca3af;
+}

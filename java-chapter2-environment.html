@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 2: Environment Setup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Environment</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 2 — Environment Setup</h1>
+        <p class="chapter-subtitle">Set up a Java development environment: online try options, local setup and editors.</p>
+    </header>
+
+    <div class="chapter-layout">
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Environment Setup</h3>
+                <div class="sidebar-search">
+                    <input type="text" id="navSearch" placeholder="Search topics..." />
+                </div>
+                <nav>
+                    <a href="#try-online">1. Try It Online</a>
+                    <a href="#local-setup">2. Local Setup (Windows)</a>
+                    <a href="#editors">3. Popular Java Editors</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="chapter-main">
+
+            <section id="try-online" class="chapter-card">
+                <span class="chapter-chip">1. Try It Online</span>
+                <h2>Online Java Compilers & IDEs</h2>
+                <p>Quick options to write and run Java without installing anything:</p>
+                <ul class="chapter-list">
+                    <li><strong>JDoodle</strong> — Simple online compile & run: <a href="https://www.jdoodle.com/online-java-compiler/" target="_blank">JDoodle</a></li>
+                    <li><strong>Repl.it</strong> — Collaborative and persistent editor: <a href="https://replit.com/languages/java10" target="_blank">Replit</a></li>
+                    <li><strong>OnlineGDB</strong> — Online debugger & editor supporting Java: <a href="https://www.onlinegdb.com/online_java_compiler" target="_blank">OnlineGDB</a></li>
+                    <li><strong>Ideone</strong> — Quick run: <a href="https://ideone.com/" target="_blank">Ideone</a></li>
+                </ul>
+
+                <p class="chapter-note">Notes: Online tools are great for quick testing, learning and sharing code. They are not recommended for building production apps, working with complex dependencies, or learning tooling like Maven/Gradle.</p>
+
+                <h3>Sample — Quick Hello World</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello from online Java!");
+    }
+}
+</code></pre>
+                </div>
+            </section>
+
+            <section id="local-setup" class="chapter-card">
+                <span class="chapter-chip">2. Local Setup</span>
+                <h2>Local Environment Setup (Windows)</h2>
+                <p>For local development on Windows, install a JDK (Java Development Kit) and configure your PATH.</p>
+
+                <h3>1) Install a JDK</h3>
+                <p>Recommended: <strong>Temurin (Eclipse Adoptium)</strong> or <strong>OpenJDK</strong> builds. Download from:</p>
+                <ul class="chapter-list">
+                    <li><a href="https://adoptium.net/" target="_blank">Eclipse Adoptium (Temurin)</a></li>
+                    <li><a href="https://openjdk.org/" target="_blank">OpenJDK</a></li>
+                    <li><a href="https://www.oracle.com/java/technologies/downloads/" target="_blank">Oracle JDK</a> (requires license awareness)</li>
+                </ul>
+
+                <h3>2) Set JAVA_HOME and PATH (PowerShell)</h3>
+                <ol class="chapter-list">
+                    <li>Install JDK (example default install path: <code>C:\Program Files\Eclipse Adoptium\jdk-17.0.7.7-hotspot</code>).</li>
+                    <li>Open PowerShell as Administrator and set environment variables (temporary for session):</li>
+                </ol>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-powershell">$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-17.0.7.7-hotspot'
+$env:PATH = $env:JAVA_HOME + '\\bin;' + $env:PATH
+javac -version
+java -version
+</code></pre>
+                </div>
+
+                <p>To make variables permanent, use System Properties or set in the registry via System -> Advanced -> Environment Variables.</p>
+
+                <h3>3) Compile & Run</h3>
+                <p>Open a terminal (PowerShell) in the directory where you saved your local example file (e.g., <code>HelloWorld.java</code>) and execute:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-powershell">javac HelloWorld.java
+java HelloWorld
+</code></pre>
+                </div>
+
+                <p class="chapter-note">If you see version numbers, your JDK is installed correctly. If not, re-check PATH and JAVA_HOME.</p>
+            </section>
+
+            <section id="editors" class="chapter-card">
+                <span class="chapter-chip">3. Editors</span>
+                <h2>Popular Java Editors & IDEs</h2>
+                <p>Pick according to your goals — quick editing vs enterprise development:</p>
+                <ul class="chapter-list">
+                    <li><strong>IntelliJ IDEA</strong> — Best productivity, deep Java support. Community Edition is free and great for most learners and developers.</li>
+                    <li><strong>Eclipse</strong> — Extensible and widely used, great for large enterprise codebases.</li>
+                    <li><strong>Visual Studio Code</strong> — Lightweight. Install the <em>Java Extension Pack</em> for debugging, Maven/Gradle, and code navigation.</li>
+                    <li><strong>NetBeans</strong> — Full-featured, good for beginners and educational projects.</li>
+                </ul>
+
+                <h3>Tooling Tips</h3>
+                <ul class="chapter-list">
+                    <li>Use an IDE for Java when working with multiple files, debugging, or build tools (Maven/Gradle).</li>
+                    <li>VS Code + Java Extension Pack is great for smaller or scripting-style workflows.</li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem; padding:0.75rem;">
+        <a href="java-chapter1-overview.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Overview</a>
+        <a href="java-chapter3-basicsyntax.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Basic Syntax ➡️</a>
+    </div>
+    <footer class="chapter-footer">&copy; 2025 Your Java Course — Environment Setup</footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="course-script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 7: Modifier Types</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <!-- Your existing stylesheet -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 7 — Modifier Types</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 7 — Java Modifier Types</h1>
+        <p class="chapter-subtitle">Learn how to control access and behavior of classes, methods, and variables.</p>
+    </header>
+
+    <div class="chapter-layout">
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Modifier Types</h3>
+                <div class="sidebar-search">
+                    <input type="text" id="navSearch" placeholder="Search topics..." />
+                </div>
+                <nav>
+                    <a href="#introduction">1. Introduction</a>
+                    <a href="#access-modifiers">2. Java Access Modifiers</a>
+                    <a href="#non-access-modifiers">3. Java Non-Access Modifiers</a>
+                    <a href="#static-modifier">4. The Static Modifier</a>
+                    <a href="#final-modifier">5. The Final Modifier</a>
+                    <a href="#abstract-modifier">6. The Abstract Modifier</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="chapter-main">
+
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction</span>
+                <h2>What are Modifiers?</h2>
+                <p><strong>Modifiers</strong> are keywords in Java that you add to declarations of classes, methods, and variables to change their meaning. They are divided into two main categories:</p>
+                <ul class="chapter-list">
+                    <li><strong>Access Modifiers:</strong> Control the <strong>visibility</strong> or scope (who can access the code). Also known as Access Control Modifiers.</li>
+                    <li><strong>Non-Access Modifiers:</strong> Control the <strong>behavior</strong> or functionality, but not the scope.</li>
+                </ul>
+                <p>Using modifiers correctly is a key part of Object-Oriented Programming, as it helps you create secure, reusable, and well-structured code.</p>
+            </section>
+
+            <section id="access-modifiers" class="chapter-card">
+                <span class="chapter-chip">2. Java Access Modifiers</span>
+                <h2>Controlling Visibility</h2>
+                <p>Access modifiers define who can access a class, method, or variable. There are four access levels in Java.</p>
+                
+                <table style="width:100%; border-collapse: collapse; margin: 1rem 0;">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Modifier</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>public</code></td>
+                            <td style="padding: 0.5rem;">Accessible from <strong>any other class</strong>. No restrictions.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>protected</code></td>
+                            <td style="padding: 0.5rem;">Accessible within the same package, and by subclasses (even if they are in a different package).</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;">(no modifier)</td>
+                            <td style="padding: 0.5rem;">Accessible only within the <strong>same package</strong>. This is the default access level.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>private</code></td>
+                            <td style="padding: 0.5rem;">Accessible <strong>only within the same class</strong>. The most restrictive level.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Code Example Demonstrating All Levels</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// File: Parent.java
+package com.example;
+
+public class Parent {
+    public String publicVar = "public";
+    protected String protectedVar = "protected";
+    String defaultVar = "default"; // no modifier
+    private String privateVar = "private";
+
+    // All methods can access all variables within the same class
+    public void printVariablesInParent() {
+        System.out.println(publicVar);
+        System.out.println(protectedVar);
+        System.out.println(defaultVar);
+        System.out.println(privateVar);
+    }
+}</code></pre>
+                </div>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// File: ChildInSamePackage.java
+package com.example;
+
+public class ChildInSamePackage extends Parent {
+    public void printVariablesInChild() {
+        // System.out.println(privateVar); // ERROR: private is not accessible
+        System.out.println(publicVar);    // OK: public is accessible
+        System.out.println(protectedVar); // OK: protected is accessible to subclass
+        System.out.println(defaultVar);   // OK: default is accessible in same package
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="non-access-modifiers" class="chapter-card">
+                <span class="chapter-chip">3. Java Non-Access Modifiers</span>
+                <h2>Changing Behavior</h2>
+                <p>Non-access modifiers do not change visibility. Instead, they provide special functionalities to classes, methods, and variables. The most common ones are <code>static</code>, <code>final</code>, and <code>abstract</code>. We will cover them in detail next.</p>
+                <p>Other non-access modifiers include <code>synchronized</code> and <code>volatile</code> (used for multithreading), <code>transient</code> (used for serialization), and <code>native</code> (for calling code from other languages).</p>
+            </section>
+
+            <section id="static-modifier" class="chapter-card">
+                <span class="chapter-chip">4. The Static Modifier</span>
+                <h2>Belonging to the Class</h2>
+                <p>The <code>static</code> keyword means that a member (variable or method) belongs to the <strong>class itself</strong>, not to a specific instance of the class.</p>
+                <h3>Key Points:</h3>
+                <ul class="chapter-list">
+                    <li>There is only <strong>one copy</strong> of a static member, shared across all objects.</li>
+                    <li>You can access static members without creating an object, using the class name: <code>ClassName.staticMember</code>.</li>
+                </ul>
+                
+                <h3>Static Variable (Class Variable)</h3>
+                <p>A static variable is shared by all instances. It's often used for constants or counters.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Employee {
+    private String name;
+    // A static variable to count all employees
+    private static int employeeCount = 0;
+
+    public Employee(String name) {
+        this.name = name;
+        employeeCount++; // Increment the shared counter
+    }
+
+    public static int getEmployeeCount() {
+        return employeeCount;
+    }
+}</code></pre>
+                </div>
+
+                <h3>Static Method</h3>
+                <p>A static method belongs to the class. It can only access other static members directly.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class MathUtils {
+    // A static method to calculate the square of a number
+    public static int square(int number) {
+        return number * number;
+    }
+}
+
+// How to use it:
+public class Main {
+    public static void main(String[] args) {
+        // Call the static method directly on the class
+        int result = MathUtils.square(5);
+        System.out.println("Square of 5 is: " + result); // 25
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="final-modifier" class="chapter-card">
+                <span class="chapter-chip">5. The Final Modifier</span>
+                <h2>The "Once and For All" Modifier</h2>
+                <p>The <code>final</code> keyword means that once something is assigned, it <strong>cannot be changed</strong>.</p>
+                
+                <h3>Final Variable (Constant)</h3>
+                <p>A final variable is a constant. Its value cannot be changed after it's assigned. By convention, constant names are in <code>UPPERCASE</code>.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Circle {
+        // PI is a constant. Any attempt to change it will cause an error.
+        public static final double PI = 3.14159;
+        
+        public double calculateCircumference(double radius) {
+            // PI = 3.14; // ERROR: Cannot assign a value to final variable PI
+            return 2 * PI * radius;
+        }
+}</code></pre>
+                </div>
+
+                <h3>Final Method</h3>
+                <p>A final method cannot be <strong>overridden</strong> by a subclass. This is used to prevent a critical method's implementation from being changed.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">class Parent {
+    // This method is final and cannot be overridden
+    public final void showMessage() {
+        System.out.println("Message from Parent");
+    }
+}
+
+class Child extends Parent {
+    // @Override
+    // public void showMessage() { // ERROR: Cannot override the final method from Parent
+    //     System.out.println("Message from Child");
+    // }
+}</code></pre>
+                </div>
+
+                <h3>Final Class</h3>
+                <p>A final class cannot be <strong>extended</strong> (inherited). This is done for security or to create an immutable class like <code>String</code>.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// This class is final and cannot be a parent to any other class
+public final class ImmutableClass {
+    // ... class members
+}
+
+// class ChildClass extends ImmutableClass { } // ERROR: Cannot inherit from final class</code></pre>
+                </div>
+            </section>
+
+            <section id="abstract-modifier" class="chapter-card">
+                <span class="chapter-chip">6. The Abstract Modifier</span>
+                <h2>The Incomplete Blueprint</h2>
+                <p>The <code>abstract</code> keyword is used to create incomplete classes and methods that are meant to be completed by subclasses.</p>
+                
+                <h3>Abstract Class</h3>
+                <p>An abstract class cannot be instantiated (you cannot create an object of it). It is designed to be a base class that other classes can extend. It can have both abstract and concrete methods.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// An abstract class representing a generic shape
+abstract class Shape {
+    String color;
+
+    // A concrete method
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    // An abstract method (no body)
+    public abstract double area();
+}</code></pre>
+                </div>
+
+                <h3>Abstract Method</h3>
+                <p>An abstract method is declared without an implementation (no body, just a semicolon). Any concrete (non-abstract) subclass <strong>must</strong> provide an implementation for all abstract methods it inherits.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// A concrete subclass of Shape
+class Rectangle extends Shape {
+    double length;
+    double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    // Must provide an implementation for the abstract area() method
+    @Override
+    public double area() {
+        return length * width;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Shape myShape = new Shape(); // ERROR: Cannot instantiate an abstract class
+        
+        Rectangle myRect = new Rectangle(10, 5);
+        System.out.println("Area of rectangle: " + myRect.area()); // 50.0
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter6-variable-types.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Variable Types</a>
+                <a href="java-chapter8-operators.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Operators ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">&copy; 2025 Your Java Course — Modifier Types</footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<!-- Your existing script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 16: Arrays (Competitive Edition)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prism.js Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+    <!-- Line Numbers Plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+    <!-- Your course styling -->
+    <link rel="stylesheet" href="course-style.css" />
+    
+    <style>
+        .array-visualization {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .array-container {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .array-index {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        
+        .array-box {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #4a90e2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 5px;
+            background-color: rgba(74, 144, 226, 0.1);
+        }
+        
+        .array-index-box {
+            width: 60px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+        
+        .array-label {
+            margin-right: 10px;
+            font-weight: bold;
+            align-self: center;
+        }
+        
+        .memory-visual {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .memory-block {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .memory-address {
+            width: 100px;
+            color: #f0f0f0;
+            font-family: monospace;
+            padding-right: 15px;
+            text-align: right;
+        }
+        
+        .memory-value {
+            flex: 1;
+            background-color: #3a3a3a;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .memory-arrow {
+            margin: 0 10px;
+            color: #4a90e2;
+            font-size: 20px;
+            align-self: center;
+        }
+    </style>
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <!-- HEADER -->
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 16 — Arrays</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 16 — Java Arrays</h1>
+        <p class="chapter-subtitle">Mastering the fundamentals of storing, manipulating, and processing collections of data with built-in utilities.</p>
+    </header>
+
+    <div class="chapter-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Arrays</h3>
+
+                <div class="sidebar-search">
+                    <input id="navSearch" type="text" placeholder="Search topics..." />
+                </div>
+
+                <nav>
+                    <a href="#introduction">1. Introduction to Arrays</a>
+                    <a href="#array-memory">2. How Arrays Store Values</a>
+                    <a href="#declaring-creating">3. Declaring & Creating Arrays</a>
+                    <a href="#initializing-accessing">4. Initializing & Accessing</a>
+                    <a href="#processing-arrays">5. Processing Arrays</a>
+                    <a href="#foreach-loops">6. The For-Each Loop</a>
+                    <a href="#multidimensional-arrays">7. Multidimensional Arrays</a>
+                    <a href="#passing-arrays">8. Passing Arrays to Methods</a>
+                    <a href="#returning-arrays">9. Returning Arrays from Methods</a>
+                    <a href="#arrays-class">10. The `java.util.Arrays` Class</a>
+                    <a href="#practice">11. Practice & Challenge</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="chapter-main">
+
+            <!-- ===========================
+                 1. INTRODUCTION
+                 =========================== -->
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction to Arrays</span>
+                <h2>What is a Java Array?</h2>
+                <p>An array is a container object that holds a <strong>fixed number</strong> of values of a <strong>single type</strong>. The length of an array is established when the array is created, and after creation, its length is fixed.</p>
+                <p>Each item in an array is called an <strong>element</strong>, and each element is accessed by its numerical <strong>index</strong>. Indexing begins at 0. For example, the 5th element of an array would be at index 4.</p>
+                <p>In Java, arrays are objects. This means they are created on the heap memory, and the variable you declare holds a <strong>reference</strong> to the array object. Because they are objects, they can be manipulated like other objects (e.g., passed to methods).</p>
+                <p><strong>Key Properties:</strong></p>
+                <ul class="chapter-list">
+                    <li><strong>Fixed Size:</strong> You cannot change the size of an array after it's created.</li>
+                    <li><strong>Homogeneous Data:</strong> All elements must be of the same data type (e.g., all `int` or all `String`).</li>
+                    <li><strong>Zero-Based Indexing:</strong> The first element is at index `0`, and the last is at `length - 1`.</li>
+                </ul>
+            </section>
+
+            <!-- ===========================
+                 2. HOW ARRAYS STORE VALUES
+                 =========================== -->
+            <section id="array-memory" class="chapter-card">
+                <span class="chapter-chip">2. How Arrays Store Values</span>
+                <h2>Memory Representation of Arrays</h2>
+                <p>Understanding how arrays store values in memory is crucial for efficient programming. In Java, arrays are stored in contiguous memory locations, which allows for fast access to elements using their index.</p>
+                
+                <h3>Visualizing Array Storage</h3>
+                <p>Let's visualize how an integer array is stored in memory:</p>
+                
+                <div class="array-visualization">
+                    <div class="array-index">
+                        <div class="array-label">Index:</div>
+                        <div class="array-index-box">0</div>
+                        <div class="array-index-box">1</div>
+                        <div class="array-index-box">2</div>
+                        <div class="array-index-box">3</div>
+                        <div class="array-index-box">4</div>
+                    </div>
+                    <div class="array-container">
+                        <div class="array-label">Values:</div>
+                        <div class="array-box">10</div>
+                        <div class="array-box">25</div>
+                        <div class="array-box">7</div>
+                        <div class="array-box">42</div>
+                        <div class="array-box">18</div>
+                    </div>
+                </div>
+                
+                <p>When you declare an array variable, it stores a reference to the array object in memory. The array object itself contains the actual data elements in contiguous memory locations.</p>
+                
+                <div class="memory-visual">
+                    <h4>Memory Layout</h4>
+                    <div class="memory-block">
+                        <div class="memory-address">0x1000</div>
+                        <div class="memory-value">int[] numbers = new int[5];</div>
+                    </div>
+                    <div class="memory-block">
+                        <div class="memory-address">0x2000</div>
+                        <div class="memory-value">numbers[0] = 10</div>
+                    </div>
+                    <div class="memory-block">
+                        <div class="memory-address">0x2004</div>
+                        <div class="memory-value">numbers[1] = 25</div>
+                    </div>
+                    <div class="memory-block">
+                        <div class="memory-address">0x2008</div>
+                        <div class="memory-value">numbers[2] = 7</div>
+                    </div>
+                    <div class="memory-block">
+                        <div class="memory-address">0x200C</div>
+                        <div class="memory-value">numbers[3] = 42</div>
+                    </div>
+                    <div class="memory-block">
+                        <div class="memory-address">0x2010</div>
+                        <div class="memory-value">numbers[4] = 18</div>
+                    </div>
+                </div>
+                
+                <p>The array variable at address 0x1000 contains a reference (0x2000) to the actual array data. Each element occupies 4 bytes (for an int) in contiguous memory locations. This contiguous storage allows for O(1) access time to any element using its index.</p>
+                
+                <p>When you access an element with <code>numbers[2]</code>, Java calculates the memory address as 0x2000 + (2 × 4) = 0x2008 and retrieves the value at that location.</p>
+            </section>
+
+            <!-- ===========================
+                 3. DECLARING & CREATING ARRAYS
+                 =========================== -->
+            <section id="declaring-creating" class="chapter-card">
+                <span class="chapter-chip">3. Declaring & Creating Arrays</span>
+                <h2>Two-Step Process</h2>
+                <p>Creating an array is a two-step process: first, you declare a variable that will hold the array reference, and second, you use the `new` operator to allocate memory for the array object itself.</p>
+
+                <h3>Step 1: Declaration</h3>
+                <p>This tells the compiler that the variable will refer to an array of a certain type.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// Preferred style
+dataType[] arrayRefVar;
+
+// C/C++ style, also works in Java
+dataType arrayRefVar[];</code></pre>
+                </div>
+                <p>Example: `int[] myNumbers;` or `String[] names;`
+
+                <h3>Step 2: Instantiation</h3>
+                <p>This creates the array object in memory with a specified size.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">arrayRefVar = new dataType[arraySize];</code></pre>
+                </div>
+                <p>Example: `myNumbers = new int[10];` creates an array that can hold 10 integers.
+
+                <h3>Combining Declaration and Instantiation</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">int[] myNumbers = new int[10]; // An array for 10 integers
+String[] names = new String[5]; // An array for 5 String objects</code></pre>
+                </div>
+                <p><strong>Default Values:</strong> When an array is created, its elements are automatically assigned default values:
+                <ul class="chapter-list">
+                    <li>Numeric types (`int`, `double`, etc.): `0` or `0.0`</li>
+                    <li>`boolean`: `false`</li>
+                    <li>Object types (`String`, etc.): `null`</li>
+                </ul>
+            </section>
+
+            <!-- ===========================
+                 4. INITIALIZING & ACCESSING
+                 =========================== -->
+            <section id="initializing-accessing" class="chapter-card">
+                <span class="chapter-chip">4. Initializing & Accessing</span>
+                <h2>Populating and Reading Elements</h2>
+                <p>You can assign values to individual elements using their index, enclosed in square brackets `[]`.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class InitializeAccess {
+    public static void main(String[] args) {
+        int[] scores = new int[4];
+        scores[0] = 95;
+        scores[1] = 88;
+        scores[2] = 76;
+        scores[3] = 100;
+
+        // Accessing an element
+        System.out.println("The first score is: " + scores[0]);
+
+        // Trying to access an invalid index will cause an error
+        // System.out.println(scores[4]); // Throws ArrayIndexOutOfBoundsException
+    }
+}</code></pre>
+                </div>
+
+                <h3>Array Literal Initialization</h3>
+                <p>You can create and initialize an array in a single step using an array literal. The size is automatically determined by the number of elements.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ArrayLiteral {
+    public static void main(String[] args) {
+        // The array size is 3
+        String[] names = {"Alice", "Bob", "Charlie"};
+
+        System.out.println("Second name: " + names[1]);
+        System.out.println("Array length: " + names.length);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 5. PROCESSING ARRAYS
+                 =========================== -->
+            <section id="processing-arrays" class="chapter-card">
+                <span class="chapter-chip">5. Processing Arrays</span>
+                <h2>Iterating with a Standard `for` Loop</h2>
+                <p>A standard `for` loop is ideal when you need to know the index of the element you are processing. The `length` field (not a method!) of an array tells you how many elements it can hold.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ProcessArray {
+    public static void main(String[] args) {
+        double[] prices = {19.99, 5.50, 12.75, 99.95};
+
+        // Find the sum of all prices
+        double total = 0;
+        for (int i = 0; i < prices.length; i++) {
+            total += prices[i];
+        }
+        System.out.println("Total price: $" + total);
+
+        // Find the most expensive item
+        double maxPrice = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > maxPrice) {
+                maxPrice = prices[i];
+            }
+        }
+        System.out.println("Highest price: $" + maxPrice);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 6. THE FOR-EACH LOOP
+                 =========================== -->
+            <section id="foreach-loops" class="chapter-card">
+                <span class="chapter-chip">6. The For-Each Loop</span>
+                <h2>Enhanced for-loop</h2>
+                <p>JDK 1.5 introduced a more concise way to loop through all the elements of an array: the enhanced for-loop, or for-each loop.</p>
+                <p>This loop is preferred when you <strong>only need to read</strong> elements and don't need to know their index.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ForEachLoop {
+    public static void main(String[] args) {
+        String[] fruits = {"Apple", "Banana", "Cherry"};
+
+        // Print all the array elements
+        System.out.println("My favorite fruits:");
+        for (String fruit : fruits) {
+            System.out.println("- " + fruit);
+        }
+    }
+}</code></pre>
+                </div>
+                <p><strong>Important:</strong> You cannot use a for-each loop to modify the array's elements, as the loop variable (`fruit` in the example) is a copy of the value, not a reference to the array slot.</p>
+            </section>
+
+            <!-- ===========================
+                 7. MULTIDIMENSIONAL ARRAYS
+                 =========================== -->
+            <section id="multidimensional-arrays" class="chapter-card">
+                <span class="chapter-chip">7. Multidimensional Arrays</span>
+                <h2>Arrays of Arrays</h2>
+                <p>Multidimensional arrays are simply arrays whose elements are other arrays. The most common type is a two-dimensional (2D) array, which is often used to represent tables or matrices.</p>
+
+                <h3>Declaring and Creating a 2D Array</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// Declares a 2D array of integers
+int[][] matrix;
+
+// Creates a 3x4 matrix (3 rows, 4 columns)
+matrix = new int[3][4];</code></pre>
+                </div>
+
+                <h3>Initializing a 2D Array</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class MultiArray {
+    public static void main(String[] args) {
+        // Initializing with a literal
+        int[][] matrix = {
+            {1, 2, 3, 4},
+            {5, 6, 7, 8},
+            {9, 10, 11, 12}
+        };
+
+        // Accessing an element: [row][column]
+        System.out.println("Element at row 1, column 2: " + matrix[1][2]); // Outputs 7
+    }
+}</code></pre>
+                </div>
+
+                <h3>Processing a 2D Array</h3>
+                <p>You typically use nested `for` loops to iterate through a 2D array.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ProcessMultiArray {
+    public static void main(String[] args) {
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        // Iterate through all elements
+        for (int i = 0; i < matrix.length; i++) { // Outer loop for rows
+            for (int j = 0; j < matrix[i].length; j++) { // Inner loop for columns
+                System.out.print(matrix[i][j] + "\t");
+            }
+            System.out.println(); // New line after each row
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 8. PASSING ARRAYS TO METHODS
+                 =========================== -->
+            <section id="passing-arrays" class="chapter-card">
+                <span class="chapter-chip">8. Passing Arrays to Methods</span>
+                <h2>Arrays as Method Parameters</h2>
+                <p>Arrays are passed to methods by <strong>reference</strong>. This means the method receives a reference to the original array, not a copy. Any changes made to the array inside the method will permanently affect the original array.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class PassArrayToMethod {
+    // Method to print an array
+    public static void printArray(int[] arr) {
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
+    }
+
+    // Method that modifies the array
+    public static void scaleArray(int[] arr, int factor) {
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = arr[i] * factor;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40};
+
+        System.out.print("Original array: ");
+        printArray(numbers);
+
+        scaleArray(numbers, 2); // Scale the array by a factor of 2
+
+        System.out.print("Array after scaling: ");
+        printArray(numbers); // The original array is modified
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 9. RETURNING ARRAYS FROM METHODS
+                 =========================== -->
+            <section id="returning-arrays" class="chapter-card">
+                <span class="chapter-chip">9. Returning an Array from a Method</span>
+                <h2>Arrays as Return Values</h2>
+                <p>A method can return an array. The return type of the method must be declared as an array type (e.g., `int[]`). This is useful for methods that generate or process data and need to return a collection of values.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ReturnArrayFromMethod {
+    // This method returns a new array containing the first n prime numbers
+    public static int[] getFirstNPrimes(int n) {
+        int[] primes = new int[n];
+        int num = 2;
+        int count = 0;
+        while (count < n) {
+            if (isPrime(num)) {
+                primes[count] = num;
+                count++;
+            }
+            num++;
+        }
+        return primes;
+    }
+
+    // Helper method to check for primality
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        int[] firstFivePrimes = getFirstNPrimes(5);
+        System.out.println("First 5 prime numbers:");
+        for (int prime : firstFivePrimes) {
+            System.out.print(prime + " "); // 2 3 5 7 11
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 10. THE JAVA.UTIL.ARRAYS CLASS
+                 =========================== -->
+            <section id="arrays-class" class="chapter-card">
+                <span class="chapter-chip">10. The `java.util.Arrays` Class</span>
+                <h2>Built-in Utility Functions</h2>
+                <p>Java provides a very useful helper class, `java.util.Arrays`, which contains various static methods for manipulating arrays (such as sorting and searching). You must import it to use: `import java.util.Arrays;`</p>
+
+                <h3>Arrays.toString()</h3>
+                <p>A convenient way to get a string representation of an array's contents. It's much better than writing your own loop for printing.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArraysToString {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40};
+        System.out.println(numbers); // Prints something like [I@1b6d3586
+        System.out.println(Arrays.toString(numbers)); // Prints [10, 20, 30, 40]
+    }
+}</code></pre>
+                </div>
+
+                <h3>Arrays.sort()</h3>
+                <p>Sorts the elements of an array into ascending order. It uses a highly optimized, dual-pivot quicksort algorithm for primitives and Timsort for objects.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArraysSort {
+    public static void main(String[] args) {
+        int[] numbers = {40, 10, 30, 20};
+        System.out.println("Before sort: " + Arrays.toString(numbers));
+        
+        Arrays.sort(numbers);
+        
+        System.out.println("After sort: " + Arrays.toString(numbers));
+    }
+}</code></pre>
+                </div>
+
+                <h3>Arrays.binarySearch()</h3>
+                <p>Searches for a specified value in a sorted array using the binary search algorithm. This is very fast (O(log n)) but <strong>requires the array to be sorted first</strong>. It returns the index of the element if found, or a negative value if not found.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArraysBinarySearch {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+        int index = Arrays.binarySearch(numbers, 30);
+        System.out.println("Index of 30 is: " + index); // 2
+
+        int notFoundIndex = Arrays.binarySearch(numbers, 35);
+        System.out.println("Index of 35 is: " + notFoundIndex); // A negative number
+    }
+}</code></pre>
+                </div>
+
+                <h3>Arrays.fill()</h3>
+                <p>Assigns the specified value to each element of the array. Useful for initialization. You can fill the entire array or a specific range of elements.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArraysFill {
+    public static void main(String[] args) {
+        int[] data = new int[5];
+        Arrays.fill(data, -1); // Fill the entire array with -1
+        System.out.println(Arrays.toString(data)); // [-1, -1, -1, -1, -1]
+
+        // Fill a specific range (from index 1 to 3, exclusive of 3)
+        Arrays.fill(data, 1, 3, 99);
+        System.out.println(Arrays.toString(data)); // [-1, 99, 99, -1, -1]
+
+        double[] prices = new double[3];
+        Arrays.fill(prices, 9.99);
+        System.out.println(Arrays.toString(prices)); // [9.99, 9.99, 9.99]
+    }
+}</code></pre>
+                </div>
+
+                <h3>Arrays.equals()</h3>
+                <p>Returns `true` if two arrays are equal in size and their corresponding elements are equal. It's the correct way to compare array contents, as the `==` operator only checks if they are the same object in memory.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArraysEquals {
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3};
+        int[] b = {1, 2, 3};
+        int[] c = a;
+
+        System.out.println(a == b); // false (different objects)
+        System.out.println(a == c); // true (same object reference)
+        System.out.println(Arrays.equals(a, b)); // true (same contents)
+        
+        // For multidimensional arrays, use deepEquals()
+        int[][] matrix1 = {{1, 2}, {3, 4}};
+        int[][] matrix2 = {{1, 2}, {3, 4}};
+        System.out.println(Arrays.equals(matrix1, matrix2)); // false (compares references)
+        System.out.println(Arrays.deepEquals(matrix1, matrix2)); // true (compares contents)
+    }
+}</code></pre>
+                </div>
+
+                <h3>Arrays.compare()</h3>
+                <p>Compares two arrays lexicographically (element by element). It returns:
+                <ul class="chapter-list">
+                    <li>A negative integer if the first array is lexicographically less than the second</li>
+                    <li>Zero if the arrays are equal</li>
+                    <li>A positive integer if the first array is lexicographically greater than the second</li>
+                </ul>
+                This method was added in Java 9.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArraysCompare {
+    public static void main(String[] args) {
+        int[] arr1 = {1, 2, 3};
+        int[] arr2 = {1, 2, 4};
+        int[] arr3 = {1, 2, 3};
+        
+        System.out.println(Arrays.compare(arr1, arr2)); // Negative (arr1 < arr2)
+        System.out.println(Arrays.compare(arr2, arr1)); // Positive (arr2 > arr1)
+        System.out.println(Arrays.compare(arr1, arr3)); // 0 (arr1 == arr3)
+        
+        // For multidimensional arrays, use compare() on each dimension or deepEquals()
+        int[][] matrix1 = {{1, 2}, {3, 4}};
+        int[][] matrix2 = {{1, 2}, {3, 5}};
+        System.out.println(Arrays.compare(matrix1, matrix2)); // Negative (matrix1 < matrix2)
+    }
+}</code></pre>
+                </div>
+
+                <h3>Arrays.copyOf() and Arrays.copyOfRange()</h3>
+                <p>Creates a new array that is a copy of the original array. `copyOf()` copies the entire array or truncates/pads it to the specified length. `copyOfRange()` copies a specific range of elements.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+
+public class ArraysCopy {
+    public static void main(String[] args) {
+        int[] original = {1, 2, 3, 4, 5};
+        
+        // Copy entire array
+        int[] copy1 = Arrays.copyOf(original, original.length);
+        System.out.println(Arrays.toString(copy1)); // [1, 2, 3, 4, 5]
+        
+        // Copy with new length (padded with zeros if longer)
+        int[] copy2 = Arrays.copyOf(original, 7);
+        System.out.println(Arrays.toString(copy2)); // [1, 2, 3, 4, 5, 0, 0]
+        
+        // Copy with truncation
+        int[] copy3 = Arrays.copyOf(original, 3);
+        System.out.println(Arrays.toString(copy3)); // [1, 2, 3]
+        
+        // Copy a range of elements (from index 1 to 4, exclusive of 4)
+        int[] copy4 = Arrays.copyOfRange(original, 1, 4);
+        System.out.println(Arrays.toString(copy4)); // [2, 3, 4]
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 11. PRACTICE & CHALLENGE
+                 =========================== -->
+            <section id="practice" class="chapter-card">
+                <span class="chapter-chip">11. Practice & Challenge</span>
+                <h2>Test Your Skills</h2>
+                <ol class="chapter-list">
+                    <li>Write a program to find the average of an array of numbers.</li>
+                    <li>Write a program to check if an array contains a specific value (without using `java.util.Arrays`).</li>
+                    <li>Write a program to find the index of an array element.</li>
+                    <li>Write a program to remove a specific element from an array (by creating a new, smaller array).</li>
+                    <li>Write a program to find the sum of the diagonals of a square 2D matrix.</li>
+                </ol>
+
+                <h3>🏆 Challenge: Array Analyzer</h3>
+                <p>Create a program that analyzes an array of integers provided by the user. The program should use `java.util.Arrays` methods where applicable and display the following:
+                <ul class="chapter-list">
+                    <li>The original array.</li>
+                    <li>The sorted array.</li>
+                    <li>The minimum and maximum values.</li>
+                    <li>Ask the user for a number and check if it exists in the array (using `binarySearch`).</li>
+                </ul>
+                </p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Arrays;
+import java.util.Scanner;
+
+public class ArrayAnalyzer {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Array Analyzer ---");
+        System.out.print("Enter numbers separated by spaces: ");
+        String line = scanner.nextLine();
+        String[] numberStrings = line.split(" ");
+
+        int[] numbers = new int[numberStrings.length];
+        for (int i = 0; i < numberStrings.length; i++) {
+            numbers[i] = Integer.parseInt(numberStrings[i]);
+        }
+
+        // 1. Original array
+        System.out.println("\nOriginal Array: " + Arrays.toString(numbers));
+
+        // 2. Sorted array
+        int[] sortedNumbers = Arrays.copyOf(numbers, numbers.length); // Create a copy to sort
+        Arrays.sort(sortedNumbers);
+        System.out.println("Sorted Array:   " + Arrays.toString(sortedNumbers));
+
+        // 3. Min and Max
+        int min = sortedNumbers[0];
+        int max = sortedNumbers[sortedNumbers.length - 1];
+        System.out.println("Minimum value: " + min);
+        System.out.println("Maximum value: " + max);
+
+        // 4. Binary Search
+        System.out.print("\nEnter a number to search for: ");
+        int target = scanner.nextInt();
+        int index = Arrays.binarySearch(sortedNumbers, target);
+
+        if (index >= 0) {
+            System.out.println("Found " + target + " at index " + index + " in the sorted array.");
+        } else {
+            System.out.println(target + " was not found in the array.");
+        }
+
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter15-strings-class.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Strings Class</a>
+                <a href="java-chapter17-date-time.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Date & Time ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">
+        © 2025 Your Java Course — Arrays (Competitive Edition)
+    </footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<!-- Your script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

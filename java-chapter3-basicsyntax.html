@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 3: Basic Syntax</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <!-- Your existing stylesheet -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 3 — Basic Syntax</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 3 — Java Basic Syntax</h1>
+        <p class="chapter-subtitle">Learn the foundations of Java, including identifiers, modifiers, variables and more.</p>
+    </header>
+
+    <div class="chapter-layout">
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Basic Syntax</h3>
+                <div class="sidebar-search">
+                    <input type="text" id="navSearch" placeholder="Search topics..." />
+                </div>
+                <nav>
+                    <a href="#first">1. First Java Program</a>
+                    <a href="#basics">2. Basic Syntax</a>
+                    <a href="#identifiers">3. Java Identifiers</a>
+                    <a href="#modifiers">4. Java Modifiers</a>
+                    <a href="#variables">5. Java Variables</a>
+                    <a href="#enums">6. Java Enums</a>
+                    <a href="#keywords">7. Java Keywords</a>
+                    <a href="#comments">8. Comments</a>
+                    <a href="#blanklines">9. Blank Lines</a>
+                    <a href="#inheritance">10. Inheritance</a>
+                    <a href="#interfaces">11. Interfaces</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="chapter-main">
+
+            <section id="first" class="chapter-card">
+                <span class="chapter-chip">1. First Java Program</span>
+                <h2>Your First Java Program: "Hello, World!"</h2>
+                <p>Let's start with the traditional first program. It simply prints the text "Hello, World!" to the screen. This simple program introduces the basic structure and syntax of Java.</p>
+                
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+                </div>
+
+                <h3>Let's Break It Down:</h3>
+                <ul class="chapter-list">
+                    <li><strong>public class HelloWorld { ... }</strong>: Every Java application must have at least one class. A class is like a blueprint for creating objects. We named our class <code>HelloWorld</code>. The file must be saved as <code>HelloWorld.java</code>.</li>
+                    <li><strong>public static void main(String[] args) { ... }</strong>: This is the main method. It's the entry point of any Java application. When you run the program, the code inside this method is the first to be executed.</li>
+                    <li><strong>System.out.println("Hello, World!");</strong>: This line prints the text inside the quotes to the console. <code>System.out</code> is a standard output object, and <code>println</code> is the method that prints a line of text.</li>
+                </ul>
+                <p class="chapter-note">Don't worry if you don't understand everything yet. We will cover each of these concepts in detail throughout this chapter.</p>
+            </section>
+
+            <section id="basics" class="chapter-card">
+                <span class="chapter-chip">2. Basic Syntax</span>
+                <h2>Core Rules of Java Syntax</h2>
+                <p>Java has a few fundamental rules you must follow. Think of them as the grammar rules of the language.</p>
+                <ul class="chapter-list">
+                    <li><strong>Case Sensitivity:</strong> Java is case-sensitive, meaning it can tell the difference between uppercase and lowercase letters. <code>myVariable</code> is not the same as <code>MyVariable</code>.</li>
+                    <li><strong>Class Names:</strong> By convention, class names should start with an uppercase letter. If the name has multiple words, use "PascalCase" (e.g., <code>MyFirstJavaClass</code>).</li>
+                    <li><strong>Method Names:</strong> Method names should start with a lowercase letter. If multiple words are used, follow "camelCase" (e.g., <code>myFirstMethodName</code>).</li>
+                    <li><strong>Source File Name:</strong> The name of the source file must exactly match the public class name, with a <code>.java</code> extension. For our example, the class is <code>HelloWorld</code>, so the file must be <code>HelloWorld.java</code>.</li>
+                    <li><strong>Statements and Semicolons:</strong> Every individual statement (a complete command) must end with a semicolon (<code>;</code>).</li>
+                    <li><strong>Code Blocks:</strong> Code is grouped into blocks using curly braces <code>{ ... }</code>. This is used for classes, methods, loops, and more.</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, Java!");
+    }
+}
+</code></pre>
+                </div>
+            </section>
+
+            <section id="identifiers" class="chapter-card">
+                <span class="chapter-chip">3. Identifiers</span>
+                <h2>Naming Things in Java</h2>
+                <p>An <strong>identifier</strong> is simply a name you give to a class, variable, or method. For example, in <code>int age = 30;</code>, the identifier is <code>age</code>.</p>
+                
+                <h3>Rules for Naming:</h3>
+                <ul class="chapter-list">
+                    <li>Can start with a letter (a-z, A-Z), an underscore (<code>_</code>), or a dollar sign (<code>$</code>).</li>
+                    <li>After the first character, it can have letters, digits (0-9), underscores, or dollar signs.</li>
+                    <li>There is no limit on the number of characters.</li>
+                    <li>Most importantly, <strong>you cannot use a Java keyword</strong> (like <code>class</code>, <code>public</code>, or <code>int</code>) as an identifier.</li>
+                </ul>
+
+                <h3>Examples:</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// Valid identifiers
+int age = 25;
+String studentName = "Alex";
+double _salary = 50000.50;
+int $value = 100;
+
+// Invalid identifiers
+// int 1stPlace = 1;  // Cannot start with a digit
+// int class = 10;    // 'class' is a reserved keyword</code></pre>
+                </div>
+            </section>
+
+            <section id="modifiers" class="chapter-card">
+                <span class="chapter-chip">4. Modifiers</span>
+                <h2>Changing Access and Behavior</h2>
+                <p>Modifiers are keywords that you add to change the meaning of a class, method, or variable. They are divided into two categories:</p>
+
+                <h3>1. Access Control Modifiers</h3>
+                <p>These control who can access the code. Think of them like setting permissions on a file.</p>
+                <ul class="chapter-list">
+                    <li><strong>public:</strong> Accessible from <strong>any other class</strong>. It's completely open.</li>
+                    <li><strong>private:</strong> Accessible <strong>only within the same class</strong> where it is declared. It's completely hidden.</li>
+                    <li><strong>protected:</strong> Accessible within the same class, its subclasses (inheritance), and classes in the same package.</li>
+                    <li><strong>(Default):</strong> If no modifier is used, it's accessible only to classes in the same package.</li>
+                </ul>
+
+                <h3>2. Non-Access Modifiers</h3>
+                <p>These change the behavior of classes, methods, and variables.</p>
+                <ul class="chapter-list">
+                    <li><strong>static:</strong> Means the member (variable or method) belongs to the class itself, not to an instance of the class. You can call a static method on the class directly (e.g., <code>Math.sqrt(9)</code>) without creating an object.</li>
+                    <li><strong>final:</strong> A final variable is a constant (its value cannot be changed). A final method cannot be overridden by a subclass. A final class cannot be subclassed.</li>
+                    <li><strong>abstract:</strong> An abstract class cannot be used to create objects. It's designed to be subclassed. An abstract method has no body and must be implemented by the subclass.</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Config {
+    public static final int VERSION = 1; // constant
+    private String secret = "hidden"; // private field
+}
+</code></pre>
+                </div>
+            </section>
+
+            <section id="variables" class="chapter-card">
+                <span class="chapter-chip">5. Variables</span>
+                <h2>Containers for Your Data</h2>
+                <p>A variable is a container that holds a piece of data. Before you use a variable, you must declare it by telling Java its data type and its name.</p>
+
+                <h3>Types of Variables in Java</h3>
+                <ul class="chapter-list">
+                    <li><strong>Local Variables:</strong> Declared inside a method. They are created when the method is called and destroyed when the method finishes. They can only be used within that method.</li>
+                    <li><strong>Instance Variables:</strong> Declared inside a class but outside any method. They belong to an instance (object) of the class. Each object gets its own copy of these variables.</li>
+                    <li><strong>Class/Static Variables:</strong> Declared with the <code>static</code> keyword inside a class. They belong to the class itself, not to any specific object. All objects of the class share the same static variable.</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">int age = 30;       // integer primitive
+double salary = 3000.50; // double primitive
+String name = "Asha";   // reference type (Object)
+</code></pre>
+                </div>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Car {
+    // Instance variable: each car object will have its own color.
+    String color;
+
+    // Class/Static variable: all cars share the same number of wheels.
+    static int numberOfWheels = 4;
+
+    public void displayInfo() {
+        // Local variable: this variable only exists inside this method.
+        String message = "This car is " + color;
+        System.out.println(message);
+        System.out.println("All cars have " + numberOfWheels + " wheels.");
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="enums" class="chapter-card">
+                <span class="chapter-chip">6. Enums</span>
+                <h2>Defining a Fixed Set of Constants</h2>
+                <p>An <strong>Enum</strong> (short for enumeration) is a special class that represents a group of constants. It's perfect for things that have a fixed, limited set of options, like days of the week, planets in the solar system, or directions.</p>
+                <p>Using an enum makes your code more readable and less error-prone than using simple strings or integers.</p>
+                
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// Defining an enum for days of the week
+public enum Day {
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+}
+
+// How to use the enum
+public class EnumTest {
+    Day day;
+
+    public EnumTest(Day day) {
+        this.day = day;
+    }
+
+    public void tellItLikeItIs() {
+        switch (day) {
+            case MONDAY:
+                System.out.println("Mondays are bad.");
+                break;
+            case FRIDAY:
+                System.out.println("Fridays are better.");
+                break;
+            case SATURDAY: case SUNDAY:
+                System.out.println("Weekends are the best!");
+                break;
+            default:
+                System.out.println("Midweek days are so-so.");
+                break;
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="keywords" class="chapter-card">
+                <span class="chapter-chip">7. Keywords</span>
+                <h2>Reserved Words in Java</h2>
+                <p>Keywords are special words that are reserved by the Java language itself. You cannot use them as identifiers (names for your variables, classes, etc.). Each keyword has a specific, predefined meaning.</p>
+                <p><strong>Note:</strong> Keywords are all written in lowercase.</p>
+
+                <table style="width:100%; border-collapse: collapse; margin-top: 0.5rem;">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.35rem;">Category</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.35rem;">Purpose</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.35rem;">Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.35rem; vertical-align: top;">Declarations</td>
+                            <td style="padding: 0.35rem; vertical-align: top;">Define classes, packages, and type relationships</td>
+                            <td style="padding: 0.35rem; vertical-align: top;"><code>class</code>, <code>interface</code>, <code>enum</code>, <code>package</code>, <code>import</code>, <code>extends</code>, <code>implements</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.35rem; vertical-align: top;">Modifiers</td>
+                            <td style="padding: 0.35rem; vertical-align: top;">Control access & behavior of classes/members</td>
+                            <td style="padding: 0.35rem; vertical-align: top;"><code>public</code>, <code>private</code>, <code>protected</code>, <code>static</code>, <code>final</code>, <code>abstract</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.35rem; vertical-align: top;">Control Flow</td>
+                            <td style="padding: 0.35rem; vertical-align: top;">Branching and looping</td>
+                            <td style="padding: 0.35rem; vertical-align: top;"><code>if</code>, <code>else</code>, <code>switch</code>, <code>for</code>, <code>while</code>, <code>break</code>, <code>continue</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.35rem; vertical-align: top;">Primitive & Type</td>
+                            <td style="padding: 0.35rem; vertical-align: top;">Basic type keywords</td>
+                            <td style="padding: 0.35rem; vertical-align: top;"><code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>boolean</code>, <code>char</code>, <code>void</code></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.35rem; vertical-align: top;">Other / Exceptions / Concurrency</td>
+                            <td style="padding: 0.35rem; vertical-align: top;">Exception handling and concurrency keywords</td>
+                            <td style="padding: 0.35rem; vertical-align: top;"><code>try</code>, <code>catch</code>, <code>finally</code>, <code>throw</code>, <code>throws</code>, <code>synchronized</code>, <code>volatile</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 0.75rem;"><strong>Tip for Beginners:</strong> When starting, focus on learning <code>class</code>, <code>public</code>, <code>static</code>, <code>void</code>, <code>if</code>, <code>for</code>, and the basic types (<code>int</code>, <code>double</code>, <code>boolean</code>). You'll encounter the others as you learn more advanced topics.</p>
+            </section>
+
+            <section id="comments" class="chapter-card">
+                <span class="chapter-chip">8. Comments</span>
+                <h2>Explaining Your Code</h2>
+                <p>Comments are notes in your code that are ignored by the Java compiler. They are meant for humans to read. Good comments explain *why* something is done, not just *what* is done. They are essential for making your code understandable to others (and to your future self!).</p>
+
+                <p>Java supports three types of comments:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// This is a single-line comment. It extends to the end of the line.
+
+/* This is a multi-line comment.
+   It can span across several lines.
+   Very useful for longer explanations. */
+
+/**
+ * This is a Javadoc comment.
+ * It has a special format that can be used by tools
+ * like Javadoc to automatically generate documentation.
+ * @author Your Name
+ * @version 1.0
+ */
+public class CommentExample {
+    public static void main(String[] args) {
+        // Print a message to the console.
+        System.out.println("Comments are helpful!");
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="blanklines" class="chapter-card">
+                <span class="chapter-chip">9. Blank Lines</span>
+                <h2>Using Blank Lines for Readability</h2>
+                <p>Blank lines are lines that contain only whitespace (spaces or tabs). The Java compiler completely ignores them. Their only purpose is to improve the readability and organization of your source code.</p>
+                <p>Using blank lines to separate logical sections of code is a very good programming practice.</p>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class BlankLineExample {
+    // Declare instance variables at the top
+    private int id;
+    private String name;
+
+    // Use a blank line to separate variables from methods
+    public BlankLineExample(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Use a blank line to separate methods
+    public void printDetails() {
+        System.out.println("ID: " + this.id);
+        System.out.println("Name: " + this.name);
+    }
+}</code></pre>
+                </div>
+                <p class="chapter-note">Good use of blank lines makes your code look cleaner and easier to navigate, but it has no effect on how the program runs.</p>
+            </section>
+
+            <section id="inheritance" class="chapter-card">
+                <span class="chapter-chip">10. Inheritance</span>
+                <h2>Reusing Code with Inheritance</h2>
+                <p>Inheritance is a powerful feature where a new class (the <strong>subclass</strong> or <strong>child class</strong>) is based on an existing class (the <strong>superclass</strong> or <strong>parent class</strong>). The child class inherits (gets) all the fields and methods from the parent class.</p>
+                <p>This allows you to reuse code and create a logical hierarchy. Think of it like this: a <code>Car</code> *is a type of* <code>Vehicle</code>. So, <code>Car</code> can be a child of the <code>Vehicle</code> class.</p>
+                <p>We use the <code>extends</code> keyword to create a subclass.</p>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// The parent class (Superclass)
+class Vehicle {
+    protected String brand = "Ford";
+
+    public void honk() {
+        System.out.println("Tuut, tuut!");
+    }
+}
+
+// The child class (Subclass)
+class Car extends Vehicle {
+    private String modelName = "Mustang";
+
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        
+        // Call the method from the Vehicle class
+        myCar.honk(); 
+        
+        // Display the field from the Vehicle class
+        System.out.println(myCar.brand + " " + myCar.modelName);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="interfaces" class="chapter-card">
+                <span class="chapter-chip">11. Interfaces</span>
+                <h2>Defining a Contract with Interfaces</h2>
+                <p>An <strong>interface</strong> is a completely "abstract class" that is used to group related methods with empty bodies. Think of an interface as a <strong>contract</strong>. It specifies *what* a class can do, but not *how* it does it.</p>
+                <p>Any class that "implements" an interface agrees to provide a body for all the methods defined in that interface. This is a great way to achieve abstraction and multiple inheritance-like behavior.</p>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// 1. The interface (the "contract")
+interface Animal {
+    public void animalSound(); // interface method (does not have a body)
+    public void sleep();      // interface method (does not have a body)
+}
+
+// 2. A class that "implements" the interface
+class Pig implements Animal {
+    public void animalSound() {
+        // The body of animalSound() is provided here
+        System.out.println("The pig says: oink oink");
+    }
+    
+    public void sleep() {
+        // The body of sleep() is provided here
+        System.out.println("Zzz");
+    }
+}
+
+// 3. Main class to test it
+class Main {
+    public static void main(String[] args) {
+        Pig myPig = new Pig();  // Create a Pig object
+        myPig.animalSound();
+        myPig.sleep();
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter2-environment.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Environment Setup</a>
+                <a href="java-array-chapter.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Arrays ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">&copy; 2025 Your Java Course — Basic Syntax</footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<!-- Your existing script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

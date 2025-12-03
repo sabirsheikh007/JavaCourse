@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 13: Numbers Class (Competitive Edition)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prism.js Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+    <!-- Line Numbers Plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+    <!-- Your course styling -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <!-- HEADER -->
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 13 — Numbers Class</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 13 — Java Numbers Class</h1>
+        <p class="chapter-subtitle">Mastering built-in methods for number manipulation and advanced mathematical operations.</p>
+    </header>
+
+    <div class="chapter-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Numbers & Math</h3>
+
+                <div class="sidebar-search">
+                    <input id="navSearch" type="text" placeholder="Search topics..." />
+                </div>
+
+                <nav>
+                    <a href="#introduction">1. Introduction</a>
+                    <a href="#number-methods">2. Number Methods</a>
+                    <a href="#math-methods">3. Math Methods</a>
+                    <a href="#conversion-methods">4. Conversion Methods</a>
+                    <a href="#biginteger">5. BigInteger</a>
+                    <a href="#bigdecimal">6. BigDecimal</a>
+                    <a href="#performance">7. Performance Tips</a>
+                    <a href="#practice">8. Practice & Challenge</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="chapter-main">
+
+            <!-- ===========================
+                 1. INTRODUCTION
+                 =========================== -->
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction</span>
+                <h2>Primitive Types vs. Wrapper Classes</h2>
+                <p>In Java, numbers like <code>int</code> and <code>double</code> are <strong>primitive types</strong>. They hold values directly in memory. Java also provides <strong>wrapper classes</strong> (like <code>Integer</code>, <code>Double</code>) that turn these primitives into <strong>objects</strong>.</p>
+                <p>This is useful when you need to treat a number as an object, for example, to store it in a list (which can only hold objects) or to use methods that require an object, like those in the <code>Number</code> class. The main wrapper classes are <code>Byte</code>, <code>Short</code>, <code>Integer</code>, <code>Long</code>, <code>Float</code>, and <code>Double</code>.</p>
+                <p>All numeric wrapper classes inherit from the abstract <code>Number</code> class. The <code>Math</code> class provides many useful <strong>static methods</strong> that work directly with these wrapper types.</p>
+            </section>
+
+            <!-- ===========================
+                 2. NUMBER METHODS
+                 =========================== -->
+            <section id="number-methods" class="chapter-card">
+                <span class="chapter-chip">2. Number Methods</span>
+                <h2>Common Methods of the Number Class</h2>
+                <p>Each wrapper class (Integer, Double, etc.) has its own set of useful methods. Here are some of the most important ones.</p>
+
+                <h3>Java – toString() Method</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ToStringExample {
+    public static void main(String[] args) {
+        Integer num = 255;
+        String s = num.toString(); // Converts Integer to String
+        System.out.println("The string is: " + s);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – intValue() Method</h3>
+                <p>Returns the value of a number object as an <code>int</code>. This is useful for getting the primitive value back from an object.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class IntValueExample {
+    public static void main(String[] args) {
+        Double d = 123.45;
+        int i = d.intValue(); // Converts Double to int (truncates)
+        System.out.println("The int value is: " + i);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – valueOf() Method</h3>
+                <p>A <strong>static factory method</strong> that converts a <code>String</code> or a primitive <code>int</code> into a number object. This is the most common way to create a number object from user input.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ValueOfExample {
+    public static void main(String[] args) {
+        String s = "500";
+        Integer i = Integer.valueOf(s); // String to Integer object
+        System.out.println("The Integer object is: " + i);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – equals() Method</h3>
+                <p>Compares this number object to another. Returns <code>true</code> if the values are the same; <code>false</code> otherwise.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class EqualsExample {
+    public static void main(String[] args) {
+        Integer num1 = 100;
+        Integer num2 = 100;
+        
+        System.out.println(num1.equals(num2)); // true
+        System.out.println(num1.equals(50)); // false
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – compareTo() Method</h3>
+                <p>Compares this number object to another numerically. Returns:
+                <ul class="chapter-list">
+                    <li>A negative integer if this number is less than the other.</li>
+                    <li>A positive integer if this number is greater than the other.</li>
+                    <li>Zero if the numbers are equal.</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class CompareToExample {
+    public static void main(String[] args) {
+        Integer a = 10;
+        Integer b = 20;
+        
+        System.out.println(a.compareTo(b)); // Outputs a negative number
+        System.out.println(b.compareTo(a)); // Outputs a positive number
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 3. MATH METHODS
+                 =========================== -->
+            <section id="math-methods" class="chapter-card">
+                <span class="chapter-chip">3. Math Methods</span>
+                <h2>Performing Mathematical Operations</h2>
+                <p>The <code>Math</code> class is full of <strong>static methods</strong> for common mathematical functions. You don't need to create an object to use them.</p>
+
+                <h3>Java – abs() Method</h3>
+                <p>Returns the absolute (positive) value of a number. Useful for finding the difference between two numbers without worrying about order.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class AbsExample {
+    public static void main(String[] args) {
+        double difference = -50.5;
+        System.out.println("Absolute value is: " + Math.abs(difference)); // Prints 50.5
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – ceil() and floor() Methods</h3>
+                <p><code>ceil()</code> rounds a number <strong>up</strong> to the nearest integer. <code>floor()</code> rounds a number <strong>down</strong> to the nearest integer.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class CeilFloorExample {
+    public static void main(String[] args) {
+        double a = 3.14;
+        System.out.println("Ceiling of 3.14 is: " + Math.ceil(a)); // 4.0
+        System.out.println("Floor of 3.14 is: " + Math.floor(a)); // 3.0
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – round() Method</h3>
+                <p>Rounds a <code>double</code> to the nearest integer (<code>long</code> or <code>int</code>) based on standard rounding rules (0.5 rounds up).</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class RoundExample {
+    public static void main(String[] args) {
+        double a = 3.67;
+        System.out.println("Rounded value is: " + Math.round(a)); // 4
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – pow() and sqrt() Methods</h3>
+                <p><code>pow(base, exponent)</code> raises a number to a power. <code>sqrt(number)</code> returns the square root.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class PowerRootExample {
+    public static void main(String[] args) {
+        double base = 2;
+        int exp = 3;
+        
+        double power = Math.pow(base, exp); // 2^3 = 8.0
+        double root = Math.sqrt(81);      // sqrt(81) = 9.0
+        System.out.println("2 to the power of 3 is: " + power);
+        System.out.println("Square root of 81 is: " + root);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – min() and max() Methods</h3>
+                <p>Finds the minimum or maximum value from a set of numbers.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class MinMaxExample {
+    public static void main(String[] args) {
+        int[] numbers = {10, 5, 25, 42, 17};
+        
+        System.out.println("Min is: " + Math.min(numbers[0], numbers[1])); // 5
+        System.out.println("Max is: " + Math.max(numbers[0], numbers[1])); // 42
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – random() Method</h3>
+                <p>Generates a random <code>double</code> between 0.0 (inclusive) and 1.0 (exclusive).</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class RandomExample {
+    public static void main(String[] args) {
+        // Generates a random double between 0.0 and 1.0
+        double randomValue = Math.random(); 
+        
+        // To get a random integer in a range, you can multiply and cast
+        int randomInt = (int)(Math.random() * 100); // Random int from 0 to 99
+        System.out.println("Random integer (0-99): " + randomInt);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 4. CONVERSION METHODS
+                 =========================== -->
+            <section id="conversion-methods" class="chapter-card">
+                <span class="chapter-chip">4. Conversion Methods</span>
+                <h2>Converting Between Strings and Numbers</h2>
+                <p>These methods are essential for handling user input, which is often read as a <code>String</code>. The wrapper classes provide methods for this purpose.</p>
+
+                <h3>Java – parseInt() Method</h3>
+                <p>Parses a string to a signed decimal <code>int</code>. Throws a <code>NumberFormatException</code> if the string is not a valid integer.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ParseIntExample {
+    public static void main(String[] args) {
+        String ageText = "30";
+        int age = Integer.parseInt(ageText); // String to int
+        System.out.println("Age is: " + age);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 5. BIGINTEGER & BIGDECIMAL
+                 =========================== -->
+            <section id="biginteger" class="chapter-card">
+                <span class="chapter-chip">5. BigInteger</span>
+                <h2>Handling Very Large Numbers</h2>
+                <p>What if you need to work with numbers larger than <code>Long.MAX_VALUE</code> (about 9 quintillion)? The <code>BigInteger</code> class is designed for arbitrary-precision integers.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.math.BigInteger;
+
+public class BigIntegerExample {
+    public static void main(String[] args) {
+        // A number with 100 digits
+        String largeNumberString = "12345678901234567890";
+
+        // Create a BigInteger from a string
+        BigInteger hugeNumber = new BigInteger(largeNumberString);
+
+        System.out.println("The number is: " + hugeNumber);
+        
+        // Perform operations
+        BigInteger evenLarger = new BigInteger("100000000000000000000000000000000");
+        BigInteger result = hugeNumber.add(evenLarger);
+
+        System.out.println("Sum is: " + result);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – BigDecimal</h3>
+                <p>For financial or scientific calculations where precision is critical, <code>double</code> is not enough. <code>BigDecimal</code> provides perfect control over decimal arithmetic.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.math.BigDecimal;
+
+public class BigDecimalExample {
+    public static void main(String[] args) {
+        // Never use double for money!
+        BigDecimal price = new BigDecimal("19.99");
+        BigDecimal taxRate = new BigDecimal("0.07");
+
+        // Calculate total with high precision
+        BigDecimal total = price.multiply(taxRate.add(BigDecimal.ONE)); // 19.99 * 1.07 = 21.3893
+
+        // Scale to 2 decimal places (standard currency format)
+        total = total.setScale(2, RoundingMode.HALF_UP);
+
+        System.out.println("Total price with tax: $" + total);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 6. PERFORMANCE TIPS
+                 =========================== -->
+            <section id="performance" class="chapter-card">
+                <span class="chapter-chip">7. Performance Tips</span>
+                <h2>Writing Efficient Code</h2>
+                <ul class="chapter-list">
+                    <li><strong>Prefer Primitives:</strong> Use <code>int</code> or <code>double</code> over their wrapper classes unless you need an object's features (like being <code>null</code>).</li>
+                    <li><strong>Use <code>StringBuilder</code> for String Concatenation:</strong> When building a large string in a loop, <code>StringBuilder</code> is much more memory and time-efficient than using the <code>+</code> operator.</li>
+                    <li><strong>Caching Expensive Operations:</strong> Store the result of a calculation if you need to use it multiple times.</li>
+                    <li><strong>Choose the Right Collection:</strong> Use <code>ArrayList</code> for random access over <code>LinkedList</code> for sequential access.</li>
+                </ul>
+            </section>
+
+            <!-- ===========================
+                 7. PRACTICE & CHALLENGE
+                 =========================== -->
+            <section id="practice" class="chapter-card">
+                <span class="chapter-chip">8. Practice & Challenge</span>
+                <h2>Test Your Skills</h2>
+                <ol class="chapter-list">
+                    <li>Write a program to convert a temperature from Celsius to Fahrenheit and vice-versa.</li>
+                    <li>Write a program to calculate the area and circumference of a circle given its radius.</li>
+                    <li>Write a program to find the hypotenuse of a right-angled triangle given the other two sides.</li>
+                    <li>Write a program to calculate simple interest (principal, rate, time).</li>
+                    <li>Write a program to generate the first N numbers of the Fibonacci series.</li>
+                    <li>Write a program to check if a number is a palindrome.</li>
+                </ol>
+
+                <h3>🏆 Challenge: High-Precision Calculator</h3>
+                <p>Combine your knowledge of <code>BigInteger</code> and <code>BigDecimal</code> to create a calculator that can handle numbers of any size with perfect precision.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.math.BigDecimal;
+import java.util.Scanner;
+
+public class PrecisionCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- High-Precision Calculator ---");
+        System.out.print("Enter first number: ");
+        BigDecimal num1 = scanner.nextBigDecimal();
+        System.out.print("Enter second number: ");
+        BigDecimal num2 = scanner.nextBigDecimal();
+        
+        // Example operation: Add
+        BigDecimal sum = num1.add(num2);
+        System.out.println("Sum: " + sum);
+
+        // Example operation: Power
+        System.out.print("Enter base: ");
+        BigDecimal base = scanner.nextBigDecimal();
+        System.out.print("Enter exponent: ");
+        int exp = scanner.nextInt();
+        BigDecimal power = base.pow(exp);
+        System.out.println(base + " to the power of " + exp + " is: " + power);
+        
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter12-decision-making.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Decision Making</a>
+                <a href="java-chapter14-strings.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Strings ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">
+        © 2025 Your Java Course — Numbers Class (Competitive Edition)
+    </footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<!-- Your script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

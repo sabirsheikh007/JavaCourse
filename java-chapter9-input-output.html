@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 9: Input/Output</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <!-- Your existing stylesheet -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 9 — Input/Output</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 9 — Java Input/Output</h1>
+        <p class="chapter-subtitle">Learn how to interact with the user by displaying and reading data.</p>
+    </header>
+
+    <div class="chapter-layout">
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Input/Output</h3>
+                <div class="sidebar-search">
+                    <input type="text" id="navSearch" placeholder="Search topics..." />
+                </div>
+                <nav>
+                    <a href="#introduction">1. Introduction</a>
+                    <a href="#output">2. Output to Console</a>
+                    <a href="#input">3. Input from Console</a>
+                    <a href="#reading-types">4. Reading Different Types</a>
+                    <a href="#common-issues">5. Common Input Issues</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="chapter-main">
+
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction</span>
+                <h2>What is Input/Output (I/O)?</h2>
+                <p>Input/Output, or I/O, is how a program communicates with the outside world. For a simple console application, this means:</p>
+                <ul class="chapter-list">
+                    <li><strong>Output:</strong> Displaying information on the screen for the user to see.</li>
+                    <li><strong>Input:</strong> Reading data that the user types on the keyboard.</li>
+                </ul>
+                <p>Java provides a rich set of tools for handling I/O, and we'll start with the most basic ones for console applications.</p>
+            </section>
+
+            <section id="output" class="chapter-card">
+                <span class="chapter-chip">2. Output to Console</span>
+                <h2>Displaying Information</h2>
+                <p>The most common way to produce output in Java is by using the `System.out` object. It has three main methods for printing text.</p>
+
+                <h3><code>System.out.println()</code></h3>
+                <p>This method prints the text you provide to the console and then moves the cursor to a new line. "println" stands for "print line".</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class PrintlnExample {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.println("This is on a new line.");
+        System.out.println(123); // You can also print variables
+    }
+}</code></pre>
+                </div>
+
+                <h3><code>System.out.print()</code></h3>
+                <p>This method prints the text but keeps the cursor on the same line. This is useful for prompting the user for input.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class PrintExample {
+    public static void main(String[] args) {
+        System.out.print("Enter your name: ");
+        System.out.print("Your name will appear here.");
+    }
+}</code></pre>
+                </div>
+
+                <h3><code>System.out.printf()</code></h3>
+                <p>This method allows for formatted printing, similar to the `printf` function in C. You can use format specifiers to control how data is displayed.</p>
+                <ul class="chapter-list">
+                    <li><code>%s</code> for a String</li>
+                    <li><code>%d</code> for an integer</li>
+                    <li><code>%f</code> for a floating-point number</li>
+                    <li><code>%n</code> for a platform-independent new line character</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class PrintfExample {
+    public static void main(String[] args) {
+        String name = "Alice";
+        int age = 30;
+        double height = 5.6;
+
+        System.out.printf("Name: %s%n", name);
+        System.out.printf("Age: %d years%n", age);
+        System.out.printf("Height: %.2f feet%n", height); // .2f rounds to 2 decimal places
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="input" class="chapter-card">
+                <span class="chapter-chip">3. Input from Console</span>
+                <h2>Reading User Input</h2>
+                <p>The easiest way to read input from the keyboard in Java is by using the `Scanner` class, which is part of Java's utility library.</p>
+
+                <h3>Steps to Use the Scanner Class:</h3>
+                <ol class="chapter-list">
+                    <li><strong>Import the class:</strong> At the top of your file, add <code>import java.util.Scanner;</code>.</li>
+                    <li><strong>Create a Scanner object:</strong> In your method, create a new Scanner object that reads from standard input (the keyboard): <code>Scanner scanner = new Scanner(System.in);</code>.</li>
+                    <li><strong>Read the input:</strong> Use one of the scanner's methods (like <code>nextInt()</code>, <code>nextLine()</code>) to read the data.</li>
+                    <li><strong>Close the scanner:</strong> When you are done, it's good practice to close the scanner to release system resources: <code>scanner.close();</code>.</li>
+                </ol>
+            </section>
+
+            <section id="reading-types" class="chapter-card">
+                <span class="chapter-chip">4. Reading Different Types</span>
+                <h2>Reading Strings, Integers, and More</h2>
+                <p>The `Scanner` class provides different methods for reading different data types. Here is a complete example showing how to read several common types.</p>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Scanner; // 1. Import the Scanner class
+
+public class InputExample {
+    public static void main(String[] args) {
+        // 2. Create a Scanner object
+        Scanner scanner = new Scanner(System.in);
+
+        // --- Reading a String ---
+        System.out.print("Enter your full name: ");
+        String fullName = scanner.nextLine(); // Reads the entire line of text
+
+        // --- Reading an Integer ---
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt(); // Reads the next integer value
+
+        // --- Reading a Double ---
+        System.out.print("Enter your GPA: ");
+        double gpa = scanner.nextDouble(); // Reads the next double value
+
+        // --- Reading a Single Character ---
+        System.out.print("Enter your grade (A, B, C, etc.): ");
+        char grade = scanner.next().charAt(0); // Reads the next token, then gets the first char
+
+        // --- Displaying all the information ---
+        System.out.println("\n--- Your Information ---");
+        System.out.println("Name: " + fullName);
+        System.out.println("Age: " + age);
+        System.out.println("GPA: " + gpa);
+        System.out.println("Grade: " + grade);
+
+        // 4. Close the scanner
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+                <p class="chapter-note">Note: <code>scanner.next()</code> reads only a single "token" (a word up to the next space). <code>scanner.nextLine()</code> reads the entire line, including spaces.</p>
+            </section>
+
+            <section id="common-issues" class="chapter-card">
+                <span class="chapter-chip">5. Common Input Issues</span>
+                <h2>The NextLine Problem</h2>
+                <p>A very common issue for beginners occurs when you mix methods like <code>nextInt()</code> or <code>nextDouble()</code> with <code>nextLine()</code>.</p>
+                <p><strong>The Problem:</strong> Methods like <code>nextInt()</code> read only the number, but they leave the "newline" character (created when you press Enter) in the input buffer. The very next <code>nextLine()</code> call then reads this leftover newline character and immediately finishes, skipping your actual input.</p>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Scanner;
+
+public class InputProblemExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt(); // Reads 25, leaves '\n' in the buffer
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine(); // Reads the leftover '\n', not your name!
+
+        System.out.println("Name: " + name + ", Age: " + age); // Name will be empty!
+
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+
+                <h3>The Solution</h3>
+                <p>After reading a number with <code>nextInt()</code>, <code>nextDouble()</code>, etc., add an extra, empty <code>scanner.nextLine();</code> call to consume the leftover newline character before you try to read a full line of text.</p>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Scanner;
+
+public class InputSolutionExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+
+        // THE FIX: Consume the leftover newline character
+        scanner.nextLine();
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine(); // Now this works correctly!
+
+        System.out.println("Name: " + name + ", Age: " + age);
+
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter8-operators.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Basic Operators</a>
+                <a href="java-chapter10-decision-making.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Decision Making ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">&copy; 2025 Your Java Course — Input/Output</footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<!-- Your existing script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

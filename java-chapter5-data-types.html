@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 5: Basic Datatypes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <!-- Your existing stylesheet -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 5 — Basic Datatypes</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 5 — Java Basic Datatypes</h1>
+        <p class="chapter-subtitle">Learn about the fundamental building blocks of data in Java: Primitive and Reference types.</p>
+    </header>
+
+    <div class="chapter-layout">
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Basic Datatypes</h3>
+                <div class="sidebar-search">
+                    <input type="text" id="navSearch" placeholder="Search topics..." />
+                </div>
+                <nav>
+                    <a href="#introduction">1. Introduction to Datatypes</a>
+                    <a href="#primitive-types">2. Primitive Datatypes</a>
+                    <a href="#reference-types">3. Reference Datatypes</a>
+                    <a href="#literals">4. Java Literals</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="chapter-main">
+
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction</span>
+                <h2>What is a Datatype?</h2>
+                <p>A <strong>datatype</strong> tells the Java compiler what kind of data a variable can hold. It determines the size of memory allocated for the variable and the operations that can be performed on it.</p>
+                <p>Java is a <strong>strongly-typed language</strong>, which means you must declare a variable with its datatype before you can use it.</p>
+                <p>Java's datatypes are broadly divided into two categories:</p>
+                <ul class="chapter-list">
+                    <li><strong>Primitive Datatypes:</strong> The most basic, built-in types.</li>
+                    <li><strong>Reference Datatypes:</strong> Types that refer to objects.</li>
+                </ul>
+            </section>
+
+            <section id="primitive-types" class="chapter-card">
+                <span class="chapter-chip">2. Primitive Datatypes</span>
+                <h2>The 8 Building Blocks of Java</h2>
+                <p>There are eight primitive datatypes in Java. They are not objects and hold values directly. Let's explore them.</p>
+                
+                <h3>Integer Types (for whole numbers)</h3>
+                <table style="width:100%; border-collapse: collapse; margin: 1rem 0;">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Type</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Size</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Range</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>byte</code></td>
+                            <td style="padding: 0.5rem;">1 byte</td>
+                            <td style="padding: 0.5rem;">-128 to 127</td>
+                            <td style="padding: 0.5rem;">Saving memory in large arrays.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>short</code></td>
+                            <td style="padding: 0.5rem;">2 bytes</td>
+                            <td style="padding: 0.5rem;">-32,768 to 32,767</td>
+                            <td style="padding: 0.5rem;">Also for saving memory.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>int</code></td>
+                            <td style="padding: 0.5rem;">4 bytes</td>
+                            <td style="padding: 0.5rem;">-2,147,483,648 to 2,147,483,647</td>
+                            <td style="padding: 0.5rem;"><strong>Most common</strong> for whole numbers.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>long</code></td>
+                            <td style="padding: 0.5rem;">8 bytes</td>
+                            <td style="padding: 0.5rem;">Very large range</td>
+                            <td style="padding: 0.5rem;">When <code>int</code> is not big enough.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Floating-Point Types (for numbers with decimals)</h3>
+                <table style="width:100%; border-collapse: collapse; margin: 1rem 0;">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Type</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Size</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Precision</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>float</code></td>
+                            <td style="padding: 0.5rem;">4 bytes</td>
+                            <td style="padding: 0.5rem;">~6-7 decimal digits</td>
+                            <td style="padding: 0.5rem;">To save memory when precision isn't critical.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>double</code></td>
+                            <td style="padding: 0.5rem;">8 bytes</td>
+                            <td style="padding: 0.5rem;">~15-16 decimal digits</td>
+                            <td style="padding: 0.5rem;"><strong>Most common</strong> for decimal values.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Other Primitive Types</h3>
+                <table style="width:100%; border-collapse: collapse; margin: 1rem 0;">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Type</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Size</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Values</th>
+                            <th style="border-bottom: 1px solid #1f2937; text-align:left; padding: 0.5rem;">Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>boolean</code></td>
+                            <td style="padding: 0.5rem;">1 bit (not precisely defined)</td>
+                            <td style="padding: 0.5rem;"><code>true</code> or <code>false</code></td>
+                            <td style="padding: 0.5rem;">For simple flags or conditions.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem;"><code>char</code></td>
+                            <td style="padding: 0.5rem;">2 bytes</td>
+                            <td style="padding: 0.5rem;">A single character (Unicode)</td>
+                            <td style="padding: 0.5rem;">To store any single letter or symbol.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Code Example</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class PrimitiveExample {
+    public static void main(String[] args) {
+        // Integer types
+        byte byteVar = 100;
+        short shortVar = 20000;
+        int intVar = 123456;
+        long longVar = 9000000000L; // Note the 'L' for long
+
+        // Floating-point types
+        float floatVar = 3.14f;      // Note the 'f' for float
+        double doubleVar = 3.14159;
+
+        // Other types
+        boolean boolVar = true;
+        char charVar = 'A';
+
+        // Print them out
+        System.out.println("Byte: " + byteVar);
+        System.out.println("Double: " + doubleVar);
+        System.out.println("Boolean: " + boolVar);
+        System.out.println("Char: " + charVar);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="reference-types" class="chapter-card">
+                <span class="chapter-chip">3. Reference Datatypes</span>
+                <h2>Pointing to Objects</h2>
+                <p>Unlike primitive types which hold values directly, a <strong>reference datatype</strong> variable holds the memory address (or a "reference") of an object.</p>
+                <p>Think of it like this: a primitive variable is a small box that holds the value itself. A reference variable is a piece of paper that has the address of where the big box (the object) is located.</p>
+                
+                <h3>Key Characteristics:</h3>
+                <ul class="chapter-list">
+                    <li>They are created using the <code>new</code> keyword.</li>
+                    <li>They can be <code>null</code>, which means they are not pointing to any object.</li>
+                    <li>The size of a reference variable is fixed, but the object it points to can be of any size.</li>
+                </ul>
+
+                <h3>Common Reference Types:</h3>
+                <ul class="chapter-list">
+                    <li><strong>String:</strong> Used for sequences of characters (text).</li>
+                    <li><strong>Arrays:</strong> A container object that holds a fixed number of values of one type.</li>
+                    <li><strong>Class Objects:</strong> Any object you create from a class, like a <code>Car</code> or <code>Student</code> object.</li>
+                </ul>
+
+                <h3>Code Example</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ReferenceExample {
+    public static void main(String[] args) {
+        // String is a reference type
+        String greeting = "Hello, World!";
+
+        // Array is a reference type
+        int[] numbers = new int[5];
+
+        // An object of a custom class is a reference type
+        // Let's assume the Car class from Chapter 4 exists
+        Car myCar = new Car("Red", "Toyota");
+
+        // A reference variable that points to nothing
+        Car anotherCar = null;
+
+        System.out.println(greeting);
+        System.out.println(myCar.model); // Accessing object members
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="literals" class="chapter-card">
+                <span class="chapter-chip">4. Java Literals</span>
+                <h2>Fixed Values in Code</h2>
+                <p>A <strong>literal</strong> is a source code representation of a fixed value. They are written directly into the code. For example, `100`, `3.14`, `'a'`, and `"Hello"` are all literals.</p>
+
+                <h3>Types of Literals</h3>
+                <ul class="chapter-list">
+                    <li><strong>Integer Literals:</strong> Whole numbers. By default, they are of type <code>int</code>. You can specify <code>long</code> by adding <code>L</code> or <code>l</code>.
+                        <div class="code-editor">
+                            <button class="copy-btn">Copy</button>
+                            <pre class="line-numbers"><code class="language-java">int decimalVal = 100;     // Decimal
+int octalVal = 0144;      // Octal (starts with 0)
+int hexVal = 0x64;         // Hexadecimal (starts with 0x)
+long longVal = 10000000000L; // Long literal (ends with L)</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>Floating-Point Literals:</strong> Numbers with a decimal point. By default, they are of type <code>double</code>. You can specify <code>float</code> by adding <code>F</code> or <code>f</code>.
+                        <div class="code-editor">
+                            <button class="copy-btn">Copy</button>
+                            <pre class="line-numbers"><code class="language-java">double doubleVal = 3.14;    // Double literal
+float floatVal = 3.14f;     // Float literal (ends with f)
+double scientificVal = 5.2e10; // Scientific notation</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>Character Literals:</strong> A single character enclosed in single quotes.
+                        <div class="code-editor">
+                            <button class="copy-btn">Copy</button>
+                            <pre class="line-numbers"><code class="language-java">char letter = 'A';
+char unicodeChar = '\u0041'; // Also 'A', using Unicode
+char newline = '\n';           // Escape sequence for newline
+char tab = '\t';              // Escape sequence for tab</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>String Literals:</strong> A sequence of characters enclosed in double quotes.
+                        <div class="code-editor">
+                            <button class="copy-btn">Copy</button>
+                            <pre class="line-numbers"><code class="language-java">String message = "This is a string literal.";
+String path = "C:\\Users\\YourName"; // Use backslash to escape a backslash</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>Boolean Literals:</strong> Can only be <code>true</code> or <code>false</code>.
+                        <div class="code-editor">
+                            <button class="copy-btn">Copy</button>
+                            <pre class="line-numbers"><code class="language-java">boolean isFun = true;
+boolean isHard = false;</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>The <code>null</code> Literal:</strong> Represents a default value for any reference variable. It means the variable is not referring to any object.
+                        <div class="code-editor">
+                            <button class="copy-btn">Copy</button>
+                            <pre class="line-numbers"><code class="language-java">Car myCar = null; // myCar does not point to any Car object yet</code></pre>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter4-objects-classes.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Objects & Classes</a>
+                <a href="java-chapter6-operators.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Operators ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">&copy; 2025 Your Java Course — Basic Datatypes</footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<!-- Your existing script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

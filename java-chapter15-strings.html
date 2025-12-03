@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 15: Strings Class (Competitive Edition)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prism.js Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+    <!-- Line Numbers Plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+    <!-- Your course styling -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <!-- HEADER -->
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 15 — Strings Class</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 15 — Java Strings Class</h1>
+        <p class="chapter-subtitle">Mastering text manipulation, immutability, and performance with the String class.</p>
+    </header>
+
+    <div class="chapter-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Strings Class</h3>
+
+                <div class="sidebar-search">
+                    <input id="navSearch" type="text" placeholder="Search topics..." />
+                </div>
+
+                <nav>
+                    <a href="#introduction">1. Introduction & Immutability</a>
+                    <a href="#creating-strings">2. Creating Strings</a>
+                    <a href="#stringbuffer-stringbuilder">3. StringBuffer & StringBuilder</a>
+                    <a href="#stringbuffer-methods">4. StringBuffer Methods</a>
+                    <a href="#string-basics">5. String Basics</a>
+                    <a href="#character-access">6. Character Access</a>
+                    <a href="#comparison-methods">7. Comparison Methods</a>
+                    <a href="#searching-methods">8. Searching Methods</a>
+                    <a href="#modification-methods">9. Modification Methods</a>
+                    <a href="#conversion-methods">10. Conversion & Utility</a>
+                    <a href="#practice">11. Practice & Challenge</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="chapter-main">
+
+            <!-- ===========================
+                 1. INTRODUCTION
+                 =========================== -->
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction & Immutability</span>
+                <h2>What is a Java String?</h2>
+                <p>In Java, a string is an object that represents a sequence of characters. <code>java.lang.String</code> is a final class, which means you cannot inherit from it. The most important property of the String class is that it is <strong>immutable</strong>.</p>
+                <p><strong>Immutability</strong> means that once a String object is created, its value cannot be changed. Any operation that appears to modify a string (like concatenation) actually creates a <strong>new</strong> String object in memory.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ImmutabilityDemo {
+    public static void main(String[] args) {
+        String s1 = "Hello";
+        String s2 = s1.concat(" World"); // s1 is NOT changed. A new string is created.
+        
+        System.out.println(s1); // Outputs: Hello
+        System.out.println(s2); // Outputs: Hello World
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 2. CREATING STRINGS
+                 =========================== -->
+            <section id="creating-strings" class="chapter-card">
+                <span class="chapter-chip">2. Creating Strings</span>
+                <h2>Ways to Create a String</h2>
+                <p>There are two main ways to create a String object:</p>
+                <ul class="chapter-list">
+                    <li><strong>String Literal:</strong> Java optimizes string literals by storing them in a special memory area called the "String Pool". If you create another string with the same literal, it will point to the same object.</li>
+                    <li><strong>Using the <code>new</code> Keyword:</strong> This always creates a new object in the heap memory, even if the content is the same as a literal.</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class CreatingStrings {
+    public static void main(String[] args) {
+        // Using a String Literal
+        String s1 = "Java";
+        String s2 = "Java"; // Points to the same object as s1 in the String Pool
+
+        // Using the 'new' keyword
+        String s3 = new String("Java"); // A new object in the heap
+
+        System.out.println(s1 == s2); // true (same reference)
+        System.out.println(s1 == s3); // false (different references)
+        System.out.println(s1.equals(s3)); // true (same content)
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 3. STRINGBUFFER & STRINGBUILDER
+                 =========================== -->
+            <section id="stringbuffer-stringbuilder" class="chapter-card">
+                <span class="chapter-chip">3. StringBuffer & StringBuilder</span>
+                <h2>Mutable String Alternatives</h2>
+                <p>When you need to modify a string frequently (e.g., in a loop), using the immutable <code>String</code> class is inefficient because it creates many intermediate objects. For this, Java provides <code>StringBuffer</code> and <code>StringBuilder</code>.</p>
+                <ul class="chapter-list">
+                    <li><strong>StringBuilder:</strong> Introduced in Java 5. It is <strong>not synchronized</strong>, which makes it <strong>faster</strong>. It should be your default choice for string manipulation in a single-threaded environment.</li>
+                    <li><strong>StringBuffer:</strong> It is <strong>synchronized</strong>, meaning it is thread-safe. Use it only when multiple threads are accessing and modifying the same string buffer. It's slower than <code>StringBuilder</code>.</li>
+                </ul>
+            </section>
+
+            <!-- ===========================
+                 4. STRINGBUFFER METHODS
+                 =========================== -->
+            <section id="stringbuffer-methods" class="chapter-card">
+                <span class="chapter-chip">4. StringBuffer Methods</span>
+                <h2>Common Mutable Operations</h2>
+                <p>These methods are available for both <code>StringBuffer</code> and <code>StringBuilder</code>. The examples will use <code>StringBuilder</code> for performance.</p>
+
+                <h3>Java – append() Method</h3>
+                <p>The <code>append()</code> method is used to append text to the end of the current sequence.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class AppendExample {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("Hello");
+        sb.append(" World");
+        sb.append("!");
+        System.out.println(sb.toString()); // Outputs: Hello World!
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – reverse() Method</h3>
+                <p>The <code>reverse()</code> method reverses the characters in the buffer.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ReverseExample {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("racecar");
+        sb.reverse();
+        System.out.println(sb.toString()); // Outputs: racecar
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – delete() Method</h3>
+                <p>The <code>delete(int start, int end)</code> method removes characters from the buffer, from <code>start</code> (inclusive) to <code>end</code> (exclusive).</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class DeleteExample {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("Java is fun!");
+        sb.delete(4, 7); // Deletes " is"
+        System.out.println(sb.toString()); // Outputs: Java fun!
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – insert() Method</h3>
+                <p>The <code>insert(int offset, ...)</code> method inserts a string or other data at the specified position.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class InsertExample {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("Java is fun!");
+        sb.insert(8, "very "); // Inserts "very " at index 8
+        System.out.println(sb.toString()); // Outputs: Java is very fun!
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – replace() Method</h3>
+                <p>The <code>replace(int start, int end, String str)</code> method replaces characters in a substring with another string.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ReplaceExample {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("Java is fun!");
+        sb.replace(8, 11, "awesome"); // Replaces "fun" with "awesome"
+        System.out.println(sb.toString()); // Outputs: Java is awesome!
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 5. STRING BASICS
+                 =========================== -->
+            <section id="string-basics" class="chapter-card">
+                <span class="chapter-chip">5. String Basics</span>
+                <h2>Length, Concatenation, and Formatting</h2>
+
+                <h3>String Length</h3>
+                <p>The <code>length()</code> method returns the number of characters in the string.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class LengthExample {
+    public static void main(String[] args) {
+        String s = "Java Programming";
+        System.out.println("Length is: " + s.length()); // Outputs: 17
+    }
+}</code></pre>
+                </div>
+
+                <h3>Concatenating Strings</h3>
+                <p>The <code>+</code> operator is overloaded for string concatenation. The <code>concat()</code> method does the same thing.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ConcatExample {
+    public static void main(String[] args) {
+        String s1 = "Hello";
+        String s2 = " World";
+        String s3 = s1 + s2; // Using + operator
+        String s4 = s1.concat(s2); // Using concat method
+        System.out.println(s3); // Hello World
+        System.out.println(s4); // Hello World
+    }
+}</code></pre>
+                </div>
+
+                <h3>Creating Format Strings</h3>
+                <p>The <code>String.format()</code> method allows you to create formatted strings, similar to <code>printf</code> in C/C++.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class FormatExample {
+    public static void main(String[] args) {
+        String name = "Alice";
+        int age = 30;
+        String formatted = String.format("Name: %s, Age: %d", name, age);
+        System.out.println(formatted); // Outputs: Name: Alice, Age: 30
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 6. CHARACTER ACCESS
+                 =========================== -->
+            <section id="character-access" class="chapter-card">
+                <span class="chapter-chip">6. Character Access</span>
+                <h2>Getting Characters from a String</h2>
+
+                <h3>Java – charAt() Method</h3>
+                <p>Returns the character at the specified index. Indexing starts at 0.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class CharAtExample {
+    public static void main(String[] args) {
+        String s = "Java";
+        char ch = s.charAt(1); // Gets the character at index 1
+        System.out.println(ch); // Outputs: a
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – getChars() Method</h3>
+                <p>Copies characters from the string into a destination character array.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class GetCharsExample {
+    public static void main(String[] args) {
+        String s = "Hello World";
+        char[] dest = new char[5];
+        // Copy characters from index 6 to 10 into 'dest'
+        s.getChars(6, 11, dest, 0);
+        System.out.println(dest); // Outputs: World
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – toCharArray() Method</h3>
+                <p>Converts the entire string into a new character array.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ToCharArrayExample {
+    public static void main(String[] args) {
+        String s = "Java";
+        char[] charArray = s.toCharArray();
+        for (char c : charArray) {
+            System.out.print(c + " "); // Outputs: J a v a 
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 7. COMPARISON METHODS
+                 =========================== -->
+            <section id="comparison-methods" class="chapter-card">
+                <span class="chapter-chip">7. Comparison Methods</span>
+                <h2>Comparing Strings</h2>
+
+                <h3>Java – equals() & equalsIgnoreCase()</h3>
+                <p><code>equals()</code> checks for content equality (case-sensitive). <code>equalsIgnoreCase()</code> does the same but ignores case.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class EqualsExample {
+    public static void main(String[] args) {
+        String s1 = "Java";
+        String s2 = "java";
+        System.out.println(s1.equals(s2)); // false
+        System.out.println(s1.equalsIgnoreCase(s2)); // true
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – compareTo() & compareToIgnoreCase()</h3>
+                <p>Compares strings lexicographically (alphabetically). Returns a negative, zero, or positive integer.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class CompareToExample {
+    public static void main(String[] args) {
+        String s1 = "Apple";
+        String s2 = "Banana";
+        System.out.println(s1.compareTo(s2)); // Negative value
+        System.out.println(s2.compareTo(s1)); // Positive value
+        System.out.println(s1.compareTo("Apple")); // 0
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 8. SEARCHING METHODS
+                 =========================== -->
+            <section id="searching-methods" class="chapter-card">
+                <span class="chapter-chip">8. Searching Methods</span>
+                <h2>Finding Characters and Substrings</h2>
+
+                <h3>Java – indexOf() & lastIndexOf()</h3>
+                <p>Finds the first or last occurrence of a character or substring. Returns -1 if not found.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class IndexOfExample {
+    public static void main(String[] args) {
+        String s = "abracadabra";
+        System.out.println(s.indexOf('a')); // 0
+        System.out.println(s.lastIndexOf('a')); // 10
+        System.out.println(s.indexOf("cad")); // 4
+        System.out.println(s.indexOf('a', 5)); // 7 (searches from index 5)
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – startsWith() & endsWith()</h3>
+                <p>Checks if the string starts or ends with a specific prefix or suffix.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class StartEndExample {
+    public static void main(String[] args) {
+        String filename = "document.pdf";
+        System.out.println(filename.startsWith("doc")); // true
+        System.out.println(filename.endsWith(".pdf")); // true
+        System.out.println(filename.endsWith(".txt")); // false
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 9. MODIFICATION METHODS
+                 =========================== -->
+            <section id="modification-methods" class="chapter-card">
+                <span class="chapter-chip">9. Modification Methods</span>
+                <h2>Creating Modified Versions of a String</h2>
+                <p>Remember, these methods do not change the original string. They return a new one.</p>
+
+                <h3>Java – substring() Method</h3>
+                <p>Extracts a substring. <code>substring(beginIndex)</code> goes to the end. <code>substring(beginIndex, endIndex)</code> is exclusive of the end index.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class SubstringExample {
+    public static void main(String[] args) {
+        String s = "Hello World";
+        System.out.println(s.substring(6)); // "World"
+        System.out.println(s.substring(0, 5)); // "Hello"
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – replace() & replaceAll()</h3>
+                <p><code>replace()</code> replaces all occurrences of a character or CharSequence. <code>replaceAll()</code> uses regular expressions for powerful replacements.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ReplaceExample {
+    public static void main(String[] args) {
+        String s = "Java is great. Java is fun.";
+        System.out.println(s.replace('a', 'A')); // JAvA is greAt. JAvA is fun.
+        System.out.println(s.replace("is", "was")); // Java was great. Java was fun.
+        // Replace all non-alphabetic characters with a space
+        System.out.println(s.replaceAll("[^a-zA-Z]", " ")); // Java is great Java is fun 
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – split() Method</h3>
+                <p>Splits the string into an array of substrings based on a delimiter (which can be a regular expression).</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class SplitExample {
+    public static void main(String[] args) {
+        String data = "apple,banana,cherry";
+        String[] fruits = data.split(",");
+        for (String fruit : fruits) {
+            System.out.println(fruit);
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – trim() Method</h3>
+                <p>Removes any leading and trailing whitespace from the string.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class TrimExample {
+    public static void main(String[] args) {
+        String s = "   some text with spaces   ";
+        System.out.println(s.trim()); // "some text with spaces"
+    }
+}</code></pre>
+                </div>
+
+                <h3>Java – toUpperCase() & toLowerCase()</h3>
+                <p>Converts all characters in the string to uppercase or lowercase.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class CaseExample {
+    public static void main(String[] args) {
+        String s = "Java Programming";
+        System.out.println(s.toUpperCase()); // JAVA PROGRAMMING
+        System.out.println(s.toLowerCase()); // java programming
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 10. CONVERSION & UTILITY
+                 =========================== -->
+            <section id="conversion-methods" class="chapter-card">
+                <span class="chapter-chip">10. Conversion & Utility</span>
+                <h2>Other Useful String Methods</h2>
+
+                <h3>Java – valueOf() Method</h3>
+                <p>A static method that converts various data types (like <code>int</code>, <code>double</code>, <code>boolean</code>) into their string representation.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ValueOfExample {
+    public static void main(String[] args) {
+        int num = 100;
+        double d = 99.99;
+        boolean bool = true;
+        
+        System.out.println(String.valueOf(num)); // "100"
+        System.out.println(String.valueOf(d));  // "99.99"
+        System.out.println(String.valueOf(bool)); // "true"
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 11. PRACTICE & CHALLENGE
+                 =========================== -->
+            <section id="practice" class="chapter-card">
+                <span class="chapter-chip">11. Practice & Challenge</span>
+                <h2>Test Your Skills</h2>
+                <ol class="chapter-list">
+                    <li>Write a program to check if a given string is a palindrome (ignoring case and non-alphanumeric characters).</li>
+                    <li>Write a program to reverse each word in a sentence while keeping the word order the same (e.g., "Hello World" -> "olleH dlroW").</li>
+                    <li>Write a program to count the number of occurrences of a specific word in a text.</li>
+                    <li>Write a program that takes a full name (e.g., "john doe") and capitalizes the first letter of each part (e.g., "John Doe").</li>
+                    <li>Write a program to find the longest word in a given string.</li>
+                </ol>
+
+                <h3>🏆 Challenge: Simple Text Processor</h3>
+                <p>Create a program that takes a block of text and performs a series of transformations on it using the methods you've learned. The program should:
+                <ul class="chapter-list">
+                    <li>Count the total number of words.</li>
+                    <li>Find and print the longest word.</li>
+                    <li>Replace all occurrences of a specific word (provided by the user) with another word.</li>
+                    <li>Print the final, modified text.</li>
+                </ul>
+                </p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Scanner;
+
+public class TextProcessor {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Simple Text Processor ---");
+        System.out.print("Enter a block of text:\n");
+        String text = scanner.nextLine();
+
+        // 1. Count words
+        String[] words = text.trim().split("\\s+");
+        System.out.println("\nTotal words: " + words.length);
+
+        // 2. Find longest word
+        String longestWord = "";
+        for (String word : words) {
+            if (word.length() > longestWord.length()) {
+                longestWord = word;
+            }
+        }
+        System.out.println("Longest word: " + longestWord);
+
+        // 3. Replace a word
+        System.out.print("\nEnter word to replace: ");
+        String toReplace = scanner.nextLine();
+        System.out.print("Enter replacement word: ");
+        String replacement = scanner.nextLine();
+        
+        String modifiedText = text.replace(toReplace, replacement);
+        
+        // 4. Print final text
+        System.out.println("\n--- Modified Text ---");
+        System.out.println(modifiedText);
+
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter14-character-class.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Character Class</a>
+                <a href="java-chapter16-arrays.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Arrays ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">
+        © 2025 Your Java Course — Strings Class (Competitive Edition)
+    </footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<!-- Your script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

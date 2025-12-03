@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 17: Date & Time (Competitive Edition)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prism.js Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+    <!-- Line Numbers Plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+    <!-- Your course styling -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <!-- HEADER -->
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 17 — Date & Time</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 17 — Java Date & Time</h1>
+        <p class="chapter-subtitle">Mastering date and time manipulation in Java, from basic operations to advanced calendar management.</p>
+    </header>
+
+    <div class="chapter-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Date & Time</h3>
+
+                <div class="sidebar-search">
+                    <input id="navSearch" type="text" placeholder="Search topics..." />
+                </div>
+
+                <nav>
+                    <a href="#introduction">1. Introduction</a>
+                    <a href="#current-date-time">2. Getting Current Date & Time</a>
+                    <a href="#date-comparison">3. Date Comparison</a>
+                    <a href="#simpledateformat">4. SimpleDateFormat Format Codes</a>
+                    <a href="#conversion-characters">5. Date & Time Conversion Characters</a>
+                    <a href="#parsing-strings">6. Parsing Strings into Dates</a>
+                    <a href="#sleeping">7. Sleeping for a While</a>
+                    <a href="#measuring-time">8. Measuring Elapsed Time</a>
+                    <a href="#gregorian-calendar">9. GregorianCalendar Class</a>
+                    <a href="#practice">10. Practice & Challenge</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="chapter-main">
+
+            <!-- ===========================
+                 1. INTRODUCTION
+                 =========================== -->
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction</span>
+                <h2>Working with Date and Time in Java</h2>
+                <p>Java provides several classes for working with dates and times. The original <code>java.util.Date</code> class, along with <code>java.util.Calendar</code> and <code>java.text.SimpleDateFormat</code>, have been part of Java since its early versions. In Java 8, a new Date and Time API was introduced in the <code>java.time</code> package, which offers a more comprehensive and immutable approach to handling dates and times.</p>
+                <p>In this chapter, we'll explore both the traditional and modern approaches to working with dates and times in Java, covering everything from getting the current date and time to complex date calculations and formatting.</p>
+            </section>
+
+            <!-- ===========================
+                 2. GETTING CURRENT DATE & TIME
+                 =========================== -->
+            <section id="current-date-time" class="chapter-card">
+                <span class="chapter-chip">2. Getting Current Date & Time</span>
+                <h2>Retrieving the Current Date and Time</h2>
+                <p>There are several ways to get the current date and time in Java, depending on which API you're using.</p>
+
+                <h3>Using the Date Class (Traditional)</h3>
+                <p>The <code>Date</code> class represents a specific moment in time, with millisecond precision.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Date;
+
+public class CurrentDateTime {
+    public static void main(String[] args) {
+        // Create a Date object with the current date and time
+        Date currentDate = new Date();
+        
+        // Display the current date and time
+        System.out.println("Current Date and Time: " + currentDate);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Using the Java 8 Date and Time API (Modern)</h3>
+                <p>The modern API provides more specific classes for different use cases:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+
+public class ModernDateTime {
+    public static void main(String[] args) {
+        // Current date
+        LocalDate date = LocalDate.now();
+        System.out.println("Current Date: " + date);
+        
+        // Current time
+        LocalTime time = LocalTime.now();
+        System.out.println("Current Time: " + time);
+        
+        // Current date and time
+        LocalDateTime dateTime = LocalDateTime.now();
+        System.out.println("Current Date and Time: " + dateTime);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 3. DATE COMPARISON
+                 =========================== -->
+            <section id="date-comparison" class="chapter-card">
+                <span class="chapter-chip">3. Date Comparison</span>
+                <h2>Comparing Dates</h2>
+                <p>Java provides several methods to compare dates, allowing you to determine which date is earlier, later, or if they are the same.</p>
+
+                <h3>Using the Date Class</h3>
+                <p>The <code>Date</code> class provides methods like <code>before()</code>, <code>after()</code>, and <code>compareTo()</code> for date comparison.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Date;
+
+public class DateComparison {
+    public static void main(String[] args) {
+        // Create two Date objects
+        Date date1 = new Date(2023, 1, 1); // Note: Year is 1900 + year, month is 0-based
+        Date date2 = new Date(2023, 1, 15);
+        
+        // Compare dates using before() and after()
+        System.out.println("date1 before date2: " + date1.before(date2));
+        System.out.println("date1 after date2: " + date1.after(date2));
+        
+        // Compare dates using compareTo()
+        int result = date1.compareTo(date2);
+        if (result < 0) {
+            System.out.println("date1 is earlier than date2");
+        } else if (result > 0) {
+            System.out.println("date1 is later than date2");
+        } else {
+            System.out.println("date1 is equal to date2");
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3>Using the Java 8 Date and Time API</h3>
+                <p>The modern API provides <code>isBefore()</code>, <code>isAfter()</code>, and <code>isEqual()</code> methods for comparison.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.time.LocalDate;
+
+public class ModernDateComparison {
+    public static void main(String[] args) {
+        // Create two LocalDate objects
+        LocalDate date1 = LocalDate.of(2023, 1, 1);
+        LocalDate date2 = LocalDate.of(2023, 1, 15);
+        
+        // Compare dates
+        System.out.println("date1 before date2: " + date1.isBefore(date2));
+        System.out.println("date1 after date2: " + date1.isAfter(date2));
+        System.out.println("date1 equal to date2: " + date1.isEqual(date2));
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 4. SIMPLEDATEFORMAT FORMAT CODES
+                 =========================== -->
+            <section id="simpledateformat" class="chapter-card">
+                <span class="chapter-chip">4. SimpleDateFormat Format Codes</span>
+                <h2>Formatting Dates and Times</h2>
+                <p>The <code>SimpleDateFormat</code> class allows you to format dates and times as strings according to specific patterns. Each pattern character represents a different part of the date or time.</p>
+                
+                <h3>Common Format Codes</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateFormatting {
+    public static void main(String[] args) {
+        Date currentDate = new Date();
+        
+        // Different date and time formats
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format2 = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+        SimpleDateFormat format3 = new SimpleDateFormat("EEE, MMM d, ''yy");
+        SimpleDateFormat format4 = new SimpleDateFormat("h:mm a");
+        
+        System.out.println("Format 1: " + format1.format(currentDate));
+        System.out.println("Format 2: " + format2.format(currentDate));
+        System.out.println("Format 3: " + format3.format(currentDate));
+        System.out.println("Format 4: " + format4.format(currentDate));
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 5. DATE AND TIME CONVERSION CHARACTERS
+                 =========================== -->
+            <section id="conversion-characters" class="chapter-card">
+                <span class="chapter-chip">5. Date & Time Conversion Characters</span>
+                <h2>Understanding Format Characters</h2>
+                <p>When formatting dates and times, you use specific characters to represent different components. Here are the most commonly used characters:</p>
+                
+                <div class="table-container">
+                    <table class="chapter-table">
+                        <thead>
+                            <tr>
+                                <th>Character</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>yyyy</td>
+                                <td>Year (4-digit)</td>
+                                <td>2023</td>
+                            </tr>
+                            <tr>
+                                <td>MM</td>
+                                <td>Month (2-digit)</td>
+                                <td>01, 12</td>
+                            </tr>
+                            <tr>
+                                <td>dd</td>
+                                <td>Day of month (2-digit)</td>
+                                <td>01, 31</td>
+                            </tr>
+                            <tr>
+                                <td>HH</td>
+                                <td>Hour in day (0-23)</td>
+                                <td>00, 23</td>
+                            </tr>
+                            <tr>
+                                <td>mm</td>
+                                <td>Minute in hour</td>
+                                <td>00, 59</td>
+                            </tr>
+                            <tr>
+                                <td>ss</td>
+                                <td>Second in minute</td>
+                                <td>00, 59</td>
+                            </tr>
+                            <tr>
+                                <td>EEE</td>
+                                <td>Day name (abbreviated)</td>
+                                <td>Mon, Tue</td>
+                            </tr>
+                            <tr>
+                                <td>MMMM</td>
+                                <td>Month name</td>
+                                <td>January, December</td>
+                            </tr>
+                            <tr>
+                                <td>a</td>
+                                <td>AM/PM marker</td>
+                                <td>AM, PM</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class FormatCharacters {
+    public static void main(String[] args) {
+        Date currentDate = new Date();
+        
+        // Using various format characters
+        SimpleDateFormat format1 = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
+        SimpleDateFormat format2 = new SimpleDateFormat("hh:mm:ss a 'on' dd-MM-yyyy");
+        SimpleDateFormat format3 = new SimpleDateFormat("'Week' w 'of' YYYY");
+        
+        System.out.println("Format 1: " + format1.format(currentDate));
+        System.out.println("Format 2: " + format2.format(currentDate));
+        System.out.println("Format 3: " + format3.format(currentDate));
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 6. PARSING STRINGS INTO DATES
+                 =========================== -->
+            <section id="parsing-strings" class="chapter-card">
+                <span class="chapter-chip">6. Parsing Strings into Dates</span>
+                <h2>Converting Strings to Date Objects</h2>
+                <p>The <code>SimpleDateFormat</code> class can also be used to parse strings into <code>Date</code> objects, as long as the string matches the specified pattern.</p>
+                
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateParsing {
+    public static void main(String[] args) {
+        // Define the date format
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        
+        try {
+            // Parse a string into a Date object
+            String dateString = "15-01-2023";
+            Date date = format.parse(dateString);
+            
+            System.out.println("Original string: " + dateString);
+            System.out.println("Parsed date: " + date);
+            
+            // Format the date back to a string with a different pattern
+            SimpleDateFormat newFormat = new SimpleDateFormat("MMMM dd, yyyy");
+            System.out.println("Formatted date: " + newFormat.format(date));
+            
+        } catch (ParseException e) {
+            System.out.println("Error parsing date: " + e.getMessage());
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Parsing with the Java 8 Date and Time API</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class ModernDateParsing {
+    public static void main(String[] args) {
+        // Define the date format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        
+        // Parse a string into a LocalDate object
+        String dateString = "15-01-2023";
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        
+        System.out.println("Original string: " + dateString);
+        System.out.println("Parsed date: " + date);
+        
+        // Format the date back to a string with a different pattern
+        DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        System.out.println("Formatted date: " + date.format(newFormatter));
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 7. SLEEPING FOR A WHILE
+                 =========================== -->
+            <section id="sleeping" class="chapter-card">
+                <span class="chapter-chip">7. Sleeping for a While</span>
+                <h2>Pausing Execution</h2>
+                <p>Sometimes you need to pause the execution of your program for a specific amount of time. Java provides the <code>Thread.sleep()</code> method for this purpose.</p>
+                
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Date;
+
+public class ThreadSleep {
+    public static void main(String[] args) {
+        try {
+            System.out.println("Starting at: " + new Date());
+            
+            // Sleep for 3 seconds (3000 milliseconds)
+            System.out.println("Sleeping for 3 seconds...");
+            Thread.sleep(3000);
+            
+            System.out.println("Woke up at: " + new Date());
+            
+            // Sleep for 1.5 seconds (1500 milliseconds)
+            System.out.println("Sleeping for 1.5 seconds...");
+            Thread.sleep(1500);
+            
+            System.out.println("Woke up again at: " + new Date());
+            
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted: " + e.getMessage());
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Modern Alternative: Using TimeUnit</h3>
+                <p>The <code>TimeUnit</code> enum provides a more readable way to specify sleep duration.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+public class TimeUnitSleep {
+    public static void main(String[] args) {
+        try {
+            System.out.println("Starting at: " + new Date());
+            
+            // Sleep for 3 seconds
+            System.out.println("Sleeping for 3 seconds...");
+            TimeUnit.SECONDS.sleep(3);
+            
+            System.out.println("Woke up at: " + new Date());
+            
+            // Sleep for 500 milliseconds
+            System.out.println("Sleeping for 500 milliseconds...");
+            TimeUnit.MILLISECONDS.sleep(500);
+            
+            System.out.println("Woke up again at: " + new Date());
+            
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted: " + e.getMessage());
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 8. MEASURING ELAPSED TIME
+                 =========================== -->
+            <section id="measuring-time" class="chapter-card">
+                <span class="chapter-chip">8. Measuring Elapsed Time</span>
+                <h2>Calculating Time Differences</h2>
+                <p>Java provides several ways to measure elapsed time, which is useful for performance testing or timing operations.</p>
+                
+                <h3>Using System.currentTimeMillis()</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ElapsedTime {
+    public static void main(String[] args) {
+        // Record the start time
+        long startTime = System.currentTimeMillis();
+        
+        // Perform some operation
+        long sum = 0;
+        for (int i = 0; i < Integer.MAX_VALUE / 100; i++) {
+            sum += i;
+        }
+        
+        // Record the end time
+        long endTime = System.currentTimeMillis();
+        
+        // Calculate and display the elapsed time
+        long elapsedTime = endTime - startTime;
+        System.out.println("Sum: " + sum);
+        System.out.println("Elapsed time in milliseconds: " + elapsedTime);
+        System.out.println("Elapsed time in seconds: " + elapsedTime / 1000.0);
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Using System.nanoTime()</h3>
+                <p>For more precise measurements, especially for short durations, <code>System.nanoTime()</code> is preferred.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class NanoTime {
+    public static void main(String[] args) {
+        // Record the start time
+        long startTime = System.nanoTime();
+        
+        // Perform some operation
+        long sum = 0;
+        for (int i = 0; i < 1000000; i++) {
+            sum += i;
+        }
+        
+        // Record the end time
+        long endTime = System.nanoTime();
+        
+        // Calculate and display the elapsed time
+        long elapsedTime = endTime - startTime;
+        System.out.println("Sum: " + sum);
+        System.out.println("Elapsed time in nanoseconds: " + elapsedTime);
+        System.out.println("Elapsed time in microseconds: " + elapsedTime / 1000.0);
+        System.out.println("Elapsed time in milliseconds: " + elapsedTime / 1000000.0);
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Using the Java 8 Date and Time API</h3>
+                <p>The modern API provides the <code>Instant</code> class for measuring time.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.time.Duration;
+import java.time.Instant;
+
+public class ModernElapsedTime {
+    public static void main(String[] args) {
+        // Record the start time
+        Instant start = Instant.now();
+        
+        // Perform some operation
+        long sum = 0;
+        for (int i = 0; i < 1000000; i++) {
+            sum += i;
+        }
+        
+        // Record the end time
+        Instant end = Instant.now();
+        
+        // Calculate and display the elapsed time
+        Duration elapsed = Duration.between(start, end);
+        System.out.println("Sum: " + sum);
+        System.out.println("Elapsed time in milliseconds: " + elapsed.toMillis());
+        System.out.println("Elapsed time in nanoseconds: " + elapsed.toNanos());
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 9. GREGORIAN CALENDAR CLASS
+                 =========================== -->
+            <section id="gregorian-calendar" class="chapter-card">
+                <span class="chapter-chip">9. GregorianCalendar Class</span>
+                <h2>Advanced Calendar Operations</h2>
+                <p>The <code>GregorianCalendar</code> class is a concrete implementation of the <code>Calendar</code> class that provides methods for manipulating dates and times. It's more flexible than the <code>Date</code> class for date calculations.</p>
+                
+                <h3>Creating and Using GregorianCalendar</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class GregorianCalendarExample {
+    public static void main(String[] args) {
+        // Create a GregorianCalendar with the current date and time
+        GregorianCalendar calendar = new GregorianCalendar();
+        
+        // Get individual components of the date and time
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH); // 0-based (0 = January)
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        
+        System.out.println("Current date and time:");
+        System.out.println("Year: " + year);
+        System.out.println("Month: " + (month + 1)); // Add 1 to display correctly
+        System.out.println("Day: " + day);
+        System.out.println("Hour: " + hour);
+        System.out.println("Minute: " + minute);
+        System.out.println("Second: " + second);
+        
+        // Check if it's a leap year
+        boolean isLeapYear = calendar.isLeapYear(year);
+        System.out.println("Is " + year + " a leap year? " + isLeapYear);
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Manipulating Dates</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class CalendarManipulation {
+    public static void main(String[] args) {
+        // Create a GregorianCalendar for a specific date
+        GregorianCalendar calendar = new GregorianCalendar(2023, 0, 15); // January 15, 2023
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        
+        System.out.println("Original date: " + format.format(calendar.getTime()));
+        
+        // Add days
+        calendar.add(Calendar.DAY_OF_MONTH, 10);
+        System.out.println("After adding 10 days: " + format.format(calendar.getTime()));
+        
+        // Subtract months
+        calendar.add(Calendar.MONTH, -2);
+        System.out.println("After subtracting 2 months: " + format.format(calendar.getTime()));
+        
+        // Set a specific component
+        calendar.set(Calendar.YEAR, 2024);
+        System.out.println("After setting year to 2024: " + format.format(calendar.getTime()));
+        
+        // Get the maximum day of the current month
+        int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        System.out.println("Maximum day of the month: " + maxDay);
+        
+        // Get the day of the week
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        System.out.println("Day of the week: " + dayNames[dayOfWeek - 1]);
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Converting Between Date and Calendar</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+public class DateCalendarConversion {
+    public static void main(String[] args) {
+        // Create a Date object
+        Date date = new Date();
+        System.out.println("Original Date: " + date);
+        
+        // Convert Date to Calendar
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        
+        // Modify the Calendar
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        
+        // Convert Calendar back to Date
+        Date newDate = calendar.getTime();
+        System.out.println("Date after adding 7 days: " + newDate);
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 10. PRACTICE & CHALLENGE
+                 =========================== -->
+            <section id="practice" class="chapter-card">
+                <span class="chapter-chip">10. Practice & Challenge</span>
+                <h2>Test Your Skills</h2>
+                <ol class="chapter-list">
+                    <li>Write a program that displays the current date in the format "Day, Month dd, yyyy" (e.g., "Monday, January 15, 2023").</li>
+                    <li>Write a program that calculates the number of days between two dates.</li>
+                    <li>Write a program that determines if a given year is a leap year.</li>
+                    <li>Write a program that adds a specific number of days, months, and years to a given date.</li>
+                    <li>Write a program that measures the execution time of a sorting algorithm on an array of random numbers.</li>
+                </ol>
+
+                <h3>🏆 Challenge: Age Calculator</h3>
+                <p>Create a program that calculates a person's age in years, months, and days based on their birthdate and the current date. The program should also calculate the number of days until their next birthday.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Scanner;
+
+public class AgeCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        
+        System.out.println("--- Age Calculator ---");
+        System.out.print("Enter your birthdate (yyyy-MM-dd): ");
+        String birthdateString = scanner.nextLine();
+        
+        try {
+            // Parse the birthdate
+            Date birthdate = format.parse(birthdateString);
+            Calendar birthCalendar = new GregorianCalendar();
+            birthCalendar.setTime(birthdate);
+            
+            // Get current date
+            Calendar today = new GregorianCalendar();
+            
+            // Calculate age
+            int years = today.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+            int months = today.get(Calendar.MONTH) - birthCalendar.get(Calendar.MONTH);
+            int days = today.get(Calendar.DAY_OF_MONTH) - birthCalendar.get(Calendar.DAY_OF_MONTH);
+            
+            // Adjust if necessary
+            if (days < 0) {
+                months--;
+                // Get the maximum days in the previous month
+                Calendar temp = (Calendar) today.clone();
+                temp.add(Calendar.MONTH, -1);
+                days += temp.getActualMaximum(Calendar.DAY_OF_MONTH);
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            System.out.println("Your age is: " + years + " years, " + months + " months, and " + days + " days.");
+            
+            // Calculate days until next birthday
+            Calendar nextBirthday = (Calendar) birthCalendar.clone();
+            nextBirthday.set(Calendar.YEAR, today.get(Calendar.YEAR));
+            
+            // If birthday has passed this year, set it to next year
+            if (nextBirthday.before(today)) {
+                nextBirthday.add(Calendar.YEAR, 1);
+            }
+            
+            // Calculate days until next birthday
+            long millisecondsPerDay = 24 * 60 * 60 * 1000;
+            long daysUntilBirthday = (nextBirthday.getTimeInMillis() - today.getTimeInMillis()) / millisecondsPerDay;
+            
+            System.out.println("Days until your next birthday: " + daysUntilBirthday);
+            
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+        }
+        
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter16-arrays.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Arrays</a>
+                <a href="java-chapter18-regular-expressions.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Regular Expressions ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">
+        © 2025 Your Java Course — Date & Time (Competitive Edition)
+    </footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<!-- Your script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

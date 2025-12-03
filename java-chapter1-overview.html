@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 1: Overview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 1</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 1 — Java Overview</h1>
+        <p class="chapter-subtitle">A simple and clear introduction to Java, history, tools and how to try a small example.</p>
+    </header>
+
+    <div class="chapter-layout">
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Chapter 1</h3>
+                <div class="sidebar-search">
+                    <input type="text" id="navSearch" placeholder="Search topics..." />
+                </div>
+                <nav>
+                    <a href="#overview">1. Java — Overview</a>
+                    <a href="#history">2. History of Java</a>
+                    <a href="#tools">3. Tools You Need</a>
+                    <a href="#try-it">4. Try It — Hello World</a>
+                    <a href="#next">5. What is Next</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="chapter-main">
+
+            <section id="overview" class="chapter-card">
+                <span class="chapter-chip">1. Overview</span>
+                <h2>What is Java?</h2>
+                <p>
+                    Java is a popular, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.
+                    It is used for building cross-platform applications — from desktop to web, mobile, and server-side apps.
+                </p>
+                <ul class="chapter-list">
+                    <li>Platform-independent via the Java Virtual Machine (JVM).</li>
+                    <li>Strongly typed and memory-managed (automatic garbage collection).</li>
+                    <li>Large ecosystem: libraries, frameworks and tooling.</li>
+                </ul>
+            </section>
+
+            <section id="history" class="chapter-card">
+                <span class="chapter-chip">2. History</span>
+                <h2>History of Java</h2>
+                <p>Here are the key milestones in Java's history (short and simple):</p>
+                <ol class="chapter-list">
+                    <li>1991: Java started as the Green Project at Sun Microsystems.</li>
+                    <li>1995: Officially released as Java 1.0.</li>
+                    <li>2006: Sun released core Java under the GPL license.</li>
+                    <li>2010+: Oracle continued Java development; Java has regular feature releases (e.g., Java 8, 11, 17 LTS versions).</li>
+                </ol>
+            </section>
+
+            <section id="tools" class="chapter-card">
+                <span class="chapter-chip">3. Tools</span>
+                <h2>Tools You Will Need</h2>
+                <p>To write, compile and run Java programs you commonly need:</p>
+                <ul class="chapter-list">
+                    <li><strong>JDK</strong> — Java Development Kit (e.g., OpenJDK 17 or 21). Install from Adoptium/Oracle.</li>
+                    <li><strong>IDE</strong> — IntelliJ IDEA, Eclipse or Visual Studio Code with Java extension.</li>
+                    <li><strong>Terminal</strong> — Command prompt or PowerShell to run <code>javac</code> and <code>java</code>.</li>
+                    <li><strong>Optional</strong> — Build tools: Maven or Gradle for larger projects.</li>
+                </ul>
+            </section>
+
+            <section id="try-it" class="chapter-card">
+                <span class="chapter-chip">4. Try It</span>
+                <h2>Quick Try — Hello World</h2>
+                <p>Copy and paste the following into a file called <code>HelloWorld.java</code>, then compile and run it:</p>
+
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, Java!");
+    }
+}
+</code></pre>
+                </div>
+
+                <p class="chapter-note">
+                    Local commands (PowerShell):
+                    <br />
+                    Copy the Hello World snippet into a file named <code>HelloWorld.java</code> and run:
+                    <br />
+                    <code>javac HelloWorld.java</code> — compile<br />
+                    <code>java HelloWorld</code> — run
+                </p>
+
+                <p>
+                    Or try it online with:</p>
+                <ul class="chapter-list">
+                    <li><a href="https://www.jdoodle.com/online-java-compiler/" target="_blank">JDoodle</a></li>
+                    <li><a href="https://replit.com/languages/java10" target="_blank">Repl.it</a></li>
+                </ul>
+            </section>
+
+            <section id="next" class="chapter-card">
+                <span class="chapter-chip">5. What is Next</span>
+                <h2>What's Next (Suggested Learning Path)</h2>
+                <p>After this overview, continue with the following topics for a smooth learning journey:</p>
+                <ol class="chapter-list">
+                    <li>Basic syntax: variables, data types and operators.</li>
+                    <li>Control flow: if/else, loops (for, while), switch-case.</li>
+                    <li>Methods and modular programming.</li>
+                    <li>Classes & objects, constructors and access modifiers.</li>
+                    <li>Collections and arrays — start with the Arrays Chapter.</li>
+                </ol>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem; padding:0.75rem;">
+        <a href="index.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Index</a>
+        <a href="java-chapter2-environment.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Environment ➡️</a>
+    </div>
+    <footer class="chapter-footer">
+        &copy; 2025 Your Java Course — Chapter 1
+    </footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<script src="course-script.js"></script>
+
+</body>
+</html>

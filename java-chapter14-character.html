@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 14: Character Class (Competitive Edition)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prism.js Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+    <!-- Line Numbers Plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+    <!-- Your course styling -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <!-- HEADER -->
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 14 — Character Class</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 14 — Java Character Class</h1>
+        <p class="chapter-subtitle">Mastering character manipulation and text processing with built-in methods.</p>
+    </header>
+
+    <div class="chapter-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Character Class</h3>
+
+                <div class="sidebar-search">
+                    <input id="navSearch" type="text" placeholder="Search topics..." />
+                </div>
+
+                <nav>
+                    <a href="#introduction">1. Introduction</a>
+                    <a href="#escape-sequences">2. Escape Sequences</a>
+                    <a href="#character-methods">3. Character Methods</a>
+                    <a href="#isletter">4. isLetter() Method</a>
+                    <a href="#isdigit">5. isDigit() Method</a>
+                    <a href="#iswhitespace">6. isWhitespace() Method</a>
+                    <a href="#isuppercase">7. isUpperCase() Method</a>
+                    <a href="#islowercase">8. isLowerCase() Method</a>
+                    <a href="#touppercase">9. toUpperCase() Method</a>
+                    <a href="#tolowercase">10. toLowerCase() Method</a>
+                    <a href="#tostring">11. toString() Method</a>
+                    <a href="#practice">12. Practice & Challenge</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="chapter-main">
+
+            <!-- ===========================
+                 1. INTRODUCTION
+                 =========================== -->
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction</span>
+                <h2>Primitive char vs. Character Class</h2>
+                <p>In Java, the <code>char</code> is a <strong>primitive type</strong> that represents a single 16-bit Unicode character. Java also provides the <code>Character</code> wrapper class that wraps a value of the primitive type <code>char</code> in an object.</p>
+                <p>The <code>Character</code> class provides several useful methods for manipulating characters, such as determining if a character is a digit, letter, whitespace, etc. It's particularly useful when you need to treat a character as an object, for example, to store it in a collection (which can only hold objects).</p>
+                <p>The <code>Character</code> class is part of Java's <code>java.lang</code> package, so you don't need to import it explicitly.</p>
+            </section>
+
+            <!-- ===========================
+                 2. ESCAPE SEQUENCES
+                 =========================== -->
+            <section id="escape-sequences" class="chapter-card">
+                <span class="chapter-chip">2. Escape Sequences</span>
+                <h2>Special Characters in Java</h2>
+                <p>Escape sequences are special characters that have a particular meaning in Java. They are used to represent characters that cannot be typed directly, such as newline, tab, or quotation marks.</p>
+                <p>Escape sequences start with a backslash (<code>\</code>) followed by a character. Here are the most common escape sequences in Java:</p>
+                <ul class="chapter-list">
+                    <li><code>\t</code> - Inserts a tab in the text</li>
+                    <li><code>\b</code> - Inserts a backspace</li>
+                    <li><code>\n</code> - Inserts a new line</li>
+                    <li><code>\r</code> - Inserts a carriage return</li>
+                    <li><code>\f</code> - Inserts a form feed</li>
+                    <li><code>\'</code> - Inserts a single quote</li>
+                    <li><code>\"</code> - Inserts a double quote</li>
+                    <li><code>\\</code> - Inserts a backslash</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class EscapeSequencesExample {
+    public static void main(String[] args) {
+        System.out.println("Hello\tWorld");  // Tab
+        System.out.println("Hello\nWorld");  // New line
+        System.out.println("She said: \"Hello\"");  // Double quote
+        System.out.println("It's a backslash: \\");  // Backslash
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 3. CHARACTER METHODS
+                 =========================== -->
+            <section id="character-methods" class="chapter-card">
+                <span class="chapter-chip">3. Character Methods</span>
+                <h2>Common Methods of the Character Class</h2>
+                <p>The <code>Character</code> class provides many useful methods for working with characters. These methods are all <strong>static</strong>, which means you can call them directly on the class without creating an object.</p>
+                <p>Let's explore some of the most important methods in the following sections.</p>
+            </section>
+
+            <!-- ===========================
+                 4. isLetter() METHOD
+                 =========================== -->
+            <section id="isletter" class="chapter-card">
+                <span class="chapter-chip">4. isLetter() Method</span>
+                <h2>Checking if a Character is a Letter</h2>
+                <p>The <code>isLetter()</code> method determines whether the specified character is a letter. It returns <code>true</code> if the character is a letter; <code>false</code> otherwise.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class IsLetterExample {
+    public static void main(String[] args) {
+        char ch1 = 'A';
+        char ch2 = '1';
+        char ch3 = '$';
+        
+        System.out.println(Character.isLetter(ch1));  // true
+        System.out.println(Character.isLetter(ch2));  // false
+        System.out.println(Character.isLetter(ch3));  // false
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 5. isDigit() METHOD
+                 =========================== -->
+            <section id="isdigit" class="chapter-card">
+                <span class="chapter-chip">5. isDigit() Method</span>
+                <h2>Checking if a Character is a Digit</h2>
+                <p>The <code>isDigit()</code> method determines whether the specified character is a digit. It returns <code>true</code> if the character is a digit; <code>false</code> otherwise.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class IsDigitExample {
+    public static void main(String[] args) {
+        char ch1 = '5';
+        char ch2 = 'A';
+        char ch3 = '@';
+        
+        System.out.println(Character.isDigit(ch1));  // true
+        System.out.println(Character.isDigit(ch2));  // false
+        System.out.println(Character.isDigit(ch3));  // false
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 6. isWhitespace() METHOD
+                 =========================== -->
+            <section id="iswhitespace" class="chapter-card">
+                <span class="chapter-chip">6. isWhitespace() Method</span>
+                <h2>Checking if a Character is Whitespace</h2>
+                <p>The <code>isWhitespace()</code> method determines whether the specified character is whitespace. It returns <code>true</code> if the character is whitespace; <code>false</code> otherwise. Whitespace includes space, tab, newline, carriage return, and form feed.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class IsWhitespaceExample {
+    public static void main(String[] args) {
+        char ch1 = ' ';
+        char ch2 = '\t';
+        char ch3 = '\n';
+        char ch4 = 'A';
+        
+        System.out.println(Character.isWhitespace(ch1));  // true
+        System.out.println(Character.isWhitespace(ch2));  // true
+        System.out.println(Character.isWhitespace(ch3));  // true
+        System.out.println(Character.isWhitespace(ch4));  // false
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 7. isUpperCase() METHOD
+                 =========================== -->
+            <section id="isuppercase" class="chapter-card">
+                <span class="chapter-chip">7. isUpperCase() Method</span>
+                <h2>Checking if a Character is Uppercase</h2>
+                <p>The <code>isUpperCase()</code> method determines whether the specified character is an uppercase letter. It returns <code>true</code> if the character is uppercase; <code>false</code> otherwise.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class IsUpperCaseExample {
+    public static void main(String[] args) {
+        char ch1 = 'A';
+        char ch2 = 'a';
+        char ch3 = '1';
+        
+        System.out.println(Character.isUpperCase(ch1));  // true
+        System.out.println(Character.isUpperCase(ch2));  // false
+        System.out.println(Character.isUpperCase(ch3));  // false
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 8. isLowerCase() METHOD
+                 =========================== -->
+            <section id="islowercase" class="chapter-card">
+                <span class="chapter-chip">8. isLowerCase() Method</span>
+                <h2>Checking if a Character is Lowercase</h2>
+                <p>The <code>isLowerCase()</code> method determines whether the specified character is a lowercase letter. It returns <code>true</code> if the character is lowercase; <code>false</code> otherwise.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class IsLowerCaseExample {
+    public static void main(String[] args) {
+        char ch1 = 'a';
+        char ch2 = 'A';
+        char ch3 = '1';
+        
+        System.out.println(Character.isLowerCase(ch1));  // true
+        System.out.println(Character.isLowerCase(ch2));  // false
+        System.out.println(Character.isLowerCase(ch3));  // false
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 9. toUpperCase() METHOD
+                 =========================== -->
+            <section id="touppercase" class="chapter-card">
+                <span class="chapter-chip">9. toUpperCase() Method</span>
+                <h2>Converting a Character to Uppercase</h2>
+                <p>The <code>toUpperCase()</code> method converts the specified character to uppercase. If the character is already uppercase or not a letter, it returns the character unchanged.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ToUpperCaseExample {
+    public static void main(String[] args) {
+        char ch1 = 'a';
+        char ch2 = 'A';
+        char ch3 = '1';
+        
+        System.out.println(Character.toUpperCase(ch1));  // A
+        System.out.println(Character.toUpperCase(ch2));  // A
+        System.out.println(Character.toUpperCase(ch3));  // 1
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 10. toLowerCase() METHOD
+                 =========================== -->
+            <section id="tolowercase" class="chapter-card">
+                <span class="chapter-chip">10. toLowerCase() Method</span>
+                <h2>Converting a Character to Lowercase</h2>
+                <p>The <code>toLowerCase()</code> method converts the specified character to lowercase. If the character is already lowercase or not a letter, it returns the character unchanged.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ToLowerCaseExample {
+    public static void main(String[] args) {
+        char ch1 = 'A';
+        char ch2 = 'a';
+        char ch3 = '1';
+        
+        System.out.println(Character.toLowerCase(ch1));  // a
+        System.out.println(Character.toLowerCase(ch2));  // a
+        System.out.println(Character.toLowerCase(ch3));  // 1
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 11. toString() METHOD
+                 =========================== -->
+            <section id="tostring" class="chapter-card">
+                <span class="chapter-chip">11. toString() Method</span>
+                <h2>Converting a Character to a String</h2>
+                <p>The <code>toString()</code> method returns a <code>String</code> object representing the specified character value. There are two versions of this method:</p>
+                <ul class="chapter-list">
+                    <li><code>static String toString(char c)</code> - Returns a <code>String</code> object representing the specified character.</li>
+                    <li><code>String toString()</code> - Returns a <code>String</code> object representing the value of this <code>Character</code> object.</li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class ToStringExample {
+    public static void main(String[] args) {
+        char ch = 'A';
+        
+        // Static method
+        String str1 = Character.toString(ch);
+        System.out.println(str1);  // A
+        
+        // Using Character object
+        Character charObj = new Character(ch);
+        String str2 = charObj.toString();
+        System.out.println(str2);  // A
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 12. PRACTICE & CHALLENGE
+                 =========================== -->
+            <section id="practice" class="chapter-card">
+                <span class="chapter-chip">12. Practice & Challenge</span>
+                <h2>Test Your Skills</h2>
+                <ol class="chapter-list">
+                    <li>Write a program to count the number of letters, digits, and whitespace characters in a given string.</li>
+                    <li>Write a program to convert all lowercase letters in a string to uppercase and vice versa.</li>
+                    <li>Write a program to check if a string is a palindrome (ignoring case and non-letter characters).</li>
+                    <li>Write a program to count the number of words in a string (a word is a sequence of characters separated by whitespace).</li>
+                    <li>Write a program to remove all digits from a string.</li>
+                </ol>
+
+                <h3>🏆 Challenge: Character Analyzer</h3>
+                <p>Create a program that analyzes a string and provides detailed statistics about the characters it contains, including the count of letters (uppercase and lowercase), digits, whitespace, and other characters. The program should also convert the string to all uppercase and all lowercase.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.Scanner;
+
+public class CharacterAnalyzer {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("--- Character Analyzer ---");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+        
+        int letters = 0, digits = 0, whitespace = 0, uppercase = 0, lowercase = 0, others = 0;
+        
+        for (int i = 0; i < input.length(); i++) {
+            char ch = input.charAt(i);
+            
+            if (Character.isLetter(ch)) {
+                letters++;
+                if (Character.isUpperCase(ch)) {
+                    uppercase++;
+                } else {
+                    lowercase++;
+                }
+            } else if (Character.isDigit(ch)) {
+                digits++;
+            } else if (Character.isWhitespace(ch)) {
+                whitespace++;
+            } else {
+                others++;
+            }
+        }
+        
+        System.out.println("\n--- Statistics ---");
+        System.out.println("Total characters: " + input.length());
+        System.out.println("Letters: " + letters + " (Uppercase: " + uppercase + ", Lowercase: " + lowercase + ")");
+        System.out.println("Digits: " + digits);
+        System.out.println("Whitespace: " + whitespace);
+        System.out.println("Others: " + others);
+        
+        System.out.println("\n--- Conversions ---");
+        System.out.println("Uppercase: " + input.toUpperCase());
+        System.out.println("Lowercase: " + input.toLowerCase());
+        
+        scanner.close();
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter13-numbers-class.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Numbers Class</a>
+                <a href="java-chapter15-strings.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Strings ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">
+        © 2025 Your Java Course — Character Class (Competitive Edition)
+    </footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<!-- Your script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

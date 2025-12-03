@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 4: Objects & Classes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+    <!-- Your existing stylesheet -->
+    <link rel="stylesheet" href="course-style.css" />
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 4 — Objects & Classes</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 4 — Java Objects & Classes</h1>
+        <p class="chapter-subtitle">Understand the core of Object-Oriented Programming (OOP) in Java.</p>
+    </header>
+
+    <div class="chapter-layout">
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Objects & Classes</h3>
+                <div class="sidebar-search">
+                    <input type="text" id="navSearch" placeholder="Search topics..." />
+                </div>
+                <nav>
+                    <a href="#objects">1. Objects in Java</a>
+                    <a href="#classes">2. Classes in Java</a>
+                    <a href="#constructors">3. Constructors</a>
+                    <a href="#singleton">4. Singleton Class</a>
+                    <a href="#creating-object">5. Creating an Object</a>
+                    <a href="#accessing-members">6. Accessing Members</a>
+                    <a href="#source-file-rules">7. Source File Rules</a>
+                    <a href="#packages">8. Java Package</a>
+                    <a href="#import-statements">9. Import Statements</a>
+                    <a href="#case-study">10. Simple Case Study</a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="chapter-main">
+
+            <section id="objects" class="chapter-card">
+                <span class="chapter-chip">1. Objects in Java</span>
+                <h2>What is an Object?</h2>
+                <p>An <strong>object</strong> is a fundamental building block of Java. Think of it as a real-world entity. If you look around, you'll find many objects around you: a car, a dog, a desk.</p>
+                <p>These objects have two main characteristics:</p>
+                <ul class="chapter-list">
+                    <li><strong>State:</strong> The data or properties of an object (e.g., a car's color is red, its model is "Toyota").</li>
+                    <li><strong>Behavior:</strong> The actions an object can perform (e.g., a car can drive, a dog can bark).</li>
+                </ul>
+                <p>In Java, an <strong>object</strong> is an <strong>instance</strong> of a class. It's the actual entity that exists in memory, with its own state and the ability to perform behaviors defined by its class.</p>
+            </section>
+
+            <section id="classes" class="chapter-card">
+                <span class="chapter-chip">2. Classes in Java</span>
+                <h2>What is a Class?</h2>
+                <p>A <strong>class</strong> is a blueprint or template for creating objects. It defines a set of properties (variables) and behaviors (methods) that every object created from it will have.</p>
+                <p>If an object is a specific car (like *your* red Toyota), then the class is the general design for all cars.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Car {
+    // State (variables or fields)
+    String color;
+    String model;
+    int year;
+
+    // Behavior (methods)
+    void drive() {
+        System.out.println("The car is moving.");
+    }
+
+    void brake() {
+        System.out.println("The car has stopped.");
+    }
+}</code></pre>
+                </div>
+                <p>In this example, <code>Car</code> is the class. It defines that any car will have a <code>color</code>, <code>model</code>, and <code>year</code>, and it can <code>drive()</code> and <code>brake()</code>.</p>
+            </section>
+
+            <section id="constructors" class="chapter-card">
+                <span class="chapter-chip">3. Constructors</span>
+                <h2>Initializing Objects</h2>
+                <p>A <strong>constructor</strong> is a special method inside a class that is called when you create a new object. Its main job is to initialize the object's variables (its state).</p>
+                <h3>Key Rules for Constructors:</h3>
+                <ul class="chapter-list">
+                    <li>The name of the constructor must be exactly the same as the class name.</li>
+                    <li>It does not have a return type (not even <code>void</code>).</li>
+                </ul>
+                <p>If you don't write a constructor, Java provides a default one that does nothing. But it's common to create your own to set initial values.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Car {
+    String color;
+    String model;
+
+    // This is a constructor for the Car class
+    public Car(String carColor, String carModel) {
+        color = carColor; // Initialize the 'color' field
+        model = carModel; // Initialize the 'model' field
+        System.out.println("A new " + color + " " + model + " has been created.");
+    }
+    
+    // ... other methods like drive() ...
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="singleton" class="chapter-card">
+                <span class="chapter-chip">4. Singleton Class</span>
+                <h2>Ensuring Only One Instance</h2>
+                <p>A <strong>Singleton</strong> is a special design pattern that restricts a class to creating only <strong>one single object</strong>. This is useful when you need exactly one object to coordinate actions across the system, like a database connection or a logging service.</p>
+                <h3>How to Create a Singleton Class:</h3>
+                <ol class="chapter-list">
+                    <li>Make the constructor <code>private</code> to prevent other classes from creating a new instance.</li>
+                    <li>Create a <code>private static</code> variable of the class's own type. This will hold the single instance.</li>
+                    <li>Create a <code>public static</code> method (commonly named <code>getInstance()</code>) that returns the single instance. It creates the instance on the first call and returns it on subsequent calls.</li>
+                </ol>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class DatabaseConnection {
+        // 2. The single, static instance
+        private static DatabaseConnection instance;
+
+        // 1. Private constructor to prevent instantiation
+        private DatabaseConnection() {
+            // Initialization code, e.g., connecting to the database
+        }
+
+        // 3. Public static method to get the instance
+        public static DatabaseConnection getInstance() {
+            if (instance == null) {
+                // Create the instance only if it doesn't exist yet
+                instance = new DatabaseConnection();
+            }
+            return instance;
+        }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="creating-object" class="chapter-card">
+                <span class="chapter-chip">5. Creating an Object</span>
+                <h2>Bringing Objects to Life</h2>
+                <p>Creating an object from a class is called <strong>instantiation</strong>. You do this using the <code>new</code> keyword. The process involves three steps:</p>
+                <ol class="chapter-list">
+                    <li><strong>Declaration:</strong> Declare a variable of the class type. <code>Car myCar;</code></li>
+                    <li><strong>Instantiation:</strong> Use the <code>new</code> keyword to create the object. <code>new Car(...)</code></li>
+                    <li><strong>Initialization:</strong> Call the constructor to initialize the object. <code>Car("Red", "Toyota")</code></li>
+                </ol>
+                <p>Usually, you do all three in one line:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        // Creating an object (instantiation) of the Car class
+        Car myToyota = new Car("Red", "Toyota");
+        Car myFord = new Car("Blue", "Ford");
+
+        // Now 'myToyota' and 'myFord' are two distinct objects
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="accessing-members" class="chapter-card">
+                <span class="chapter-chip">6. Accessing Members</span>
+                <h2>Working with Your Object</h2>
+                <p>Once you have created an object, you can access its variables (state) and methods (behavior) using the <strong>dot operator (<code>.</code>)</strong>.</p>
+                <ul class="chapter-list">
+                    <li>To access an instance variable: <code>objectName.variableName</code></li>
+                    <li>To call an instance method: <code>objectName.methodName()</code></li>
+                </ul>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car("Red", "Toyota");
+
+        // Accessing instance variables
+        System.out.println("Car color: " + myCar.color); // Outputs: Red
+        System.out.println("Car model: " + myCar.model); // Outputs: Toyota
+
+        // Modifying an instance variable
+        myCar.color = "Black";
+        System.out.println("New car color: " + myCar.color); // Outputs: Black
+
+        // Calling an instance method
+        myCar.drive(); // Outputs: The car is moving.
+        myCar.brake(); // Outputs: The car has stopped.
+    }
+}</code></pre>
+                </div>
+                <p class="chapter-note">Note: It's good practice to make variables <code>private</code> and provide <code>public</code> methods (getters and setters) to access them. This is called encapsulation.</p>
+            </section>
+
+            <section id="source-file-rules" class="chapter-card">
+                <span class="chapter-chip">7. Source File Rules</span>
+                <h2>Declaration Rules for Java Files</h2>
+                <p>When writing Java code, you must follow these rules for your source files (<code>.java</code> files):</p>
+                <ul class="chapter-list">
+                    <li>There can be only one <code>public</code> class per source file.</li>
+                    <li>The source file name must exactly match the name of the <code>public</code> class. For example, if the public class is <code>Car</code>, the file must be saved as <code>Car.java</code>.</li>
+                    <li>If the source file does not contain a public class, the file name can be anything (but it's good practice to name it after a class inside).</li>
+                    <li>A source file can contain multiple non-public classes.</li>
+                    <li><code>package</code> statements must be at the very beginning of the file.</li>
+                    <li><code>import</code> statements must come after the <code>package</code> statement and before the class declaration.</li>
+                </ul>
+            </section>
+
+            <section id="packages" class="chapter-card">
+                <span class="chapter-chip">8. Java Package</span>
+                <h2>Organizing Your Classes</h2>
+                <p>A <strong>package</strong> in Java is a mechanism for organizing related classes and interfaces. Think of it like a folder on your computer. It helps to:</p>
+                <ul class="chapter-list">
+                    <li><strong>Avoid naming conflicts:</strong> You can have a class named <code>Student</code> in a <code>university</code> package and another <code>Student</code> in a <code>school</code> package without any issues.</li>
+                    <li><strong>Provide access control:</strong> Packages help in controlling access to classes and members.</li>
+                </ul>
+                <p>The <code>package</code> statement must be the first line in a source file.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// This file, Car.java, is part of the 'vehicles' package
+package vehicles;
+
+public class Car {
+    // ... class body
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="import-statements" class="chapter-card">
+                <span class="chapter-chip">9. Import Statements</span>
+                <h2>Using Code from Other Packages</h2>
+                <p>If you want to use a class from another package in your code, you need to <strong>import</strong> it. The <code>import</code> statement tells the Java compiler where to find the class you want to use.</p>
+                <p>For example, if you want to use the <code>ArrayList</code> class, which is in the <code>java.util</code> package, you must import it.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.util.ArrayList; // Import the ArrayList class
+
+public class MyClass {
+    public static void main(String[] args) {
+        // Now you can use ArrayList without writing the full package name
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Alice");
+        names.add("Bob");
+        System.out.println(names);
+    }
+}</code></pre>
+                </div>
+                <p>If you don't use an import, you would have to write the full name everywhere: <code>java.util.ArrayList<String> names = new java.util.ArrayList<>();</code></p>
+            </section>
+
+            <section id="case-study" class="chapter-card">
+                <span class="chapter-chip">10. Simple Case Study</span>
+                <h2>Putting It All Together: A Student Management System</h2>
+                <p>Let's create a simple `Student` class and then use it in a `main` method to see how all these concepts work together.</p>
+                
+                <h3>Step 1: Create the `Student` Class Blueprint</h3>
+                <p>This class will define what every student object will look like.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">package university;
+
+public class Student {
+    // 1. Instance Variables (State)
+    private String studentId;
+    private String name;
+    private double gpa;
+
+    // 2. Constructor (for Initialization)
+    public Student(String id, String studentName) {
+        this.studentId = id;
+        this.name = studentName;
+        this.gpa = 0.0; // Default GPA
+    }
+
+    // 3. Methods (Behavior)
+    public void setGpa(double newGpa) {
+        if (newGpa >= 0.0 && newGpa <= 4.0) {
+            this.gpa = newGpa;
+        } else {
+            System.out.println("Invalid GPA value.");
+        }
+    }
+
+    public void displayStudentInfo() {
+        System.out.println("Student ID: " + this.studentId);
+        System.out.println("Student Name: " + this.name);
+        System.out.println("Student GPA: " + this.gpa);
+    }
+}</code></pre>
+                </div>
+
+                <h3>Step 2: Use the `Student` Class in a Main Program</h3>
+                <p>Now, let's create a `Main` class to create and interact with `Student` objects.</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import university.Student; // 8. Import the Student class
+
+public class Main {
+    public static void main(String[] args) {
+        // 5. Create two Student objects (instantiation)
+        Student student1 = new Student("S101", "Alice");
+        Student student2 = new Student("S102", "Bob");
+
+        // 6. Access and modify object state using methods
+        student1.setGpa(3.8);
+        student2.setGpa(3.5);
+
+        // 6. Call methods on the objects
+        System.out.println("--- Information for Student 1 ---");
+        student1.displayStudentInfo();
+
+        System.out.println("\n--- Information for Student 2 ---");
+        student2.displayStudentInfo();
+    }
+}</code></pre>
+                </div>
+                <p class="chapter-note">This example combines classes, objects, constructors, instance variables, methods, packages, and import statements into one complete program.</p>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter3-syntax.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Basic Syntax</a>
+                <a href="java-chapter5-data-types.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Data Types ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">&copy; 2025 Your Java Course — Objects & Classes</footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<!-- Your existing script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>

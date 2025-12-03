@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Java Course — Index</title>
+    <link rel="stylesheet" href="course-style.css" />
+    <style>
+        /* --- Redesign Styles (Injected to avoid changing the main stylesheet) --- */
+
+        /* Style for the main chapter list container */
+        #chapter-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        /* Style for each individual chapter item */
+        #chapter-list > li {
+            margin-bottom: 1rem;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden; /* Ensures the border-radius clips the content */
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        #chapter-list > li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Style for the clickable chapter header/title */
+        .chapter-header-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: white; /* Ensures the main link is white */
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .chapter-header-link:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* The arrow indicator */
+        .toggle-arrow {
+            display: inline-block;
+            margin-right: 1rem;
+            font-size: 1rem;
+            color: #03dac6; /* Using an accent color for the arrow */
+            transition: transform 0.3s ease;
+        }
+
+        /* Class to rotate the arrow when expanded */
+        .expanded .toggle-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Container for the sub-topics */
+        .sub-topics {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 0; /* Start collapsed */
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+
+        /* Class to expand the sub-topics */
+        .expanded .sub-topics {
+            max-height: 500px; /* A value large enough to fit the content */
+            padding: 0.5rem 0;
+        }
+
+        /* Style for each sub-topic link */
+        .sub-topics li a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8); /* Slightly dimmer white for sub-links */
+            text-decoration: none;
+            font-size: 1rem;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .sub-topics li a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white; /* Full white on hover */
+            border-left-color: #03dac6; /* Accent color on hover */
+            padding-left: 2rem; /* Indent on hover for a nice effect */
+        }
+        
+    </style>
+</head>
+<body class="theme-dark">
+<div class="chapter-container">
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Course</div>
+        </div>
+        <h1>Java Course — Chapters</h1>
+        <p class="chapter-subtitle">Select a chapter to start learning Java.</p>
+    </header>
+
+    <main class="chapter-main">
+        <div class="chapter-card">
+            <h2>Complete Chapter List</h2>
+            <p class="chapter-subtitle">All chapters of the Java course — select any chapter or jump to a specific section.</p>
+            
+            <!-- The new, interactive chapter list -->
+            <ol id="chapter-list">
+                <li>
+                    <a href="java-chapter1-overview.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 1 — Java Overview
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter1-overview.html#overview">What is Java?</a></li>
+                        <li><a href="java-chapter1-overview.html#history">History</a></li>
+                        <li><a href="java-chapter1-overview.html#tools">Tools</a></li>
+                        <li><a href="java-chapter1-overview.html#try-it">Try It (Hello World)</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter2-environment.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 2 — Environment Setup
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter2-environment.html#try-online">Try It Online</a></li>
+                        <li><a href="java-chapter2-environment.html#local-setup">Local Setup (Windows)</a></li>
+                        <li><a href="java-chapter2-environment.html#editors">Popular Java Editors</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter3-basicsyntax.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 3 — Basic Syntax
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter3-basicsyntax.html#first">First Java Program</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#basics">Syntax Basics</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#identifiers">Identifiers</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#modifiers">Modifiers</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#variables">Variables</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#enums">Enums</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#keywords">Keywords (Sample list)</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#comments">Comments</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#blanklines">Blank Lines</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#inheritance">Inheritance (Intro)</a></li>
+                        <li><a href="java-chapter3-basicsyntax.html#interfaces">Interfaces</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter4-objects-classes.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 4 — Objects & Classes
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter4-objects-classes.html#objects">Objects in Java</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#classes">Classes in Java</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#constructors">Constructors</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#singleton">Singleton Pattern</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#creating-object">Creating Objects</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#accessing-members">Accessing Members</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#source-file-rules">Source File Rules</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#packages">Packages</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#import-statements">Import Statements</a></li>
+                        <li><a href="java-chapter4-objects-classes.html#case-study">Simple Case Study</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-array-chapter.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Extra: Arrays (Quick Resource)
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-array-chapter.html#intro">Introduction</a></li>
+                        <li><a href="java-array-chapter.html#declaration">Declaration & Creation</a></li>
+                        <li><a href="java-array-chapter.html#initialization">Initialization</a></li>
+                        <li><a href="java-array-chapter.html#reading">Reading Input</a></li>
+                        <li><a href="java-array-chapter.html#traversal">Traversing</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter5-data-types.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 5 — Basic Datatypes
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter5-data-types.html#introduction">Introduction</a></li>
+                        <li><a href="java-chapter5-data-types.html#primitive-types">Primitive Types</a></li>
+                        <li><a href="java-chapter5-data-types.html#reference-types">Reference Types</a></li>
+                        <li><a href="java-chapter5-data-types.html#literals">Literals</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter6-variable-types.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 6 — Variable Types
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter6-variable-types.html#introduction">Introduction</a></li>
+                        <li><a href="java-chapter6-variable-types.html#local-variables">Local Variables</a></li>
+                        <li><a href="java-chapter6-variable-types.html#instance-variables">Instance Variables</a></li>
+                        <li><a href="java-chapter6-variable-types.html#static-variables">Static / Class Variables</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter7-modifiers.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 7 — Modifiers
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter7-modifiers.html#introduction">Introduction</a></li>
+                        <li><a href="java-chapter7-modifiers.html#access-modifiers">Access Modifiers</a></li>
+                        <li><a href="java-chapter7-modifiers.html#non-access-modifiers">Non-Access Modifiers</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter8-operators.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 8 — Operators
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter8-operators.html#arithmetic">Arithmetic Operators</a></li>
+                        <li><a href="java-chapter8-operators.html#relational">Relational Operators</a></li>
+                        <li><a href="java-chapter8-operators.html#logical">Logical Operators</a></li>
+                        <li><a href="java-chapter8-operators.html#precedence">Operator Precedence</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter9-input-output.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 9 — Input/Output
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter9-input-output.html#output">Output to Console</a></li>
+                        <li><a href="java-chapter9-input-output.html#input">Input from Console</a></li>
+                        <li><a href="java-chapter9-input-output.html#reading-types">Reading Different Types</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter10-problem-solving.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 10 — Problem Solving & Best Practices
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter10-problem-solving.html#problem1">Problem 1: Print Name & Address</a></li>
+                        <li><a href="java-chapter10-problem-solving.html#problem5">Problem 5: Arithmetic Operations</a></li>
+                        <li><a href="java-chapter10-problem-solving.html#problem10">Problem 10: Student Marks</a></li>
+                        <li><a href="java-chapter10-problem-solving.html#problem18">Problem 18: Sum of Digits</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter11-loop-control.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 11 — Loop Control
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter11-loop-control.html#while-loop">While</a></li>
+                        <li><a href="java-chapter11-loop-control.html#for-loop">For</a></li>
+                        <li><a href="java-chapter11-loop-control.html#break-statement">Break</a></li>
+                        <li><a href="java-chapter11-loop-control.html#enhanced-for-loop">Enhanced For Loop</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter12-decision-making.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 12 — Decision Making
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter12-decision-making.html#if-statement">If</a></li>
+                        <li><a href="java-chapter12-decision-making.html#switch-statement">Switch</a></li>
+                        <li><a href="java-chapter12-decision-making.html#ternary-operator">Ternary ? :</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter13-numbers.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 13 — Numbers
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter13-numbers.html#number-methods">Number Methods</a></li>
+                        <li><a href="java-chapter13-numbers.html#math-methods">Math Methods</a></li>
+                        <li><a href="java-chapter13-numbers.html#biginteger">BigInteger</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter14-character.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 14 — Character
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter14-character.html#escape-sequences">Escape Sequences</a></li>
+                        <li><a href="java-chapter14-character.html#character-methods">Character Methods</a></li>
+                        <li><a href="java-chapter14-character.html#practice">Practice</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter15-strings.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 15 — Strings
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter15-strings.html#introduction">Immutability & Basics</a></li>
+                        <li><a href="java-chapter15-strings.html#character-access">Character Access</a></li>
+                        <li><a href="java-chapter15-strings.html#comparison-methods">Comparison Methods</a></li>
+                        <li><a href="java-chapter15-strings.html#practice">Practice</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter16-array.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 16 — Arrays (Advanced)
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter16-array.html#declaring-creating">Declaration & Creation</a></li>
+                        <li><a href="java-chapter16-array.html#multidimensional-arrays">Multidimensional Arrays</a></li>
+                        <li><a href="java-chapter16-array.html#arrays-class">java.util.Arrays</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter17-date-and-time.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 17 — Date & Time
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter17-date-and-time.html#current-date-time">Getting Current Date & Time</a></li>
+                        <li><a href="java-chapter17-date-and-time.html#parsing-strings">Parsing Strings into Dates</a></li>
+                        <li><a href="java-chapter17-date-and-time.html#sleeping">Sleeping (Thread.sleep)</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter18-regular-expression.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 18 — Regular Expressions
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter18-regular-expression.html#regex-syntax">Regex Syntax</a></li>
+                        <li><a href="java-chapter18-regular-expression.html#pattern-matcher">Pattern & Matcher</a></li>
+                        <li><a href="java-chapter18-regular-expression.html#practice">Practice</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter19-methods.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 19 — Methods
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter19-methods.html#creating-methods">Creating Methods</a></li>
+                        <li><a href="java-chapter19-methods.html#method-overloading">Method Overloading</a></li>
+                        <li><a href="java-chapter19-methods.html#this-keyword">The this Keyword</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter20-files-and-io-streams.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 20 — Files & I/O Streams
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter20-files-and-io-streams.html#reading-files">Reading Files</a></li>
+                        <li><a href="java-chapter20-files-and-io-streams.html#writing-files">Writing Files</a></li>
+                        <li><a href="java-chapter20-files-and-io-streams.html#file-class">File Class & Directories</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter21-Exceptions.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 21 — Exceptions
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter21-Exceptions.html#exception-hierarchy">Exception Hierarchy</a></li>
+                        <li><a href="java-chapter21-Exceptions.html#catching-exceptions">Catching Exceptions</a></li>
+                        <li><a href="java-chapter21-Exceptions.html#try-with-resources">Try-With-Resources</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter22-inner-classes.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 22 — Inner Classes
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter22-inner-classes.html#nested-classes">Nested Classes</a></li>
+                        <li><a href="java-chapter22-inner-classes.html#anonymous-inner">Anonymous Inner Classes</a></li>
+                        <li><a href="java-chapter22-inner-classes.html#static-nested">Static Nested Classes</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter23-class-objects-inheritance.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 23 — Object-Oriented Programming
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter23-class-objects-inheritance.html#introduction">Introduction to OOP</a></li>
+                        <li><a href="java-chapter23-class-objects-inheritance.html#extends-keyword">extends Keyword</a></li>
+                        <li><a href="java-chapter23-class-objects-inheritance.html#types-inheritance">Types of Inheritance</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter24-method-overrideing.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 24 — Method Overriding
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter24-method-overrideing.html#rules-overriding">Rules for Overriding</a></li>
+                        <li><a href="java-chapter24-method-overrideing.html#override-annotation">Using @Override</a></li>
+                        <li><a href="java-chapter24-method-overrideing.html#dynamic-dispatch">Dynamic Dispatch</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter25-polymorphism.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 25 — Polymorphism
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter25-polymorphism.html#introduction">Introduction to Polymorphism</a></li>
+                        <li><a href="java-chapter25-polymorphism.html#upcasting-downcasting">Up/Down Casting</a></li>
+                        <li><a href="java-chapter25-polymorphism.html#instanceof">The instanceof Operator</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter26-encapsulation.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 26 — Encapsulation
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter26-encapsulation.html#private-modifier">private Modifier</a></li>
+                        <li><a href="java-chapter26-encapsulation.html#getters-setters">Getters & Setters</a></li>
+                        <li><a href="java-chapter26-encapsulation.html#immutability">Immutability</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter27-Interfaces.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 27 — Interfaces
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter27-Interfaces.html#declaring-interfaces">Declaring Interfaces</a></li>
+                        <li><a href="java-chapter27-Interfaces.html#implementing-interfaces">Implementing Interfaces</a></li>
+                        <li><a href="java-chapter27-Interfaces.html#practice">Practice</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="java-chapter28-java-packages.html" class="chapter-header-link">
+                        <span class="toggle-arrow">▶</span>
+                        Chapter 28 — Packages
+                    </a>
+                    <ul class="sub-topics">
+                        <li><a href="java-chapter28-java-packages.html#creating-packages">Creating Packages</a></li>
+                        <li><a href="java-chapter28-java-packages.html#import-keyword">import Keyword</a></li>
+                        <li><a href="java-chapter28-java-packages.html#classpath">Classpath Basics</a></li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </main>
+
+    <footer class="chapter-footer">
+        &copy; 2025 Your Java Course
+    </footer>
+</div>
+
+<script src="course-script.js"></script>
+<script>
+    // --- JavaScript for the collapsible functionality ---
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const chapterListItems = document.querySelectorAll('#chapter-list > li');
+
+        chapterListItems.forEach(item => {
+            const headerLink = item.querySelector('.chapter-header-link');
+            
+            // Add click listener to the main chapter link
+            headerLink.addEventListener('click', function (event) {
+                // Prevent the link from navigating immediately
+                event.preventDefault(); 
+
+                // Toggle the 'expanded' class on the parent <li>
+                item.classList.toggle('expanded');
+
+                // Optional: If you want it to navigate after expanding, you can uncomment the line below
+                // window.location.href = this.href;
+            });
+        });
+    });
+</script>
+</body>
+</html>
