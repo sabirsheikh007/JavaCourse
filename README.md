@@ -43,3 +43,6 @@ Archived examples: For convenience, some example snippets are stored as text fil
 ## Notes
 - For large projects, use build tools like Maven or Gradle.
 - If you prefer non-Windows OS, use SDKMAN (macOS/Linux) to manage JDKs: https://sdkman.io/
+
+visit https://sabirsheikh007.github.io/JavaCourse/
+
