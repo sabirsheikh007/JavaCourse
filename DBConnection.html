@@ -1,0 +1,1726 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Java Tutorial - Chapter 30: Database Connectivity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prism.js Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+
+    <!-- Line Numbers Plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+    <!-- Your course styling -->
+    <link rel="stylesheet" href="course-style.css" />
+    
+    <!-- Custom styles for diagrams -->
+    <style>
+        .diagram-container {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .db-connection-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .db-component {
+            background-color: #444;
+            border: 2px solid #666;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            width: 80%;
+            text-align: center;
+        }
+        
+        .db-arrow {
+            width: 2px;
+            height: 40px;
+            background-color: #666;
+            position: relative;
+            margin: 5px 0;
+        }
+        
+        .db-arrow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -4px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid #666;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+        }
+        
+        .db-arrow-label {
+            position: absolute;
+            left: 30px;
+            top: 10px;
+            font-size: 12px;
+            color: #aaa;
+            white-space: nowrap;
+        }
+        
+        .crud-diagram {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        
+        .crud-operation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20%;
+        }
+        
+        .crud-box {
+            background-color: #444;
+            border: 2px solid #666;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .crud-arrow {
+            width: 100px;
+            height: 2px;
+            background-color: #666;
+            position: relative;
+            margin: 10px 0;
+        }
+        
+        .crud-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #666;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+        
+        .crud-arrow-label {
+            position: absolute;
+            top: -25px;
+            font-size: 12px;
+            color: #aaa;
+            white-space: nowrap;
+        }
+        
+        .connection-pool-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .pool-container {
+            background-color: #444;
+            border: 2px solid #666;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            width: 80%;
+            text-align: center;
+        }
+        
+        .pool-connections {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .pool-connection {
+            background-color: #555;
+            border: 2px solid #777;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        
+        .pool-connection.active {
+            background-color: #4CAF50;
+            border-color: #81C784;
+        }
+        
+        .pool-connection.inactive {
+            background-color: #f44336;
+            border-color: #e57373;
+        }
+    </style>
+</head>
+<body class="theme-dark">
+
+<div class="chapter-container">
+    <!-- HEADER -->
+    <header class="chapter-header">
+        <div class="chapter-header-top">
+            <div class="chapter-breadcrumb">Java Tutorial &raquo; Chapter 30 — Database Connectivity</div>
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+        <h1>Chapter 30 — Java Database Connectivity</h1>
+        <p class="chapter-subtitle">Connecting Java applications to databases and performing CRUD operations.</p>
+    </header>
+
+    <div class="chapter-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="chapter-sidebar">
+            <div class="sidebar-box">
+                <h3>Database Connectivity</h3>
+
+                <div class="sidebar-search">
+                    <input id="navSearch" type="text" placeholder="Search topics..." />
+                </div>
+
+                <nav>
+                    <a href="#introduction">1. Introduction to JDBC</a>
+                    <a href="#connection-setup">2. MySQL Connection Setup</a>
+                    <a href="#crud-operations">3. CRUD Operations</a>
+                    <a href="#prepared-statements">4. Prepared Statements</a>
+                    <a href="#connection-pooling">5. Connection Pooling</a>
+                    <a href="#best-practices">6. Best Practices</a>
+                    <a href="#practice">7. Practice & Challenge</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="chapter-main">
+
+            <!-- ===========================
+                 1. INTRODUCTION
+                 =========================== -->
+            <section id="introduction" class="chapter-card">
+                <span class="chapter-chip">1. Introduction to JDBC</span>
+                <h2>What is JDBC?</h2>
+                <p><strong>JDBC (Java Database Connectivity)</strong> is a Java API that enables Java applications to interact with databases. It provides methods for querying and updating data in a database, and is oriented towards relational databases.</p>
+                <p>JDBC is part of the Java Standard Edition platform, and it provides a database-agnostic way to connect to a wide variety of database systems, including MySQL, Oracle, PostgreSQL, SQL Server, and many others.</p>
+                
+                <h3>Key Components of JDBC:</h3>
+                <ul class="chapter-list">
+                    <li><strong>JDBC Driver:</strong> A software component that enables Java applications to interact with a specific database.</li>
+                    <li><strong>Connection:</strong> Represents a connection (session) with a specific database.</li>
+                    <li><strong>Statement:</strong> Used for executing static SQL statements and returning the results they produce.</li>
+                    <li><strong>ResultSet:</strong> Represents the data resulting from a query.</li>
+                    <li><strong>SQLException:</strong> An exception that provides information on database access errors.</li>
+                </ul>
+                
+                <h3>JDBC Architecture:</h3>
+                <p>JDBC consists of two main layers:</p>
+                <ul class="chapter-list">
+                    <li><strong>JDBC API:</strong> Provides the application-to-JDBC Manager connection.</li>
+                    <li><strong>JDBC Driver Manager:</strong> Provides the driver-to-connection management.</li>
+                </ul>
+                
+                <div class="diagram-container">
+                    <h3 style="text-align: center; margin-top: 0;">JDBC Architecture</h3>
+                    <div class="db-connection-flow">
+                        <div class="db-component">Java Application</div>
+                        <div class="db-arrow">
+                            <div class="db-arrow-label">JDBC API</div>
+                        </div>
+                        <div class="db-component">JDBC Driver Manager</div>
+                        <div class="db-arrow">
+                            <div class="db-arrow-label">JDBC Driver</div>
+                        </div>
+                        <div class="db-component">Database</div>
+                    </div>
+                </div>
+                
+                <h3>Types of JDBC Drivers:</h3>
+                <ul class="chapter-list">
+                    <li><strong>Type 1: JDBC-ODBC Bridge Driver:</strong> Translates JDBC calls into ODBC calls.</li>
+                    <li><strong>Type 2: Native-API Driver:</strong> Converts JDBC calls into database-specific calls.</li>
+                    <li><strong>Type 3: Network-Protocol Driver:</strong> Translates JDBC calls into a database-independent network protocol.</li>
+                    <li><strong>Type 4: Pure Java Driver:</strong> Directly converts JDBC calls to the database-specific protocol.</li>
+                </ul>
+            </section>
+
+            <!-- ===========================
+                 2. MYSQL CONNECTION SETUP
+                 =========================== -->
+            <section id="connection-setup" class="chapter-card">
+                <span class="chapter-chip">2. MySQL Connection Setup</span>
+                <h2>Setting Up MySQL Connection</h2>
+                <p>To connect to a MySQL database from a Java application, you need to follow these steps:</p>
+                
+                <h3>Step 1: Add MySQL JDBC Driver to Your Project</h3>
+                <p>If you're using Maven, add the following dependency to your <code>pom.xml</code>:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;version&gt;8.0.28&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+                </div>
+                
+                <p>If you're not using Maven, you can download the MySQL JDBC driver JAR file from the <a href="https://dev.mysql.com/downloads/connector/j/" target="_blank">MySQL website</a> and add it to your project's classpath.</p>
+                
+                <h3>Step 2: Create a Database Connection</h3>
+                <p>Here's how to establish a connection to a MySQL database:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class MySQLConnection {
+    // Database connection parameters
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
+    private static final String USER = "username";
+    private static final String PASS = "password";
+    
+    public static Connection getConnection() {
+        Connection connection = null;
+        
+        try {
+            // Register the JDBC driver (not required for JDBC 4.0+)
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            
+            // Open a connection
+            System.out.println("Connecting to database...");
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Database connected successfully!");
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+        }
+        
+        return connection;
+    }
+    
+    public static void main(String[] args) {
+        Connection conn = getConnection();
+        
+        if (conn != null) {
+            try {
+                // Close the connection when done
+                conn.close();
+                System.out.println("Connection closed.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Connection String Parameters</h3>
+                <p>The MySQL connection string can include various parameters to customize the connection behavior:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">// Basic connection string
+String basicUrl = "jdbc:mysql://localhost:3306/mydatabase";
+
+// Connection string with user and password
+String userPassUrl = "jdbc:mysql://localhost:3306/mydatabase?user=username&password=password";
+
+// Connection string with SSL and timezone settings
+String advancedUrl = "jdbc:mysql://localhost:3306/mydatabase?" +
+    "user=username&password=password" +
+    "&useSSL=false" +
+    "&serverTimezone=UTC" +
+    "&allowPublicKeyRetrieval=true";
+
+// Connection string with connection pooling properties
+String poolUrl = "jdbc:mysql://localhost:3306/mydatabase?" +
+    "user=username&password=password" +
+    "&useSSL=false" +
+    "&serverTimezone=UTC" +
+    "&cachePrepStmts=true" +
+    "&prepStmtCacheSize=250" +
+    "&prepStmtCacheSqlLimit=2048" +
+    "&useServerPrepStmts=true";</code></pre>
+                </div>
+                
+                <h3>Handling Connection Exceptions</h3>
+                <p>When working with database connections, it's important to handle exceptions properly:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConnectionWithExceptionHandling {
+    public static Connection getConnection() {
+        Connection connection = null;
+        
+        try {
+            String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+            String user = "username";
+            String password = "password";
+            
+            connection = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            // Handle different types of SQL exceptions
+            switch (e.getSQLState()) {
+                case "08001": // Connection refused
+                    System.err.println("Cannot connect to the database server. Check if it's running.");
+                    break;
+                case "28000": // Invalid authorization
+                    System.err.println("Invalid username or password.");
+                    break;
+                case "3D000": // Database doesn't exist
+                    System.err.println("Database doesn't exist.");
+                    break;
+                default:
+                    System.err.println("Database connection error: " + e.getMessage());
+                    break;
+            }
+            e.printStackTrace();
+        }
+        
+        return connection;
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 3. CRUD OPERATIONS
+                 =========================== -->
+            <section id="crud-operations" class="chapter-card">
+                <span class="chapter-chip">3. CRUD Operations</span>
+                <h2>Performing CRUD Operations</h2>
+                <p>CRUD stands for Create, Read, Update, and Delete - the four basic operations of persistent storage. Let's see how to perform these operations using JDBC with MySQL.</p>
+                
+                <div class="diagram-container">
+                    <h3 style="text-align: center; margin-top: 0;">CRUD Operations</h3>
+                    <div class="crud-diagram">
+                        <div class="crud-operation">
+                            <div class="crud-box">CREATE</div>
+                            <div class="crud-arrow">
+                                <div class="crud-arrow-label">INSERT</div>
+                            </div>
+                            <div class="crud-box">New Record</div>
+                        </div>
+                        <div class="crud-operation">
+                            <div class="crud-box">READ</div>
+                            <div class="crud-arrow">
+                                <div class="crud-arrow-label">SELECT</div>
+                            </div>
+                            <div class="crud-box">Retrieve Data</div>
+                        </div>
+                        <div class="crud-operation">
+                            <div class="crud-box">UPDATE</div>
+                            <div class="crud-arrow">
+                                <div class="crud-arrow-label">UPDATE</div>
+                            </div>
+                            <div class="crud-box">Modify Record</div>
+                        </div>
+                        <div class="crud-operation">
+                            <div class="crud-box">DELETE</div>
+                            <div class="crud-arrow">
+                                <div class="crud-arrow-label">DELETE</div>
+                            </div>
+                            <div class="crud-box">Remove Record</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Setting Up the Example</h3>
+                <p>For our CRUD examples, let's assume we have a table called <code>employees</code> with the following structure:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-sql">CREATE TABLE employees (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    department VARCHAR(50),
+    salary DECIMAL(10, 2),
+    hire_date DATE
+);</code></pre>
+                </div>
+                
+                <h3>CREATE Operation</h3>
+                <p>Here's how to insert a new record into the <code>employees</code> table:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CreateExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement()) {
+            
+            // SQL query to insert a new employee
+            String sql = "INSERT INTO employees (first_name, last_name, email, department, salary, hire_date) " +
+                         "VALUES ('John', 'Doe', 'john.doe@example.com', 'IT', 75000.00, '2023-01-15')";
+            
+            // Execute the query
+            int rowsAffected = stmt.executeUpdate(sql);
+            
+            System.out.println(rowsAffected + " row(s) inserted.");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>READ Operation</h3>
+                <p>Here's how to retrieve data from the <code>employees</code> table:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ReadExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement()) {
+            
+            // SQL query to select all employees
+            String sql = "SELECT id, first_name, last_name, email, department, salary, hire_date FROM employees";
+            
+            // Execute the query
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            // Process the results
+            System.out.println("ID\tFirst Name\tLast Name\tEmail\t\tDepartment\tSalary\tHire Date");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                String email = rs.getString("email");
+                String department = rs.getString("department");
+                double salary = rs.getDouble("salary");
+                java.sql.Date hireDate = rs.getDate("hire_date");
+                
+                System.out.println(id + "\t" + firstName + "\t\t" + lastName + "\t\t" + 
+                                   email + "\t" + department + "\t" + salary + "\t" + hireDate);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>UPDATE Operation</h3>
+                <p>Here's how to update an existing record in the <code>employees</code> table:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class UpdateExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement()) {
+            
+            // SQL query to update an employee's salary
+            String sql = "UPDATE employees SET salary = 80000.00 WHERE id = 1";
+            
+            // Execute the query
+            int rowsAffected = stmt.executeUpdate(sql);
+            
+            System.out.println(rowsAffected + " row(s) updated.");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>DELETE Operation</h3>
+                <p>Here's how to delete a record from the <code>employees</code> table:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class DeleteExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement()) {
+            
+            // SQL query to delete an employee
+            String sql = "DELETE FROM employees WHERE id = 1";
+            
+            // Execute the query
+            int rowsAffected = stmt.executeUpdate(sql);
+            
+            System.out.println(rowsAffected + " row(s) deleted.");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 4. PREPARED STATEMENTS
+                 =========================== -->
+            <section id="prepared-statements" class="chapter-card">
+                <span class="chapter-chip">4. Prepared Statements</span>
+                <h2>Using Prepared Statements</h2>
+                <p><strong>PreparedStatement</strong> is an interface in the JDBC API that represents a precompiled SQL statement. It's more efficient than regular statements when executing the same SQL multiple times, and it's also more secure as it helps prevent SQL injection attacks.</p>
+                
+                <h3>Benefits of Prepared Statements:</h3>
+                <ul class="chapter-list">
+                    <li><strong>Performance:</strong> SQL statements are compiled once and can be executed multiple times with different parameters.</li>
+                    <li><strong>Security:</strong> Parameters are automatically escaped, preventing SQL injection attacks.</li>
+                    <li><strong>Readability:</strong> Separates SQL code from parameter values, making the code cleaner.</li>
+                    <li><strong>Type Safety:</strong> Provides setter methods for different data types, ensuring type safety.</li>
+                </ul>
+                
+                <h3>Creating a Prepared Statement</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Date;
+
+public class PreparedStatementExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            
+            // SQL query with placeholders (?)
+            String sql = "INSERT INTO employees (first_name, last_name, email, department, salary, hire_date) " +
+                         "VALUES (?, ?, ?, ?, ?, ?)";
+            
+            // Create a prepared statement
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                
+                // Set the parameters
+                pstmt.setString(1, "Jane");
+                pstmt.setString(2, "Smith");
+                pstmt.setString(3, "jane.smith@example.com");
+                pstmt.setString(4, "HR");
+                pstmt.setDouble(5, 65000.00);
+                pstmt.setDate(6, Date.valueOf("2023-02-20"));
+                
+                // Execute the statement
+                int rowsAffected = pstmt.executeUpdate();
+                
+                System.out.println(rowsAffected + " row(s) inserted.");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Prepared Statement for SELECT Query</h3>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class PreparedStatementSelectExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            
+            // SQL query with a placeholder for department
+            String sql = "SELECT id, first_name, last_name, email, salary FROM employees WHERE department = ?";
+            
+            // Create a prepared statement
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                
+                // Set the parameter
+                pstmt.setString(1, "IT");
+                
+                // Execute the query
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    
+                    // Process the results
+                    System.out.println("ID\tFirst Name\tLast Name\tEmail\t\tSalary");
+                    System.out.println("--------------------------------------------------------------------");
+                    
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        String firstName = rs.getString("first_name");
+                        String lastName = rs.getString("last_name");
+                        String email = rs.getString("email");
+                        double salary = rs.getDouble("salary");
+                        
+                        System.out.println(id + "\t" + firstName + "\t\t" + lastName + "\t\t" + 
+                                           email + "\t" + salary);
+                    }
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Batch Processing with Prepared Statements</h3>
+                <p>Prepared statements can be used for batch processing, which is more efficient when executing multiple similar statements:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Date;
+
+public class BatchProcessingExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            
+            // Disable auto-commit for batch processing
+            conn.setAutoCommit(false);
+            
+            // SQL query with placeholders
+            String sql = "INSERT INTO employees (first_name, last_name, email, department, salary, hire_date) " +
+                         "VALUES (?, ?, ?, ?, ?, ?)";
+            
+            // Create a prepared statement
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                
+                // Employee data
+                Object[][] employees = {
+                    {"Alice", "Johnson", "alice.johnson@example.com", "Finance", 70000.00, "2023-03-10"},
+                    {"Bob", "Williams", "bob.williams@example.com", "IT", 80000.00, "2023-03-15"},
+                    {"Charlie", "Brown", "charlie.brown@example.com", "Marketing", 60000.00, "2023-03-20"},
+                    {"Diana", "Miller", "diana.miller@example.com", "HR", 65000.00, "2023-03-25"},
+                    {"Eva", "Davis", "eva.davis@example.com", "Finance", 72000.00, "2023-04-01"}
+                };
+                
+                // Add each employee to the batch
+                for (Object[] employee : employees) {
+                    pstmt.setString(1, (String) employee[0]);
+                    pstmt.setString(2, (String) employee[1]);
+                    pstmt.setString(3, (String) employee[2]);
+                    pstmt.setString(4, (String) employee[3]);
+                    pstmt.setDouble(5, (Double) employee[4]);
+                    pstmt.setDate(6, Date.valueOf((String) employee[5]));
+                    
+                    pstmt.addBatch();
+                }
+                
+                // Execute the batch
+                int[] updateCounts = pstmt.executeBatch();
+                
+                // Commit the transaction
+                conn.commit();
+                
+                System.out.println("Batch executed successfully. " + updateCounts.length + " records inserted.");
+                
+            } catch (SQLException e) {
+                // Roll back the transaction in case of error
+                try {
+                    conn.rollback();
+                    System.out.println("Transaction rolled back due to error.");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                e.printStackTrace();
+            } finally {
+                // Re-enable auto-commit
+                try {
+                    conn.setAutoCommit(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 5. CONNECTION POOLING
+                 =========================== -->
+            <section id="connection-pooling" class="chapter-card">
+                <span class="chapter-chip">5. Connection Pooling</span>
+                <h2>Managing Database Connections Efficiently</h2>
+                <p>Opening and closing database connections is an expensive operation. <strong>Connection pooling</strong> is a technique that maintains a pool of database connections that can be reused, reducing the overhead of creating new connections for each request.</p>
+                
+                <h3>Benefits of Connection Pooling:</h3>
+                <ul class="chapter-list">
+                    <li><strong>Improved Performance:</strong> Reusing connections reduces the overhead of creating new connections.</li>
+                    <li><strong>Better Resource Management:</strong> Limits the number of connections to the database, preventing resource exhaustion.</li>
+                    <li><strong>Enhanced Responsiveness:</strong> Applications can get a connection quickly from the pool.</li>
+                    <li><strong>Connection Management:</strong> The pool handles connection validation, timeout, and cleanup.</li>
+                </ul>
+                
+                <div class="diagram-container">
+                    <h3 style="text-align: center; margin-top: 0;">Connection Pool Architecture</h3>
+                    <div class="connection-pool-diagram">
+                        <div class="pool-container">
+                            <h4>Application</h4>
+                            <div class="pool-connections">
+                                <div class="pool-connection active">Request 1</div>
+                                <div class="pool-connection active">Request 2</div>
+                                <div class="pool-connection inactive">Request 3</div>
+                                <div class="pool-connection active">Request 4</div>
+                                <div class="pool-connection inactive">Request 5</div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-arrow" style="width: 2px; height: 40px; margin: 10px auto;">
+                            <div class="db-arrow-label" style="left: 30px;">Borrows/Returns</div>
+                        </div>
+                        
+                        <div class="pool-container">
+                            <h4>Connection Pool</h4>
+                            <div class="pool-connections">
+                                <div class="pool-connection active">Connection 1</div>
+                                <div class="pool-connection active">Connection 2</div>
+                                <div class="pool-connection inactive">Connection 3</div>
+                                <div class="pool-connection active">Connection 4</div>
+                                <div class="pool-connection inactive">Connection 5</div>
+                                <div class="pool-connection inactive">Connection 6</div>
+                                <div class="pool-connection inactive">Connection 7</div>
+                                <div class="pool-connection inactive">Connection 8</div>
+                            </div>
+                        </div>
+                        
+                        <div class="db-arrow" style="width: 2px; height: 40px; margin: 10px auto;">
+                            <div class="db-arrow-label" style="left: 30px;">Establishes/Maintains</div>
+                        </div>
+                        
+                        <div class="pool-container">
+                            <h4>Database</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Implementing Connection Pooling with Apache Commons DBCP</h3>
+                <p>Apache Commons DBCP is a popular connection pooling library. First, add the dependency to your <code>pom.xml</code>:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-dbcp2&lt;/artifactId&gt;
+    &lt;version&gt;2.9.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+                </div>
+                
+                <p>Now, let's create a connection pool using DBCP:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import org.apache.commons.dbcp2.BasicDataSource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ConnectionPoolExample {
+    // Create a singleton DataSource
+    private static final BasicDataSource dataSource = new BasicDataSource();
+    
+    static {
+        // Configure the connection pool
+        dataSource.setUrl("jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC");
+        dataSource.setUsername("username");
+        dataSource.setPassword("password");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        
+        // Pool configuration
+        dataSource.setInitialSize(5); // Initial number of connections
+        dataSource.setMaxTotal(20);   // Maximum number of connections
+        dataSource.setMaxIdle(10);    // Maximum number of idle connections
+        dataSource.setMinIdle(5);     // Minimum number of idle connections
+        dataSource.setMaxWaitMillis(10000); // Maximum wait time for a connection
+        
+        // Validation
+        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setTestOnBorrow(true);
+        dataSource.setTestOnReturn(false);
+        dataSource.setTestWhileIdle(true);
+        dataSource.setTimeBetweenEvictionRunsMillis(30000);
+        dataSource.setNumTestsPerEvictionRun(3);
+        dataSource.setMinEvictableIdleTimeMillis(60000);
+    }
+    
+    // Get a connection from the pool
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
+    }
+    
+    // Example of using the connection pool
+    public static void main(String[] args) {
+        try {
+            // Get a connection from the pool
+            Connection conn = getConnection();
+            
+            try {
+                // Use the connection
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM employees");
+                
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    System.out.println("Total employees: " + count);
+                }
+                
+                // Close the statement and result set
+                rs.close();
+                stmt.close();
+                
+            } finally {
+                // Return the connection to the pool
+                conn.close();
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>Implementing Connection Pooling with HikariCP</h3>
+                <p>HikariCP is another high-performance JDBC connection pool. First, add the dependency to your <code>pom.xml</code>:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.zaxxer&lt;/groupId&gt;
+    &lt;artifactId&gt;HikariCP&lt;/artifactId&gt;
+    &lt;version&gt;5.0.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+                </div>
+                
+                <p>Now, let's create a connection pool using HikariCP:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class HikariCPExample {
+    // Create a singleton DataSource
+    private static final HikariDataSource dataSource;
+    
+    static {
+        HikariConfig config = new HikariConfig();
+        
+        // Configure the connection pool
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC");
+        config.setUsername("username");
+        config.setPassword("password");
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        
+        // Pool configuration
+        config.setMinimumIdle(5);
+        config.setMaximumPoolSize(20);
+        config.setIdleTimeout(60000);
+        config.setConnectionTimeout(10000);
+        config.setMaxLifetime(1800000); // 30 minutes
+        
+        // Validation
+        config.setConnectionTestQuery("SELECT 1");
+        
+        // Create the data source
+        dataSource = new HikariDataSource(config);
+    }
+    
+    // Get a connection from the pool
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
+    }
+    
+    // Example of using the connection pool
+    public static void main(String[] args) {
+        try {
+            // Get a connection from the pool
+            Connection conn = getConnection();
+            
+            try {
+                // Use the connection
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM employees");
+                
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    System.out.println("Total employees: " + count);
+                }
+                
+                // Close the statement and result set
+                rs.close();
+                stmt.close();
+                
+            } finally {
+                // Return the connection to the pool
+                conn.close();
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 6. BEST PRACTICES
+                 =========================== -->
+            <section id="best-practices" class="chapter-card">
+                <span class="chapter-chip">6. Best Practices</span>
+                <h2>Database Connection Best Practices</h2>
+                <p>When working with database connections in Java, following best practices can help you write more efficient, secure, and maintainable code.</p>
+                
+                <h3>1. Use Try-with-Resources for Automatic Resource Management</h3>
+                <p>Always use try-with-resources to ensure that JDBC resources (Connection, Statement, ResultSet) are properly closed:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class TryWithResourcesExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        // Use try-with-resources to automatically close resources
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM employees")) {
+            
+            // Process the result set
+            while (rs.next()) {
+                // Process each row
+                System.out.println(rs.getString("first_name") + " " + rs.getString("last_name"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Resources are automatically closed here
+    }
+}</code></pre>
+                </div>
+                
+                <h3>2. Use Prepared Statements to Prevent SQL Injection</h3>
+                <p>Always use prepared statements with parameterized queries to prevent SQL injection attacks:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class SecureQueryExample {
+    public static Employee getEmployeeById(int id) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        String sql = "SELECT * FROM employees WHERE id = ?";
+        
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // Set the parameter safely
+            pstmt.setInt(1, id);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    Employee employee = new Employee();
+                    employee.setId(rs.getInt("id"));
+                    employee.setFirstName(rs.getString("first_name"));
+                    employee.setLastName(rs.getString("last_name"));
+                    employee.setEmail(rs.getString("email"));
+                    employee.setDepartment(rs.getString("department"));
+                    employee.setSalary(rs.getDouble("salary"));
+                    employee.setHireDate(rs.getDate("hire_date"));
+                    
+                    return employee;
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+}</code></pre>
+                </div>
+                
+                <h3>3. Use Connection Pooling in Production</h3>
+                <p>Always use a connection pool in production environments to improve performance and resource management:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class ConnectionPoolManager {
+    private static final HikariDataSource dataSource;
+    
+    static {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC");
+        config.setUsername("username");
+        config.setPassword("password");
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        
+        // Pool configuration optimized for production
+        config.setMinimumIdle(10);
+        config.setMaximumPoolSize(50);
+        config.setIdleTimeout(300000); // 5 minutes
+        config.setConnectionTimeout(20000); // 20 seconds
+        config.setMaxLifetime(1200000); // 20 minutes
+        
+        dataSource = new HikariDataSource(config);
+    }
+    
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
+    }
+    
+    public static void closeDataSource() {
+        if (dataSource != null && !dataSource.isClosed()) {
+            dataSource.close();
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>4. Handle Transactions Properly</h3>
+                <p>Use transactions to maintain data integrity when performing multiple related operations:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class TransactionExample {
+    public static boolean transferSalary(int fromEmployeeId, int toEmployeeId, double amount) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC";
+        String user = "username";
+        String password = "password";
+        
+        try (Connection conn = ConnectionPoolManager.getConnection()) {
+            // Disable auto-commit to start a transaction
+            conn.setAutoCommit(false);
+            
+            try {
+                // Deduct salary from the first employee
+                String deductSql = "UPDATE employees SET salary = salary - ? WHERE id = ?";
+                try (PreparedStatement deductStmt = conn.prepareStatement(deductSql)) {
+                    deductStmt.setDouble(1, amount);
+                    deductStmt.setInt(2, fromEmployeeId);
+                    
+                    int rowsAffected = deductStmt.executeUpdate();
+                    if (rowsAffected == 0) {
+                        conn.rollback();
+                        return false;
+                    }
+                }
+                
+                // Add salary to the second employee
+                String addSql = "UPDATE employees SET salary = salary + ? WHERE id = ?";
+                try (PreparedStatement addStmt = conn.prepareStatement(addSql)) {
+                    addStmt.setDouble(1, amount);
+                    addStmt.setInt(2, toEmployeeId);
+                    
+                    int rowsAffected = addStmt.executeUpdate();
+                    if (rowsAffected == 0) {
+                        conn.rollback();
+                        return false;
+                    }
+                }
+                
+                // Commit the transaction if all operations succeed
+                conn.commit();
+                return true;
+                
+            } catch (SQLException e) {
+                // Roll back the transaction if any operation fails
+                conn.rollback();
+                e.printStackTrace();
+                return false;
+            } finally {
+                // Re-enable auto-commit
+                conn.setAutoCommit(true);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}</code></pre>
+                </div>
+                
+                <h3>5. Use Appropriate Fetch Size for Large Result Sets</h3>
+                <p>When dealing with large result sets, set an appropriate fetch size to reduce memory usage:</p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class FetchSizeExample {
+    public static void processLargeResultSet() {
+        String sql = "SELECT * FROM large_table";
+        
+        try (Connection conn = ConnectionPoolManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // Set fetch size to control how many rows are fetched at a time
+            // This reduces memory usage for large result sets
+            pstmt.setFetchSize(100);
+            
+            // Set fetch direction for forward-only, read-only cursor
+            pstmt.setFetchDirection(ResultSet.FETCH_FORWARD);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    // Process each row
+                    // Only a small number of rows are loaded into memory at a time
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- ===========================
+                 7. PRACTICE & CHALLENGE
+                 =========================== -->
+            <section id="practice" class="chapter-card">
+                <span class="chapter-chip">7. Practice & Challenge</span>
+                <h2>Test Your Skills</h2>
+                <ol class="chapter-list">
+                    <li>Create a Java program that connects to a MySQL database and retrieves all records from a table.</li>
+                    <li>Implement a simple employee management system with CRUD operations using prepared statements.</li>
+                    <li>Create a connection pool using HikariCP and demonstrate its usage with multiple concurrent threads.</li>
+                    <li>Implement a transaction that transfers an amount from one account to another in a banking system.</li>
+                    <li>Create a batch processing example that inserts 1000 records into a table efficiently.</li>
+                </ol>
+
+                <h3>🏆 Challenge: Employee Management System</h3>
+                <p>Create a comprehensive employee management system with the following features:
+                <ul class="chapter-list">
+                    <li>Connect to a MySQL database using a connection pool.</li>
+                    <li>Implement a DAO (Data Access Object) pattern for employee operations.</li>
+                    <li>Provide methods for all CRUD operations (Create, Read, Update, Delete).</li>
+                    <li>Implement search functionality with different criteria (by department, by salary range, etc.).</li>
+                    <li>Use transactions for operations that involve multiple tables.</li>
+                    <li>Include proper error handling and logging.</li>
+                </ul>
+                </p>
+                <div class="code-editor">
+                    <button class="copy-btn">Copy</button>
+                    <pre class="line-numbers"><code class="language-java">import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+// Employee model class
+class Employee {
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String department;
+    private double salary;
+    private LocalDate hireDate;
+    
+    // Constructors, getters, and setters
+    public Employee() {}
+    
+    public Employee(String firstName, String lastName, String email, String department, double salary, LocalDate hireDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.department = department;
+        this.salary = salary;
+        this.hireDate = hireDate;
+    }
+    
+    // Getters and setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    
+    public String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
+    
+    public double getSalary() { return salary; }
+    public void setSalary(double salary) { this.salary = salary; }
+    
+    public LocalDate getHireDate() { return hireDate; }
+    public void setHireDate(LocalDate hireDate) { this.hireDate = hireDate; }
+    
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", department='" + department + '\'' +
+                ", salary=" + salary +
+                ", hireDate=" + hireDate +
+                '}';
+    }
+}
+
+// Data Access Object for Employee
+class EmployeeDAO {
+    private static final Logger logger = Logger.getLogger(EmployeeDAO.class.getName());
+    private final DataSource dataSource;
+    
+    public EmployeeDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+    
+    // Create a new employee
+    public int create(Employee employee) throws SQLException {
+        String sql = "INSERT INTO employees (first_name, last_name, email, department, salary, hire_date) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            pstmt.setString(1, employee.getFirstName());
+            pstmt.setString(2, employee.getLastName());
+            pstmt.setString(3, employee.getEmail());
+            pstmt.setString(4, employee.getDepartment());
+            pstmt.setDouble(5, employee.getSalary());
+            pstmt.setDate(6, Date.valueOf(employee.getHireDate()));
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("Creating employee failed, no rows affected.");
+            }
+            
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    employee.setId(generatedKeys.getInt(1));
+                    return employee.getId();
+                } else {
+                    throw new SQLException("Creating employee failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error creating employee", e);
+            throw e;
+        }
+    }
+    
+    // Read an employee by ID
+    public Employee read(int id) throws SQLException {
+        String sql = "SELECT * FROM employees WHERE id = ?";
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToEmployee(rs);
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error reading employee with ID: " + id, e);
+            throw e;
+        }
+    }
+    
+    // Read all employees
+    public List<Employee> readAll() throws SQLException {
+        String sql = "SELECT * FROM employees ORDER BY last_name, first_name";
+        List<Employee> employees = new ArrayList<>();
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            
+            while (rs.next()) {
+                employees.add(mapResultSetToEmployee(rs));
+            }
+            
+            return employees;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error reading all employees", e);
+            throw e;
+        }
+    }
+    
+    // Update an employee
+    public boolean update(Employee employee) throws SQLException {
+        String sql = "UPDATE employees SET first_name = ?, last_name = ?, email = ?, department = ?, salary = ?, hire_date = ? WHERE id = ?";
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, employee.getFirstName());
+            pstmt.setString(2, employee.getLastName());
+            pstmt.setString(3, employee.getEmail());
+            pstmt.setString(4, employee.getDepartment());
+            pstmt.setDouble(5, employee.getSalary());
+            pstmt.setDate(6, Date.valueOf(employee.getHireDate()));
+            pstmt.setInt(7, employee.getId());
+            
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error updating employee with ID: " + employee.getId(), e);
+            throw e;
+        }
+    }
+    
+    // Delete an employee
+    public boolean delete(int id) throws SQLException {
+        String sql = "DELETE FROM employees WHERE id = ?";
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error deleting employee with ID: " + id, e);
+            throw e;
+        }
+    }
+    
+    // Search employees by department
+    public List<Employee> searchByDepartment(String department) throws SQLException {
+        String sql = "SELECT * FROM employees WHERE department = ? ORDER BY last_name, first_name";
+        List<Employee> employees = new ArrayList<>();
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, department);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    employees.add(mapResultSetToEmployee(rs));
+                }
+            }
+            
+            return employees;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error searching employees by department: " + department, e);
+            throw e;
+        }
+    }
+    
+    // Search employees by salary range
+    public List<Employee> searchBySalaryRange(double minSalary, double maxSalary) throws SQLException {
+        String sql = "SELECT * FROM employees WHERE salary BETWEEN ? AND ? ORDER BY salary DESC, last_name, first_name";
+        List<Employee> employees = new ArrayList<>();
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setDouble(1, minSalary);
+            pstmt.setDouble(2, maxSalary);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    employees.add(mapResultSetToEmployee(rs));
+                }
+            }
+            
+            return employees;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error searching employees by salary range: " + minSalary + " - " + maxSalary, e);
+            throw e;
+        }
+    }
+    
+    // Transfer an employee to another department with a salary adjustment
+    public boolean transferWithSalaryAdjustment(int employeeId, String newDepartment, double salaryAdjustment) throws SQLException {
+        String updateSql = "UPDATE employees SET department = ?, salary = salary + ? WHERE id = ?";
+        String insertSql = "INSERT INTO salary_history (employee_id, old_salary, new_salary, adjustment_date, reason) VALUES (?, ?, ?, CURDATE(), ?)";
+        
+        try (Connection conn = dataSource.getConnection()) {
+            // Start a transaction
+            conn.setAutoCommit(false);
+            
+            try {
+                // Get the current salary
+                Employee employee = read(employeeId);
+                if (employee == null) {
+                    conn.rollback();
+                    return false;
+                }
+                
+                double oldSalary = employee.getSalary();
+                
+                // Update the employee's department and salary
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setString(1, newDepartment);
+                    updateStmt.setDouble(2, salaryAdjustment);
+                    updateStmt.setInt(3, employeeId);
+                    
+                    int affectedRows = updateStmt.executeUpdate();
+                    if (affectedRows == 0) {
+                        conn.rollback();
+                        return false;
+                    }
+                }
+                
+                // Record the salary adjustment in the history table
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                    insertStmt.setInt(1, employeeId);
+                    insertStmt.setDouble(2, oldSalary);
+                    insertStmt.setDouble(3, oldSalary + salaryAdjustment);
+                    insertStmt.setString(4, "Transfer to " + newDepartment);
+                    
+                    insertStmt.executeUpdate();
+                }
+                
+                // Commit the transaction
+                conn.commit();
+                return true;
+                
+            } catch (SQLException e) {
+                // Roll back the transaction if any operation fails
+                conn.rollback();
+                logger.log(Level.SEVERE, "Error transferring employee with ID: " + employeeId, e);
+                throw e;
+            } finally {
+                // Re-enable auto-commit
+                conn.setAutoCommit(true);
+            }
+        }
+    }
+    
+    // Helper method to map a ResultSet to an Employee object
+    private Employee mapResultSetToEmployee(ResultSet rs) throws SQLException {
+        Employee employee = new Employee();
+        employee.setId(rs.getInt("id"));
+        employee.setFirstName(rs.getString("first_name"));
+        employee.setLastName(rs.getString("last_name"));
+        employee.setEmail(rs.getString("email"));
+        employee.setDepartment(rs.getString("department"));
+        employee.setSalary(rs.getDouble("salary"));
+        employee.setHireDate(rs.getDate("hire_date").toLocalDate());
+        
+        return employee;
+    }
+}
+
+// Connection Pool Manager
+class ConnectionPoolManager {
+    private static final HikariDataSource dataSource;
+    
+    static {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydatabase?useSSL=false&serverTimezone=UTC");
+        config.setUsername("username");
+        config.setPassword("password");
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        
+        // Pool configuration
+        config.setMinimumIdle(5);
+        config.setMaximumPoolSize(20);
+        config.setIdleTimeout(300000);
+        config.setConnectionTimeout(20000);
+        config.setMaxLifetime(1200000);
+        
+        dataSource = new HikariDataSource(config);
+    }
+    
+    public static DataSource getDataSource() {
+        return dataSource;
+    }
+    
+    public static void closeDataSource() {
+        if (dataSource != null && !dataSource.isClosed()) {
+            dataSource.close();
+        }
+    }
+}
+
+// Main application class
+public class EmployeeManagementSystem {
+    private static final Logger logger = Logger.getLogger(EmployeeManagementSystem.class.getName());
+    private static final EmployeeDAO employeeDAO = new EmployeeDAO(ConnectionPoolManager.getDataSource());
+    
+    public static void main(String[] args) {
+        try {
+            // Create a new employee
+            Employee newEmployee = new Employee(
+                "John", "Doe", "john.doe@example.com", "IT", 75000.00, LocalDate.now()
+            );
+            int employeeId = employeeDAO.create(newEmployee);
+            System.out.println("Created employee with ID: " + employeeId);
+            
+            // Read the employee
+            Employee employee = employeeDAO.read(employeeId);
+            System.out.println("Read employee: " + employee);
+            
+            // Update the employee
+            employee.setSalary(80000.00);
+            boolean updated = employeeDAO.update(employee);
+            System.out.println("Employee updated: " + updated);
+            
+            // Read all employees
+            List<Employee> employees = employeeDAO.readAll();
+            System.out.println("All employees (" + employees.size() + "):");
+            employees.forEach(System.out::println);
+            
+            // Search by department
+            List<Employee> itEmployees = employeeDAO.searchByDepartment("IT");
+            System.out.println("IT employees (" + itEmployees.size() + "):");
+            itEmployees.forEach(System.out::println);
+            
+            // Search by salary range
+            List<Employee> highEarners = employeeDAO.searchBySalaryRange(70000, 100000);
+            System.out.println("High earners (" + highEarners.size() + "):");
+            highEarners.forEach(System.out::println);
+            
+            // Transfer with salary adjustment
+            boolean transferred = employeeDAO.transferWithSalaryAdjustment(employeeId, "Management", 5000.00);
+            System.out.println("Employee transferred: " + transferred);
+            
+            // Delete the employee
+            boolean deleted = employeeDAO.delete(employeeId);
+            System.out.println("Employee deleted: " + deleted);
+            
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error in employee management system", e);
+        } finally {
+            // Close the data source
+            ConnectionPoolManager.closeDataSource();
+        }
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Prev / Next Buttons -->
+            <div class="chapter-card" style="display:flex; justify-content:space-between; gap:1rem;">
+                <a href="java-chapter29-multithreading.html" class="theme-toggle-btn" style="text-decoration:none;">⬅️ Previous: Multithreading</a>
+                <a href="java-chapter31-web-services.html" class="theme-toggle-btn" style="text-decoration:none;">Next: Web Services ➡️</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="chapter-footer">
+        © 2025 Your Java Course — Database Connectivity
+    </footer>
+
+</div>
+
+<!-- Prism.js and plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<!-- Your script file -->
+<script src="course-script.js"></script>
+
+</body>
+</html>
